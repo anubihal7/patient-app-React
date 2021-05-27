@@ -1,0 +1,89 @@
+.searchResultsBlock {
+    background-color: rgba(60, 100, 177, 0.06);
+    padding: 0px 36px;
+    min-height: calc(100vh - 84px);
+    .componentTree {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 10px 5px;
+        a{
+            font-style: normal;
+            font-weight: bold;
+            font-size: 13px;
+            line-height: 14px;
+            letter-spacing: 0.2px;
+            color: #828282;
+            &.active{
+                color: #4F4F4F;
+            }
+        }
+        img{
+            margin: 0 10px;
+        }
+    }
+}
+.noResult {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 26px 30px 26px 30px;
+    h6{
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 26px;
+        letter-spacing: 0.2px;
+        color: #25282B;
+        margin-bottom: 32px;
+    }
+    p{
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        line-height: 26px;
+        letter-spacing: 0.2px;
+        color: #25282B;
+    }
+}
+.userSearchResult{
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 26px;
+    margin-top: 10px;
+    h4{
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 26px;
+        letter-spacing: 0.2px;
+        color: #25282B;
+        margin-bottom: 17px;
+    }
+}
+.customTable {
+    thead{
+        background-color: #F2F2F2;
+        th{
+            font-style: normal;
+            font-weight: bold;
+            font-size: 10px;
+            line-height: 13px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #4F4F4F;
+            &.transparent {
+                color: transparent;
+            }
+        }
+    }
+    tbody{
+        td{
+            font-style: normal;
+            font-weight: bold;
+            font-size: 12px;
+            line-height: 16px;
+            letter-spacing: 0.05em;
+            color: #25213B;
+        }
+    }
+}

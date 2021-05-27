@@ -1,0 +1,105 @@
+.authPageForm {
+    width: 100%;
+    h3{
+        font-style: normal;
+        font-weight: bold;
+        font-size: 40px;
+        line-height: 46px;
+        color: #25282B;
+    }
+    p{
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 40px;
+        color: #52575C;
+    }
+    .formInput {
+        border: 1px solid #A0A4A8;
+        border-radius: 8px;
+        padding: 14px 16px;
+        min-height: 48px;
+        &::placeholder{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+        }
+    }
+}
+.signInButton {
+    background: #4F4F4F;
+    border-radius: 8px;
+    border: 1px solid #4F4F4F;
+    margin-top: 40px;
+    padding: 11px 21px;
+    .signInImage {
+        margin-right: 10px;
+    }
+}
+.formCheckBox {
+    &.custom-switch {
+        padding-left: 50px;
+        padding-top: 8px;
+        .custom-control-label::before{
+            width: 36px;
+            height: 20px;
+            background: #828282;
+            border: 1px solid #828282;
+            border-radius: 18px;
+            transform: matrix(-1, 0, 0, 1, 0, 0);
+            left: -48px;
+        }
+        .custom-control-label::after{
+            top: calc(.25rem + 4px);
+            left: calc(-3rem + 4px);
+            background-color: #fff;
+        }
+        .custom-control-input:checked~.custom-control-label::after {
+            transform: translateX(15px);
+            -webkit-transform: translateX(15px);
+        }
+        .custom-control-input:checked~.custom-control-label::before{
+            border-color: #007bff;
+            background-color: #007bff;
+        }
+    }
+}
+.bottomLinks {
+    width: 100%;
+    padding-bottom: 30px;
+    padding-top: 50px;
+    .forget{
+        font-style: normal;
+        font-weight: bold;
+        font-size: 14px;
+        color: #828282;
+    }
+    .account{
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        color: #828282;
+        display: block;
+        a{
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            color: #25282B;
+            margin-right: 5px;
+        }
+    }
+}
+.returnHome{
+    border: 1px solid #4F4F4F;
+    border-radius: 8px;
+    color: #4F4F4F;
+    background-color: #fff;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 12px 27px;
+    .returnHomeImage {
+        margin-left: 5px;
+    }
+}
