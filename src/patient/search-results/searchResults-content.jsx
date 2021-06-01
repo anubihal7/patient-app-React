@@ -3,6 +3,7 @@ import "./style.scss";
 import smallArrow from "../../images/smallArrow.svg";
 import { Table } from "react-bootstrap";
 import darkArrow from "../../images/darkArrow.svg";
+import { Link } from "react-router-dom";
 
 const data = [
   {
@@ -57,6 +58,7 @@ const data = [
 const SearchResultsContent = (props) => {
   let { searchKey } = props;
   let [searchData, setSearchData] = useState([]);
+
   useEffect(() => {
     searchKey = searchKey.toLowerCase();
     let filterData = data.filter((key) => {
@@ -92,7 +94,7 @@ const SearchResultsContent = (props) => {
         <div className="userSearchResult text-left">
           <h4>Search results for "{searchKey}"</h4>
 
-          <Table className="customTable" hover>
+          <Table className="customTable" responsive hover>
             <thead>
               <tr>
                 <th>New ID</th>
@@ -113,9 +115,12 @@ const SearchResultsContent = (props) => {
                     <td>{item.name}</td>
                     <td>{item.tdata5}</td>
                     <td>
-                      <a href="">
+                      <Link to="/patient/details/demographics">
                         <img src={darkArrow} alt="rightArrow" />
-                      </a>
+                      </Link>
+                      {/* <a  >
+                        <img src={darkArrow} alt="rightArrow" />
+                      </a> */}
                     </td>
                   </tr>
                 );

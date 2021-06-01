@@ -1,0 +1,12 @@
+.patientContant{
+    background: linear-gradient(0deg, rgba(60, 100, 177, 0.06), rgba(60, 100, 177, 0.06)), #FFFFFF;
+    .componentTree{
+        margin: 0 38px;
+        @media(max-width:767px){
+            margin: 0 25px;
+        }
+        @media(max-width:480px){
+            margin: 0 15px;
+        }
+    }
+}

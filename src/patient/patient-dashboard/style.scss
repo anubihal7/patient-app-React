@@ -1,117 +1,174 @@
-.dashboardMainBlock{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: stretch;
-    justify-content: space-between;
-    min-height: 100vh;
-    .dashboardLeftBlock {
-        min-width: 356px;
-        padding: 17px;
-        @media(max-width:1400px){
-            min-width: 256px;
-        }
+.dashboardMainBlock {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: space-between;
+  min-height: 100vh;
+  .dashboardLeftBlock {
+    min-width: 356px;
+    padding: 17px;
+    z-index: 9;
+    @media (max-width: 1400px) {
+      min-width: 256px;
     }
-    .dashboardRightBlock {
-        width: calc(100% - 356px);
-        @media(max-width:1400px){
-            width: calc(100% - 256px);
-        }
+    @media (max-width: 1100px) {
+      min-width: unset;
+      width: 60px;
+      padding: 0;
     }
+  }
+  .dashboardRightBlock {
+    width: calc(100% - 356px);
+    @media (max-width: 1400px) {
+      width: calc(100% - 256px);
+    }
+    @media (max-width: 1100px) {
+      width: calc(100% - 60px);
+    }
+  }
 }
 
-.dashboardContant{
-    background-color: rgba(60, 100, 177, 0.06);
-    padding: 68px 36px;
-    min-height: calc(100vh - 84px);
-    .dashHeading {
+.dashboardContant {
+  background-color: rgba(60, 100, 177, 0.06);
+  padding: 68px 36px;
+  min-height: calc(100vh - 84px);
+  @media (max-width: 767px) {
+    padding: 30px 30px;
+  }
+  @media (max-width: 480px) {
+    padding: 30px 20px;
+  }
+  .dashHeading {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 52px;
+    letter-spacing: 0.2px;
+    color: #25282b;
+    margin-bottom: 16px;
+    @media (max-width: 767px) {
+      font-size: 30px;
+      margin-bottom: 5px;
+    }
+    @media (max-width: 480px) {
+      font-size: 24px;
+      line-height: normal;
+    }
+  }
+  .dashSubHeading {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 26px;
+    letter-spacing: 0.2px;
+    color: #000000;
+    margin-bottom: 42px;
+    @media (max-width: 767px) {
+      font-size: 16px;
+      line-height: 23px;
+    }
+  }
+  .dashWhatsNew {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    background-color: #fbfcfe;
+    position: relative;
+    @media (max-width: 1100px) {
+      flex-wrap: wrap;
+    }
+    &::after {
+      content: "";
+      background-image: url("../../images/lines.svg");
+      background-position: center;
+      background-size: cover;
+      display: block;
+      z-index: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    &::before {
+      content: "";
+      background-image: url("../../images/lines2.svg");
+      background-position: center;
+      background-size: cover;
+      display: block;
+      z-index: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .imageSection {
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @media (max-width: 1100px) {
+        width: 100%;
+        padding: 40px;
+      }
+    }
+    .textSetion {
+      width: 50%;
+      padding: 38px;
+      @media (max-width: 1100px) {
+        width: 100%;
+      }
+      @media (max-width: 767px) {
+        padding: 20px;
+      }
+      h6 {
+        font-style: normal;
+        font-weight: 800;
+        font-size: 14px;
+        line-height: 18px;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+        color: #828282;
+        margin-bottom: 12px;
+      }
+      h3 {
         font-style: normal;
         font-weight: bold;
-        font-size: 40px;
-        line-height: 52px;
+        font-size: 44px;
+        line-height: 56px;
         letter-spacing: 0.2px;
-        color: #25282B;
-        margin-bottom: 16px;
-    }
-    .dashSubHeading{
+        color: #373f41;
+        margin-bottom: 40px;
+        max-width: 400px;
+        @media (max-width: 1100px) {
+          max-width: unset;
+        }
+        @media (max-width: 767px) {
+          font-size: 30px;
+          line-height: normal;
+          margin-bottom: 17px;
+        }
+        @media (max-width: 480px) {
+          font-size: 23px;
+        }
+      }
+      p {
         font-style: normal;
-        font-weight: bold;
-        font-size: 24px;
-        line-height: 26px;
-        letter-spacing: 0.2px;
-        color: #000000;
-        margin-bottom: 42px;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 22px;
+        letter-spacing: 0.3px;
+        color: #737b7d;
+        margin-bottom: 60px;
+        max-width: 445px;
+        @media (max-width: 1100px) {
+          max-width: unset;
+        }
+        @media (max-width: 480px) {
+          margin-bottom: 30px;
+        }
+      }
     }
-    .dashWhatsNew{
-        display: flex;
-        align-items: stretch;
-        justify-content: space-between;
-        background-color: #fbfcfe;
-        position: relative;
-        &::after{
-            content: '';
-            background-image: url("../../images/lines.svg");
-            background-position: center;
-            background-size: cover;
-            display: block;
-            z-index: 0;
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        &::before{
-            content: '';
-            background-image: url("../../images/lines2.svg");
-            background-position: center;
-            background-size: cover;
-            display: block;
-            z-index: 0;
-            height: 100%;
-            width: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-        }
-        .imageSection{
-            width: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .textSetion{
-            width: 50%;
-            padding: 38px;
-            h6{
-                font-style: normal;
-                font-weight: 800;
-                font-size: 14px;
-                line-height: 18px;
-                letter-spacing: 0.4px;
-                text-transform: uppercase;
-                color: #828282;
-                margin-bottom: 12px;
-            }
-            h3{
-                font-style: normal;
-                font-weight: bold;
-                font-size: 44px;
-                line-height: 56px;
-                letter-spacing: 0.2px;
-                color: #373F41;
-                margin-bottom: 40px;
-                max-width: 400px;
-            }
-            p{
-                font-style: normal;
-                font-weight: normal;
-                font-size: 16px;
-                line-height: 22px;
-                letter-spacing: 0.3px;
-                color: #737B7D;
-                margin-bottom: 60px;
-                max-width: 445px;
-            }
-        }
-    }
+  }
 }

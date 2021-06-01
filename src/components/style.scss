@@ -100,7 +100,58 @@
 
 .leftSideBar {
     display: block;
-    height: 100%;
+    height: calc(100vh - 20px);
+    position: fixed;
+    width: 300px;
+    .mobileLogo {display: none;}
+    .desktopLogo{
+        margin-top: 20px;
+    }
+    @media(max-width:1100px){
+        background-color: #fff;
+        height: calc(100vh - 0px);
+        padding-left: 17px;
+        transition: all ease-in-out 0.5s;
+        &.mobile{
+            display: block;
+            height: calc(100vh - 20px);
+            position: fixed;
+            width: 60px;
+            overflow: hidden;
+            transition: all ease-in-out 0.5s;
+            .desktopLogo{
+                display: none;
+            }
+            .mobileLogo {
+                display: inline-block;
+                margin-left: -10px;
+                width: 48px;
+                margin-top: 20px;
+            }
+            .leftSideTabs {
+                .sideBarList {
+                    li{
+                        a{
+                            color: transparent !important;
+                        }
+                    }
+                }
+                .signOutbtn {
+                    font-size: 0px;
+                    padding-bottom: 10px;
+                    a{
+                        font-size: 0px;
+                        .desktopHidd {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .desktopHidd {
+        display: none;
+    }
     .leftSideTabs{
         display: flex;
         flex-direction: column;
@@ -156,6 +207,9 @@
             color: #828282;
             padding-left: 5px;
             padding-bottom: 10px;
+            @media(max-width:1100px){
+                padding-bottom: 30px;
+            }
             a{
                 font-style: normal;
                 font-weight: bold;
@@ -171,7 +225,34 @@
 .headerBlock{
     background-color: #F2F2F2;
     padding: 4px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    @media (max-width:767px){
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+    }
+    .latestUpdate {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 20px;
+        letter-spacing: 0.1px;
+        color: #4F4F4F;
+        margin-bottom: 0;
+        margin-left: 21px;
+        @media (max-width:767px){
+            margin-left: 0;
+            margin-top: 10px;
+            width: 100%;
+            text-align: center;
+        }
+    }
     .headerDropdown{
+        @media(max-width:767px){
+            width: 100%;
+        }
         .dropdown-toggle {
             background-color: #E0E0E0;
             border: 1px solid #E0E0E0;
@@ -186,6 +267,10 @@
             font-size: 12px;
             line-height: 20px;
             color: #4F4F4F;
+            @media(max-width:767px){
+                min-width: unset;
+                width: 100%;
+            }
             &:focus,&:active,&:hover{
                 outline: none;
                 box-shadow: none !important;
@@ -214,12 +299,79 @@
     padding: 8px 36px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
+    @media(max-width:767px){
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 8px 15px;
+    }
+    .searchinputblock{
+        display: flex;
+        align-items: center;
+        width: -webkit-fill-available;
+        width: -moz-available;
+        @media(max-width:480px){
+            flex-wrap: wrap;
+        }
+    }
+    .pdfActionBtns {
+        margin-left: 20px;
+        @media(max-width:767px){
+            margin-left: 10px; 
+            padding-top: 10px;
+        }
+        .pdfDownlode{
+            background-color: #4F4F4F;
+            border-radius: 28px;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 18px;
+            color: #fff;
+            border: 1px solid #4f4f4f;
+            display: flex;
+            align-items: center;
+            padding: 7px 23px;
+            img{margin-right: 5px;}
+            @media(max-width:1024px){
+                font-size: 0px;
+                img{margin-right: 0px;}
+            }
+        }
+        .pdfPrint {
+            background-color: #4F4F4F;
+            border-radius: 28px;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 14px;
+            line-height: 18px;
+            color: #fff;
+            border: 1px solid #4f4f4f;
+            display: flex;
+            align-items: center;
+            padding: 7px 23px;
+            margin-left: 10px;
+            img{margin-right: 5px;}
+            @media(max-width:1024px){
+                font-size: 0px;
+                img{margin-right: 0px;}
+            }
+        }
+    }
     .form-group {
         margin-bottom: 0;
         width: 100%;
         margin-bottom: 0;
         max-width: 540px;
+        @media(max-width:1300px){
+            max-width:400px;
+        }
+        @media(max-width:1200px){
+            max-width:330px;
+        }
+        @media(max-width:480px){
+            max-width: unset;
+        }
     }
     .searchIconInput{
         .input-group-prepend{
@@ -260,11 +412,23 @@
         margin-left: 34px;
         letter-spacing: 0.2px;
         text-decoration-line: underline;
+        @media (max-width:767px){
+            white-space: nowrap;
+            margin-left: 25px;
+        }
+        @media(max-width:480px){
+            margin-left: auto;
+            margin-top: 11px;
+            margin-right: auto;
+        }
     }
 }
 .advancedSearch {
     background-color: #E0E0E0;
     padding: 8px 36px;
+    @media(max-width:480px){
+        padding: 8px 20px;
+    }
     h5{
         font-style: normal;
         font-weight: bold;
@@ -310,5 +474,128 @@
         align-items: center;
         color: #4F4F4F;
         padding: 21px 15px;
+    }
+}
+
+
+// page naviagtion bar 
+.componentTree {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 10px 5px;
+    @media(max-width:767px){
+        padding: 10px 11px;
+        flex-wrap: wrap;
+    }
+    a{
+        font-style: normal;
+        font-weight: bold;
+        font-size: 13px;
+        line-height: 14px;
+        letter-spacing: 0.2px;
+        color: #828282;
+        &.active{
+            color: #4F4F4F;
+        }
+    }
+    img{
+        margin: 0 10px;
+    }
+}
+
+
+// patientInfo
+.patientInfo{
+    padding: 24px;
+    background: #E6EDF7;
+    .patientName {
+        @media(max-width:991px){
+            margin-bottom: 15px;
+        }
+        h6{
+            font-style: normal;
+            font-weight: normal;
+            font-size: 10px;
+            line-height: 18px;
+            letter-spacing: 0.2px;
+            text-transform: uppercase;
+            color: #000000;
+            margin-bottom: 0;
+        }
+        h4{
+            font-style: normal;
+            font-weight: bold;
+            font-size: 36px;
+            line-height: 47px;
+            letter-spacing: 0.2px;
+            color: #000000;
+            margin-bottom: 0;
+            @media(max-width:480px){
+                font-size: 25px;
+                line-height: normal;
+            }
+        }
+        h3{
+            font-style: normal;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 18px;
+            letter-spacing: 0.2px;
+            color: #000000;
+            margin-top: 12px;
+        }
+        h5{
+            font-style: normal;
+            font-weight: 600;
+            font-size: 14px;
+            line-height: 18px;
+            display: flex;
+            align-items: center;
+            letter-spacing: 0.2px;
+            color: #000000;
+        }
+    }
+}
+
+// Tabs 
+
+.tabsBlock{
+    margin: 0px 36px;
+    padding: 0px 0;
+    border-bottom: 2px solid #828282;
+    @media(max-width:767px){
+        margin: 0px 25px;
+    }
+    @media(max-width:480px){
+        margin: 0px 15px;
+    }
+    .nav-item {
+        .nav-link{
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 18px;
+            letter-spacing: 0.2px;
+            color: #4F4F4F;
+            padding: 20px 15px;
+            &.active{
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 17px;
+                color: #000000;
+                position: relative;
+                &::before{
+                    content: '';
+                    position: absolute;
+                    bottom: -1px;
+                    left: 0;
+                    width: 100%;
+                    height: 3px;
+                    background: #828282;
+                }
+            }
+        }
     }
 }

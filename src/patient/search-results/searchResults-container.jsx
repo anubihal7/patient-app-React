@@ -9,7 +9,7 @@ const SearchResultsContainer = (props) => {
   return (
     <div className="dashboardMainBlock">
       <div className="dashboardLeftBlock">
-        <LeftSidebar />
+        <LeftSidebar {...props} />
       </div>
       <div className="dashboardRightBlock">
         <HeaderBar />

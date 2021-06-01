@@ -1,0 +1,247 @@
+.claimInfo {
+  background: linear-gradient(
+      0deg,
+      rgba(60, 100, 177, 0.06),
+      rgba(60, 100, 177, 0.06)
+    ),
+    #ffffff;
+  .componentTree {
+    margin: 0 38px;
+    @media (max-width: 767px) {
+      margin: 0 25px;
+    }
+    @media (max-width: 480px) {
+      margin: 0 15px;
+    }
+  }
+}
+.printBlocks {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 24px;
+  padding-bottom: 8px;
+  margin: 10px 38px;
+  display: inline-block;
+  @media (max-width: 991px) {
+    margin: 10px 25px;
+    width: calc(100% - 50px);
+  }
+  @media (max-width: 767px) {
+    margin: 10px 15px;
+    width: calc(100% - 30px);
+    padding: 20px 15px;
+  }
+  .printBlock {
+    border: 1px solid #bdbdbd;
+    border-radius: 14px;
+    display: flex;
+    margin-bottom: 16px;
+    label {
+      font-style: normal;
+      font-weight: 900;
+      font-size: 10px;
+      line-height: 13px;
+      text-align: center;
+      letter-spacing: 0.1px;
+      color: #000000;
+      background: #c4c4c4;
+      border-radius: 14px;
+      padding: 3px 6px;
+      margin-bottom: 0;
+    }
+    h6 {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 10px;
+      line-height: 13px;
+      letter-spacing: 0.1px;
+      color: #000000;
+      margin: 3px 12px;
+    }
+  }
+}
+.claimInfoTable {
+  .react-bootstrap-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    table {
+      thead {
+        tr {
+          th {
+            &.expand-cell-header {
+              font-size: 0;
+              position: relative;
+              min-width: 35px;
+              &::before {
+                content: "";
+                background-image: url("../../images/tableClose.svg");
+                background-position: center;
+                background-size: contain;
+                background-repeat: no-repeat;
+                display: inline-block;
+                width: 16px;
+                height: 16px;
+                position: absolute;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                left: 50%;
+              }
+            }
+            &:nth-child(8),
+            &:nth-child(9) {
+              min-width: 96px;
+            }
+          }
+        }
+      }
+      tbody {
+        tr {
+          td {
+            &.expand-cell {
+              // font-size: 0;
+              // position: relative;
+              // &::before {
+              //   content: "";
+              //   background-image: url("../../images/tableClose.svg");
+              //   background-position: center;
+              //   background-size: contain;
+              //   background-repeat: no-repeat;
+              //   display: inline-block;
+              //   width: 16px;
+              //   height: 16px;
+              //   position: absolute;
+              //   top: 13px;
+              //   transform: translatex(-50%);
+              //   left: 51%;
+              // }
+            }
+          }
+        }
+      }
+    }
+  }
+  .react-bootstrap-table .table {
+    thead {
+      background-color: #f2f2f2;
+      th {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 10px;
+        line-height: 13px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: #4f4f4f;
+        &.transparent {
+          color: transparent;
+        }
+      }
+    }
+    tbody {
+      td {
+        font-style: normal;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.05em;
+        color: #25213b;
+      }
+    }
+  }
+}
+.dxLinks {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  // flex-wrap: wrap;
+  span {
+    font-style: normal;
+    font-weight: 900;
+    font-size: 10px;
+    line-height: 13px;
+    text-align: center;
+    letter-spacing: 0.1px;
+    color: #000000;
+    background-color: #c4c4c4;
+    padding: 3px 6px;
+    border-radius: 14px;
+    margin-right: 4px;
+  }
+}
+.tableExpandData {
+  padding-left: 70px;
+  label {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: 0.1px;
+    text-transform: uppercase;
+    color: #a0a4a8;
+    margin-bottom: 8px;
+  }
+  h6 {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: 0.1px;
+    color: #25282b;
+  }
+  .tableEpandAreaLine {
+    position: relative;
+    margin-bottom: 20px;
+    &::before {
+      content: "";
+      background-image: url("../../images/tableLine.svg");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      display: inline-block;
+      height: 46px;
+      width: 15px;
+      position: absolute;
+      left: -17px;
+      bottom: 14px;
+    }
+  }
+}
+
+p.expand-table-row {
+  font-size: 0;
+  position: relative;
+  &::before {
+    content: "";
+    background-image: url("../../images/tableClose.svg");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 5px;
+    transform: translatex(-50%);
+    left: 51%;
+  }
+}
+
+p.reduce-table-row {
+  font-size: 0;
+  position: relative;
+  &::before {
+    content: "";
+    background-image: url("../../images/collapse-row.svg");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    top: 5px;
+    transform: translatex(-50%);
+    left: 51%;
+  }
+}

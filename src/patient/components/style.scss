@@ -1,0 +1,198 @@
+.Demographics {
+    background: #FFFFFF;
+    border-radius: 8px;
+    padding: 22px 24px;
+    margin: 10px 36px;
+    display: inline-block;
+    width: calc(100% - 72px);
+    @media (max-width:991px){
+        margin: 10px 25px;
+        width: calc(100% - 50px);
+    }
+    @media (max-width:767px){
+        margin: 10px 15px;
+        width: calc(100% - 30px);
+        padding: 20px 15px;
+    }
+    h5{
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 26px;
+        letter-spacing: 0.2px;
+        color: #25282B;
+    }
+    .sectionOne {
+        margin-top: 16px;
+        .row{
+            border-bottom: 1px solid #BDBDBD;
+            padding-top: 32px;
+            .col{
+                margin-bottom: 27px;
+                label{
+                    font-style: normal;
+                    font-weight: normal;
+                    font-size: 10px;
+                    line-height: 16px;
+                    letter-spacing: 0.1px;
+                    text-transform: uppercase;
+                    color: #A0A4A8;
+                }
+                h6{
+                    font-style: normal;
+                    font-weight: 600;
+                    font-size: 14px;
+                    line-height: 20px;
+                    letter-spacing: 0.1px;
+                    color: #25282B;
+                    word-break: break-word;
+                }
+            }
+        }
+    }
+}
+
+.claimHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .form-group {
+        margin-bottom: 0;
+        @media (max-width:480px){
+            max-width: 110px;
+        }
+    }
+    .searchIconInput{
+        .input-group-prepend{
+            .input-group-text {
+                background: #F6F6F6;
+                border-radius: 100px;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+                border: 1px solid #fff;
+            }
+        }
+        .form-control {
+            background: #F6F6F6;
+            border-radius: 100px;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border: 1px solid #fff;
+            font-style: normal;
+            font-weight: 600;
+            font-size: 13px;
+            line-height: 16px;
+            color: #4F4F4F;
+            &:focus{
+                outline: none;
+                box-shadow: none !important;
+            }
+            &::placeholder{
+                color: #BDBDBD;
+            }
+        }
+    }
+}
+.customTable {
+    thead{
+        background-color: #F2F2F2;
+        th{
+            font-style: normal;
+            font-weight: bold;
+            font-size: 10px;
+            line-height: 13px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: #4F4F4F;
+            &.transparent {
+                color: transparent;
+            }
+        }
+    }
+    tbody{
+        td{
+            font-style: normal;
+            font-weight: bold;
+            font-size: 12px;
+            line-height: 16px;
+            letter-spacing: 0.05em;
+            color: #25213B;
+        }
+    }
+}
+.claiminfoBlock {
+    > .row{
+        padding-top: 24px;
+    }
+    .claimID {
+        border: 2px solid #828282;
+        border-radius: 4px;
+        padding: 8px 16px;
+        h5{
+            font-style: normal;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 40px;
+            color: #000;
+            span{
+                display: block;
+                font-style: normal;
+                font-weight: bold;
+                font-size: 16px;
+                line-height: 26px;
+                letter-spacing: 0.2px;
+                color: #828282;
+            }
+        }
+    }
+}
+.claiminfoblocks {
+    padding-left:70px;
+    @media(max-width:767px){
+        padding-left: 15px;
+        padding-top: 25px;
+    }
+    label{
+        font-style: normal;
+        font-weight: normal;
+        font-size: 10px;
+        line-height: 16px;
+        letter-spacing: 0.1px;
+        text-transform: uppercase;
+        color: #A0A4A8;
+        margin-bottom: 8px;
+    }
+    h6{
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 20px;
+        letter-spacing: 0.1px;
+        color: #25282B;
+    }
+}
+.buttonTabs{
+    padding-left: 25px;
+    @media(max-width:480px){
+        padding-left: 0px;
+    }
+    .tabButton {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        color: #BDBDBD;
+        border: 0px solid transparent;
+        border-bottom: 1px solid transparent;
+        background-color: transparent;
+        border-radius: 0;
+        &.active,&:focus,&:active {
+            border: 0px solid transparent !important;
+            border-bottom: 1px solid #4F4F4F !important;
+            background-color: transparent !important;
+            border-radius: 0 !important;
+            color: #4F4F4F !important;
+            box-shadow: none !important;
+        }
+    }
+}

@@ -2,11 +2,18 @@
     background-color: rgba(60, 100, 177, 0.06);
     padding: 0px 36px;
     min-height: calc(100vh - 84px);
+    @media (max-width:480px){
+        padding: 0px 20px;
+    }
     .componentTree {
         display: flex;
         align-items: center;
         justify-content: flex-start;
         padding: 10px 5px;
+        @media(max-width:767px){
+            padding: 10px 11px;
+            flex-wrap: wrap;
+        }
         a{
             font-style: normal;
             font-weight: bold;

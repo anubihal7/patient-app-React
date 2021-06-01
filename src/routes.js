@@ -23,6 +23,12 @@ const DashboardContainer = React.lazy(() =>
 const SearchResultsContainer = React.lazy(() =>
   import("./patient/search-results/searchResults-container.jsx")
 );
+const PatientContainer = React.lazy(() =>
+  import("./patient/patient-details/patient-container.jsx")
+);
+const ClaimInfoContainer = React.lazy(() =>
+  import("./patient/claim-information/claimInfo-container.jsx")
+);
 
 function Routes() {
   return (
@@ -47,10 +53,20 @@ function Routes() {
             path="/patient/dashboard"
             component={DashboardContainer}
           />
-           <AuthGuard
+          <AuthGuard
             exact
             path="/patient/result"
             component={SearchResultsContainer}
+          />
+          <AuthGuard
+            exact
+            path="/patient/details/:type"
+            component={PatientContainer}
+          />
+          <AuthGuard
+            exact
+            path="/patient/claiminfo"
+            component={ClaimInfoContainer}
           />
           <Redirect exact from="/" to="auth/login" />
         </Switch>

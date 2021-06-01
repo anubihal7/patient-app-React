@@ -8,7 +8,9 @@ const SearchBlock = (props) => {
   let [advanceSearch, setAdvanceSearch] = useState(false);
 
   const onKeyUp = (e) => {
-    props.onKeyUpMethod(e);
+    if (props.onKeyUpMethod) {
+      props.onKeyUpMethod(e);
+    }
   };
   const showAdvanceSearch = () => {
     //   let search = !advanceSearch
@@ -18,28 +20,30 @@ const SearchBlock = (props) => {
   return (
     <>
       <div className="searchBlock">
-        <InputWithIcon
-          inputIcon={search}
-          inputClass="searchIconInput"
-          placeholder="Search by name, ID number, or date of birth"
-          type="text"
-          onKeyUp={onKeyUp}
-        />
-        <a
-          className="searchBtn"
-          style={{ cursor: "pointer" }}
-          onClick={showAdvanceSearch}
-        >
-          Advanced Search
-        </a>
+        <div className="searchinputblock">
+          <InputWithIcon
+            inputIcon={search}
+            inputClass="searchIconInput"
+            placeholder="Search by name, ID number, or date of birth"
+            type="text"
+            onKeyUp={onKeyUp}
+          />
+          <a
+            className="searchBtn"
+            style={{ cursor: "pointer" }}
+            onClick={showAdvanceSearch}
+          >
+            Advanced Search
+          </a>
+        </div>
       </div>
       {/* this block only show when click on advanced search button */}
       {advanceSearch && (
         <div className="advancedSearch text-left">
           <h5>Advanced Search</h5>
-          <Row md={1} lg={1} xl={2}>
+          <Row xs={1} sm={1} md={1} lg={1} xl={2}>
             <Col>
-              <Row md={1} lg={3}>
+              <Row xs={1} sm={1} md={2} lg={3}>
                 <Col className="advancedInputBlock">
                   <Input
                     placeholder="Username"
@@ -67,7 +71,7 @@ const SearchBlock = (props) => {
               </Row>
             </Col>
             <Col>
-              <Row md={1} lg={2}>
+              <Row xs={1} sm={1} md={2} lg={2}>
                 <Col className="advancedInputBlock">
                   <Input
                     placeholder="Username"
