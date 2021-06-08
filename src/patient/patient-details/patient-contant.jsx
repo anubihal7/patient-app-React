@@ -5,6 +5,11 @@ import Claims from "../components/Claims.jsx";
 import Tab from "../../components/tabs.jsx";
 import Demographies from "../components/Demographies.jsx";
 import "./style.scss";
+import Contacts from "../components/Contacts.jsx";
+import Documents from "../components/Documents.jsx";
+import Insurances from "../components/Insurances.jsx";
+import Appointments from "../components/Appointments.jsx";
+import Clinicals from "../components/Clinicals.jsx";
 
 const PatientContent = (props) => {
   let [tabSelection, setTabSelection] = useState("demographics");
@@ -29,6 +34,13 @@ const PatientContent = (props) => {
       />
       {tabSelection == "demographics" && <Demographies />}
       {tabSelection == "claims" && <Claims />}
+      {tabSelection == "contacts" && <Contacts />}
+      {tabSelection == "documents" && <Documents />}
+      {tabSelection == "insurances" && <Insurances />}
+      {tabSelection == "appointment" && <Appointments />}
+      {tabSelection == "clinicals" && <Clinicals />}
+      {/* {tabSelection == "demographics" && <Demographies />}
+      {tabSelection == "claims" && <Claims />} */}
     </div>
   );
 };

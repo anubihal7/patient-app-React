@@ -5,6 +5,7 @@ import "./style.scss";
 import ClaimInfo from "../components/ClaimInformation.jsx";
 import PrintButton from "../components/print-buttons";
 import ClaimInfoTable from "./claiminfo-table";
+import Comments from "../components/Comments.jsx";
 
 const ClaimInfoContent = () => (
   <div className="claimInfo text-left">
@@ -12,7 +13,8 @@ const ClaimInfoContent = () => (
     <PatientInfo />
     <ClaimInfo />
     <ClaimInfoTable />
-    <PrintButton/>
+    <PrintButton />
+    <Comments />
   </div>
 );
 
