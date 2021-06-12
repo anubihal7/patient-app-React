@@ -7,9 +7,9 @@ import PrintButton from "../components/print-buttons";
 import ClaimInfoTable from "./claiminfo-table";
 import Comments from "../components/Comments.jsx";
 
-const ClaimInfoContent = () => (
+const ClaimInfoContent = (props) => (
   <div className="claimInfo text-left">
-    <SearchNav />
+    <SearchNav {...props} />
     <PatientInfo />
     <ClaimInfo />
     <ClaimInfoTable />

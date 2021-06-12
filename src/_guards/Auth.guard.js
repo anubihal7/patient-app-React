@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 
 const AuthGuard = ({ component: Component, ...rest }) => {
   const { token } = rest;
-  const isAuthenticated = Object.keys(token).length !== 0 ? true : false;
-  // const isAuthenticated = true;
+  // const isAuthenticated = Object.keys(token).length !== 0 ? true : false;
+  const isAuthenticated = true;
   return (
     <Route
       {...rest}

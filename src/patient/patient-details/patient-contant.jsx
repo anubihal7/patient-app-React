@@ -25,20 +25,20 @@ const PatientContent = (props) => {
   };
   return (
     <div className="patientContant text-left">
-      <SearchNav />
+      <SearchNav {...props} />
       <PatientInfo />
       <Tab
         {...props}
         tabSelection={tabSelection}
         getTabSelection={getTabSelection}
       />
-      {tabSelection == "demographics" && <Demographies />}
-      {tabSelection == "claims" && <Claims />}
-      {tabSelection == "contacts" && <Contacts />}
-      {tabSelection == "documents" && <Documents />}
-      {tabSelection == "insurances" && <Insurances />}
-      {tabSelection == "appointment" && <Appointments />}
-      {tabSelection == "clinicals" && <Clinicals />}
+      {tabSelection == "demographics" && <Demographies {...props} />}
+      {tabSelection == "claims" && <Claims {...props} />}
+      {tabSelection == "contacts" && <Contacts {...props} />}
+      {tabSelection == "documents" && <Documents {...props} />}
+      {tabSelection == "insurances" && <Insurances {...props} />}
+      {tabSelection == "appointment" && <Appointments {...props} />}
+      {tabSelection == "clinicals" && <Clinicals {...props} />}
       {/* {tabSelection == "demographics" && <Demographies />}
       {tabSelection == "claims" && <Claims />} */}
     </div>

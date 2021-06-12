@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import AppLoading from "./components/app-loading.jsx";
+import PDFViewerContainer from "./patient/pdf-viewer/pdf-viewer-container.jsx";
 import AuthGuard from "./_guards/Auth.guard";
 const LoginContainer = React.lazy(() =>
   import("./auth/login/login-container.jsx")
@@ -68,6 +69,12 @@ function Routes() {
             path="/patient/claiminfo"
             component={ClaimInfoContainer}
           />
+          <AuthGuard
+            exact
+            path="/patient/view/pdf"
+            component={PDFViewerContainer}
+          />
+          {/* PDFViewerContainer */}
           <Redirect exact from="/" to="auth/login" />
         </Switch>
       </Suspense>

@@ -72,6 +72,10 @@ const SearchResultsContent = (props) => {
     setSearchData(filterData);
   }, [searchKey]);
 
+  const goToDetails = () => {
+    props.history.push("/patient/details/demographics");
+  };
+
   return (
     <div className="searchResultsBlock">
       <div className="componentTree text-left">
@@ -108,7 +112,7 @@ const SearchResultsContent = (props) => {
             <tbody>
               {searchData?.map((item, index) => {
                 return (
-                  <tr key={index}>
+                  <tr key={index} onClick={goToDetails}>
                     <td>{item.id}</td>
                     <td>{item.priorId}</td>
                     <td>{item.dob}</td>
