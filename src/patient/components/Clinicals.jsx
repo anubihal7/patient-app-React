@@ -5,6 +5,7 @@ import "./style.scss";
 import { Button, Table } from "react-bootstrap";
 import darkArrow from "../../images/darkArrow.svg";
 import { Link } from "react-router-dom";
+import PaginationBlock from "./Pagination";
 
 const tabledata = [
   {
@@ -70,6 +71,33 @@ const tabledata = [
     tdata6: "Office",
     tdata7: "Comments maximum of 255 characters",
   },
+  {
+    tdata1: "10/22/2020",
+    tdata2: "10:00-10:20 AM",
+    tdata3: "FU",
+    tdata4: "Reason entry sjkdhb",
+    tdata5: "JRO",
+    tdata6: "Office",
+    tdata7: "Comments maximum of 255 characters",
+  },
+  {
+    tdata1: "10/22/2020",
+    tdata2: "10:00-10:20 AM",
+    tdata3: "FU",
+    tdata4: "Reason entry sluhkn",
+    tdata5: "JRO",
+    tdata6: "Office",
+    tdata7: "Comments maximum of 255 characters",
+  },
+  {
+    tdata1: "10/22/2020",
+    tdata2: "10:00-10:20 AM",
+    tdata3: "FU",
+    tdata4: "Reason entryajn k.n",
+    tdata5: "JRO",
+    tdata6: "Office",
+    tdata7: "Comments maximum of 255 characters",
+  },
 ];
 const Clinicals = () => {
   const [tableData, setTableData] = useState(tabledata);
@@ -96,7 +124,7 @@ const Clinicals = () => {
         <InputWithIcon
           inputIcon={darkSearch}
           inputClass="searchIconInput"
-          placeholder="Search claims"
+          placeholder="Search Clinicals"
           type="text"
           onKeyUp={onKeyUp}
         />
@@ -144,6 +172,7 @@ const Clinicals = () => {
             })}
           </tbody>
         </Table>
+        <PaginationBlock name="Clinicals" />
       </div>
     </div>
   );

@@ -10,6 +10,7 @@ import Documents from "../components/Documents.jsx";
 import Insurances from "../components/Insurances.jsx";
 import Appointments from "../components/Appointments.jsx";
 import Clinicals from "../components/Clinicals.jsx";
+import PaginationBlock from "../components/Pagination.jsx";
 
 const PatientContent = (props) => {
   let [tabSelection, setTabSelection] = useState("demographics");

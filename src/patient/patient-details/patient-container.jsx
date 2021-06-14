@@ -12,7 +12,7 @@ const PatientContainer = (props) => (
     </div>
     <div className="dashboardRightBlock">
       <HeaderBar />
-      <SearchBlock />
+      <SearchBlock {...props} />
       <PatientContant {...props} />
     </div>
   </div>

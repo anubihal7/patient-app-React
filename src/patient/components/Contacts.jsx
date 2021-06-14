@@ -3,6 +3,7 @@ import { InputWithIcon } from "../../components/input";
 import darkSearch from "../../images/DarkSearch.png";
 import "./style.scss";
 import { Button, Table } from "react-bootstrap";
+import PaginationBlock from "./Pagination";
 
 const tabledata = [
   {
@@ -24,6 +25,21 @@ const tabledata = [
     tdata1: "Name D",
     tdata2: "Relationship4",
     tdata3: "Phone4",
+  },
+  {
+    tdata1: "Name E",
+    tdata2: "Relationship5",
+    tdata3: "Phone3",
+  },
+  {
+    tdata1: "Name F",
+    tdata2: "Relationship6",
+    tdata3: "Phone2",
+  },
+  {
+    tdata1: "Name G",
+    tdata2: "Relationship7",
+    tdata3: "Phone1",
   },
   {
     tdata1: "Name E",
@@ -66,7 +82,7 @@ const Contacts = () => {
         <InputWithIcon
           inputIcon={darkSearch}
           inputClass="searchIconInput"
-          placeholder="Search claims"
+          placeholder="Search Contacts"
           type="text"
           onKeyUp={onKeyUp}
         />
@@ -100,6 +116,7 @@ const Contacts = () => {
             })}
           </tbody>
         </Table>
+        <PaginationBlock name="Contacts" />
       </div>
     </div>
   );

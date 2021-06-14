@@ -3,6 +3,8 @@ import { InputWithIcon } from "../../components/input";
 import darkSearch from "../../images/DarkSearch.png";
 import "./style.scss";
 import { Button, Table } from "react-bootstrap";
+import previous from "../../images/ArrowRight.svg";
+import PaginationBlock from "./Pagination";
 
 const tabledata = [
   {
@@ -125,6 +127,7 @@ const Comments = () => {
             })}
           </tbody>
         </Table>
+        <PaginationBlock name="comments" />
       </div>
     </div>
   );

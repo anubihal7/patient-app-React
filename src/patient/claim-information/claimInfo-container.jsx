@@ -12,7 +12,7 @@ const ClaimInfoContainer = (props) => (
     </div>
     <div className="dashboardRightBlock">
       <HeaderBar />
-      <SearchBlock />
+      <SearchBlock {...props} />
       <ClaimInfoContent {...props} />
     </div>
   </div>

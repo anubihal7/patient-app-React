@@ -3,6 +3,7 @@ import { InputWithIcon } from "../../components/input";
 import darkSearch from "../../images/DarkSearch.png";
 import "./style.scss";
 import { Button, Table } from "react-bootstrap";
+import PaginationBlock from "./Pagination";
 
 const tabledata = [
   {
@@ -75,6 +76,36 @@ const tabledata = [
     tdata7: " ",
     tdata8: "Comments maximum of 255 characters",
   },
+  {
+    tdata1: "10/22/2020",
+    tdata2: "10:00-10:20 AM",
+    tdata3: "FU",
+    tdata4: "Reason entry ppom",
+    tdata5: "JRO",
+    tdata6: "Office",
+    tdata7: " ",
+    tdata8: "Comments maximum of 255 characters",
+  },
+  {
+    tdata1: "10/22/2020",
+    tdata2: "10:00-10:20 AM",
+    tdata3: "FU",
+    tdata4: "Reason entry hjbsa d",
+    tdata5: "JRO",
+    tdata6: "Office",
+    tdata7: " ",
+    tdata8: "Comments maximum of 255 characters",
+  },
+  {
+    tdata1: "10/22/2020",
+    tdata2: "10:00-10:20 AM",
+    tdata3: "FU",
+    tdata4: "Reason entry kjsb jhkg",
+    tdata5: "JRO",
+    tdata6: "Office",
+    tdata7: " ",
+    tdata8: "Comments maximum of 255 characters",
+  },
 ];
 const Appointments = () => {
   const [tableData, setTableData] = useState(tabledata);
@@ -102,7 +133,7 @@ const Appointments = () => {
         <InputWithIcon
           inputIcon={darkSearch}
           inputClass="searchIconInput"
-          placeholder="Search claims"
+          placeholder="Search Appointments"
           type="text"
           onKeyUp={onKeyUp}
         />
@@ -146,6 +177,7 @@ const Appointments = () => {
             })}
           </tbody>
         </Table>
+        <PaginationBlock name="Appointments" />
       </div>
     </div>
   );

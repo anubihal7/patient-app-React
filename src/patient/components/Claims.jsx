@@ -5,6 +5,7 @@ import "./style.scss";
 import { Button, Table } from "react-bootstrap";
 import darkArrow from "../../images/darkArrow.svg";
 import { Link } from "react-router-dom";
+import PaginationBlock from "./Pagination";
 
 const tabledata = [
   {
@@ -107,16 +108,16 @@ const tabledata = [
     tdata7: "Primary",
     tdata8: "$0.00",
   },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "Kristi Sommer, MD",
-    tdata3: "Sommer Retina Clinic gfcb",
-    tdata4: "$150.00",
-    tdata5: "$75.00",
-    tdata6: "$75.00",
-    tdata7: "Primary",
-    tdata8: "$0.00",
-  },
+  // {
+  //   tdata1: "10/22/2020",
+  //   tdata2: "Kristi Sommer, MD",
+  //   tdata3: "Sommer Retina Clinic gfcb",
+  //   tdata4: "$150.00",
+  //   tdata5: "$75.00",
+  //   tdata6: "$75.00",
+  //   tdata7: "Primary",
+  //   tdata8: "$0.00",
+  // },
 ];
 const Claims = (props) => {
   const [tableData, setTableData] = useState(tabledata);
@@ -198,6 +199,7 @@ const Claims = (props) => {
             })}
           </tbody>
         </Table>
+        <PaginationBlock name="Claims" />
       </div>
     </div>
   );

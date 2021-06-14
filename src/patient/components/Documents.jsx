@@ -5,6 +5,7 @@ import "./style.scss";
 import { Table } from "react-bootstrap";
 import darkArrow from "../../images/darkArrow.svg";
 import { Link } from "react-router-dom";
+import PaginationBlock from "./Pagination";
 
 const tabledata = [
   {
@@ -26,6 +27,21 @@ const tabledata = [
     tdata1: "Name 4",
     tdata2: "Relationship z",
     tdata3: "Phone e",
+  },
+  {
+    tdata1: "Name 5",
+    tdata2: "Relationship b",
+    tdata3: "Phone a",
+  },
+  {
+    tdata1: "Name 6",
+    tdata2: "Relationship y",
+    tdata3: "Phone 2",
+  },
+  {
+    tdata1: "Name 7",
+    tdata2: "Relationship x",
+    tdata3: "Phone 1",
   },
   {
     tdata1: "Name 5",
@@ -71,7 +87,7 @@ const Documents = (props) => {
         <InputWithIcon
           inputIcon={darkSearch}
           inputClass="searchIconInput"
-          placeholder="Search claims"
+          placeholder="Search Documents"
           type="text"
           onKeyUp={onKeyUp}
         />
@@ -105,6 +121,7 @@ const Documents = (props) => {
             })}
           </tbody>
         </Table>
+        <PaginationBlock name="Documents" />
       </div>
     </div>
   );

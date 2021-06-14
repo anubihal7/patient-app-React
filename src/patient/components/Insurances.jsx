@@ -3,6 +3,7 @@ import { InputWithIcon } from "../../components/input";
 import darkSearch from "../../images/DarkSearch.png";
 import "./style.scss";
 import { Button, Table } from "react-bootstrap";
+import PaginationBlock from "./Pagination";
 
 const tabledata = [
   {
@@ -75,6 +76,36 @@ const tabledata = [
     tdata7: "__",
     tdata8: "Active",
   },
+  {
+    tdata1: "1",
+    tdata2: "Medical dd",
+    tdata3: "Medicare",
+    tdata4: "01/01/2018",
+    tdata5: "__",
+    tdata6: "345323340A",
+    tdata7: "__",
+    tdata8: "Active",
+  },
+  {
+    tdata1: "1",
+    tdata2: "Medical ee",
+    tdata3: "Medicare",
+    tdata4: "01/01/2018",
+    tdata5: "__",
+    tdata6: "345323340A",
+    tdata7: "__",
+    tdata8: "Active",
+  },
+  {
+    tdata1: "1",
+    tdata2: "Medical ff",
+    tdata3: "Medicare",
+    tdata4: "01/01/2018",
+    tdata5: "__",
+    tdata6: "345323340A",
+    tdata7: "__",
+    tdata8: "Active",
+  },
 ];
 const Insurances = () => {
   const [tableData, setTableData] = useState(tabledata);
@@ -102,7 +133,7 @@ const Insurances = () => {
         <InputWithIcon
           inputIcon={darkSearch}
           inputClass="searchIconInput"
-          placeholder="Search claims"
+          placeholder="Search Insurances"
           type="text"
           onKeyUp={onKeyUp}
         />
@@ -146,6 +177,7 @@ const Insurances = () => {
             })}
           </tbody>
         </Table>
+        <PaginationBlock name="Insurances" />
       </div>
     </div>
   );

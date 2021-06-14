@@ -11,11 +11,19 @@ import pdfPrint from "../images/pdfPrint.svg";
 import pdfDownlode from "../images/downlodPdf.svg";
 const SearchBlock = (props) => {
   let [advanceSearch, setAdvanceSearch] = useState(false);
+  let [searchKey, setSearchKey] = useState("");
 
   const onKeyUp = (e) => {
+    console.log(props);
+    if (e.key === "Enter") {
+      props.history.push(`/patient/dashboard?searchKey=${searchKey}`);
+      return;
+    }
+    setSearchKey(e.target.value);
     if (props.onKeyUpMethod) {
       props.onKeyUpMethod(e);
     }
+    console.log(e);
   };
   const showAdvanceSearch = () => {
     //   let search = !advanceSearch
