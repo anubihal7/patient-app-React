@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { InputWithIcon } from "../../components/input";
 import darkSearch from "../../images/DarkSearch.png";
 import "./style.scss";
@@ -6,117 +6,37 @@ import { Button, Table } from "react-bootstrap";
 import darkArrow from "../../images/darkArrow.svg";
 import { Link } from "react-router-dom";
 import PaginationBlock from "./Pagination";
+import {getPatientClinicals} from "../patient-details/api";
 
-const tabledata = [
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry jsdhb",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry dgjhbs",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry sjhb",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry sjdlhb",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry sjkdhb",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry sluhkn",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entryajn k.n",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry sjkdhb",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry sluhkn",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entryajn k.n",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: "Comments maximum of 255 characters",
-  },
-];
-const Clinicals = () => {
-  const [tableData, setTableData] = useState(tabledata);
-  const onKeyUp = (e) => {
+const Clinicals = (props) => {
+  let [searchData, setSearchData] = useState([]);
+  let [nextPageNum, setNextPage] = useState("1");
+  let [limit, setLimit] = useState(10);
+  let patientId = props.match.params.patientId;
+
+  const onKeyUp = async (e) => {
     let text = e.target.value.toLowerCase();
-    let data = [...tableData];
     if (!text) {
-      setTableData(tabledata);
-      return;
+      text=""
     }
-    data = data.filter((rows) => {
-      for (let key in rows) {
-        if (rows[key].toLowerCase().includes(text)) {
-          return true;
-        }
-      }
-    });
-    setTableData(data);
+    await performSearch("1", text)
   };
+  useEffect(async () => {
+    await performSearch("1");
+  }, []);
+  const performSearch = async (nextPage, searchKey) => {
+    let filterData = await getPatientClinicals(patientId, searchKey, limit, nextPage)
+    setSearchData(filterData.items);
+    setNextPage(filterData.lastKey?filterData.lastKey:"1")
+  }
+  const nextPage = async () => {
+    await performSearch(nextPageNum)
+  }
+  const prevPage = async () => {
+    let last = parseInt(nextPageNum) - 2
+    await performSearch(last.toString())
+  }
+
   return (
     <div className="Demographics text-left">
       <div className="claimHeader">
@@ -152,16 +72,16 @@ const Clinicals = () => {
             </tr>
           </thead>
           <tbody>
-            {tableData?.map((item, index) => {
+            {searchData?.map((item, index) => {
               return (
                 <tr key={index}>
-                  <td>{item.tdata1}</td>
-                  <td>{item.tdata2}</td>
-                  <td>{item.tdata3}</td>
-                  <td>{item.tdata4}</td>
-                  <td>{item.tdata5}</td>
-                  <td>{item.tdata6}</td>
-                  <td>{item.tdata7}</td>
+                  <td>{item.clinicalDate}</td>
+                  <td>{item.clinicalTime}</td>
+                  <td>{item.type}</td>
+                  <td>{item.reason}</td>
+                  <td>{item.resource}</td>
+                  <td>{item.location}</td>
+                  <td>{item.comments}</td>
                   <td>
                     <Link to="/patient/claiminfo">
                       <img src={darkArrow} alt="rightArrow" />
@@ -172,7 +92,9 @@ const Clinicals = () => {
             })}
           </tbody>
         </Table>
-        <PaginationBlock name="Clinicals" />
+        <PaginationBlock name="Clinicals" nextPage={nextPageNum} nextClick={nextPage}
+                         prevClick={prevPage}
+                         limit={limit} currentLength={searchData.length}/>
       </div>
     </div>
   );

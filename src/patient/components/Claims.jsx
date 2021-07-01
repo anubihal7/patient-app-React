@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { InputWithIcon } from "../../components/input";
 import darkSearch from "../../images/DarkSearch.png";
 import "./style.scss";
@@ -6,137 +6,37 @@ import { Button, Table } from "react-bootstrap";
 import darkArrow from "../../images/darkArrow.svg";
 import { Link } from "react-router-dom";
 import PaginationBlock from "./Pagination";
+import {getPatientClaims} from "../patient-details/api";
 
-const tabledata = [
-  {
-    tdata1: "10/22/2020",
-    tdata2: "Kristi Sommer, MD",
-    tdata3: "Sommer Retina Clinic bsdm",
-    tdata4: "$150.00",
-    tdata5: "$75.00",
-    tdata6: "$75.00",
-    tdata7: "Primary",
-    tdata8: "$0.00",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "Kristi Sommer, MD",
-    tdata3: "Sommer Retina Clinic sjdb",
-    tdata4: "$150.00",
-    tdata5: "$75.00",
-    tdata6: "$75.00",
-    tdata7: "Primary",
-    tdata8: "$0.00",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "Kristi Sommer, MD",
-    tdata3: "Sommer Retina Clinic sjbhm",
-    tdata4: "$150.00",
-    tdata5: "$75.00",
-    tdata6: "$75.00",
-    tdata7: "Primary",
-    tdata8: "$0.00",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "Kristi Sommer, MD",
-    tdata3: "Sommer Retina Clinic skh",
-    tdata4: "$150.00",
-    tdata5: "$75.00",
-    tdata6: "$75.00",
-    tdata7: "Primary",
-    tdata8: "$0.00",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "Kristi Sommer, MD",
-    tdata3: "Sommer Retina Clinic hsd,bm",
-    tdata4: "$150.00",
-    tdata5: "$75.00",
-    tdata6: "$75.00",
-    tdata7: "Primary",
-    tdata8: "$0.00",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "Kristi Sommer, MD",
-    tdata3: "Sommer Retina Clinic slkhd",
-    tdata4: "$150.00",
-    tdata5: "$75.00",
-    tdata6: "$75.00",
-    tdata7: "Primary",
-    tdata8: "$0.00",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "Kristi Sommer, MD",
-    tdata3: "Sommer Retina Clinic sbm",
-    tdata4: "$150.00",
-    tdata5: "$75.00",
-    tdata6: "$75.00",
-    tdata7: "Primary",
-    tdata8: "$0.00",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "Kristi Sommer, MD",
-    tdata3: "Sommer Retina Clinic ksh.",
-    tdata4: "$150.00",
-    tdata5: "$75.00",
-    tdata6: "$75.00",
-    tdata7: "Primary",
-    tdata8: "$0.00",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "Kristi Sommer, MD",
-    tdata3: "Sommer Retina Clinic shdk.",
-    tdata4: "$150.00",
-    tdata5: "$75.00",
-    tdata6: "$75.00",
-    tdata7: "Primary",
-    tdata8: "$0.00",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "Kristi Sommer, MD",
-    tdata3: "Sommer Retina Clinicafscbv ",
-    tdata4: "$150.00",
-    tdata5: "$75.00",
-    tdata6: "$75.00",
-    tdata7: "Primary",
-    tdata8: "$0.00",
-  },
-  // {
-  //   tdata1: "10/22/2020",
-  //   tdata2: "Kristi Sommer, MD",
-  //   tdata3: "Sommer Retina Clinic gfcb",
-  //   tdata4: "$150.00",
-  //   tdata5: "$75.00",
-  //   tdata6: "$75.00",
-  //   tdata7: "Primary",
-  //   tdata8: "$0.00",
-  // },
-];
 const Claims = (props) => {
-  const [tableData, setTableData] = useState(tabledata);
-  const onKeyUp = (e) => {
+  let [searchData, setSearchData] = useState([]);
+  let [nextPageNum, setNextPage] = useState("1");
+  let [limit, setLimit] = useState(10);
+  let patientId = props.match.params.patientId;
+
+  const onKeyUp = async (e) => {
     let text = e.target.value.toLowerCase();
-    let data = [...tableData];
     if (!text) {
-      setTableData(tabledata);
-      return;
+      text=""
     }
-    data = data.filter((rows) => {
-      for (let key in rows) {
-        if (rows[key].toLowerCase().includes(text)) {
-          return true;
-        }
-      }
-    });
-    setTableData(data);
+    await performSearch("1", text)
   };
+  useEffect(async () => {
+    await performSearch("1");
+  }, []);
+  const performSearch = async (nextPage, searchKey) => {
+    let filterData = await getPatientClaims(patientId, searchKey, limit, nextPage)
+    setSearchData(filterData.items);
+    setNextPage(filterData.lastKey?filterData.lastKey:"1")
+  }
+  const nextPage = async () => {
+    await performSearch(nextPageNum)
+  }
+  const prevPage = async () => {
+    let last = parseInt(nextPageNum) - 2
+    await performSearch(last.toString())
+  }
+
   const goToDetails = () => {
     props.history.push("/patient/claiminfo");
   };
@@ -177,17 +77,17 @@ const Claims = (props) => {
             </tr>
           </thead>
           <tbody>
-            {tableData?.map((item, index) => {
+            {searchData?.map((item, index) => {
               return (
                 <tr key={index} onClick={goToDetails}>
-                  <td>{item.tdata1}</td>
-                  <td>{item.tdata2}</td>
-                  <td>{item.tdata3}</td>
-                  <td>{item.tdata4}</td>
-                  <td>{item.tdata5}</td>
-                  <td>{item.tdata6}</td>
-                  <td>{item.tdata7}</td>
-                  <td>{item.tdata8}</td>
+                  <td>-</td>
+                  <td>{item.provider}</td>
+                  <td>{item.location}</td>
+                  <td>{item.totalCharges}</td>
+                  <td>{item.appliedPayments}</td>
+                  <td>{item.adjustments}</td>
+                  <td>{item.billedTo}</td>
+                  <td>{item.balance}</td>
 
                   <td>
                     <Link to="/patient/claiminfo">
@@ -199,7 +99,9 @@ const Claims = (props) => {
             })}
           </tbody>
         </Table>
-        <PaginationBlock name="Claims" />
+        <PaginationBlock name="Claims" nextPage={nextPageNum} nextClick={nextPage}
+                         prevClick={prevPage}
+                         limit={limit} currentLength={searchData.length}/>
       </div>
     </div>
   );

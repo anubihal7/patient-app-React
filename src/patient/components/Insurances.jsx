@@ -1,130 +1,39 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { InputWithIcon } from "../../components/input";
 import darkSearch from "../../images/DarkSearch.png";
 import "./style.scss";
 import { Button, Table } from "react-bootstrap";
 import PaginationBlock from "./Pagination";
+import {getPatientInsurances} from "../patient-details/api";
 
-const tabledata = [
-  {
-    tdata1: "1",
-    tdata2: "Medical zz",
-    tdata3: "Medicare",
-    tdata4: "01/01/2018",
-    tdata5: "__",
-    tdata6: "345323340A",
-    tdata7: "__",
-    tdata8: "Active",
-  },
-  {
-    tdata1: "1",
-    tdata2: "Medical aa",
-    tdata3: "Medicare",
-    tdata4: "01/01/2018",
-    tdata5: "__",
-    tdata6: "345323340A",
-    tdata7: "__",
-    tdata8: "Active",
-  },
-  {
-    tdata1: "1",
-    tdata2: "Medical bb",
-    tdata3: "Medicare",
-    tdata4: "01/01/2018",
-    tdata5: "__",
-    tdata6: "345323340A",
-    tdata7: "__",
-    tdata8: "Active",
-  },
-  {
-    tdata1: "1",
-    tdata2: "Medical cc",
-    tdata3: "Medicare",
-    tdata4: "01/01/2018",
-    tdata5: "__",
-    tdata6: "345323340A",
-    tdata7: "__",
-    tdata8: "Active",
-  },
-  {
-    tdata1: "1",
-    tdata2: "Medical dd",
-    tdata3: "Medicare",
-    tdata4: "01/01/2018",
-    tdata5: "__",
-    tdata6: "345323340A",
-    tdata7: "__",
-    tdata8: "Active",
-  },
-  {
-    tdata1: "1",
-    tdata2: "Medical ee",
-    tdata3: "Medicare",
-    tdata4: "01/01/2018",
-    tdata5: "__",
-    tdata6: "345323340A",
-    tdata7: "__",
-    tdata8: "Active",
-  },
-  {
-    tdata1: "1",
-    tdata2: "Medical ff",
-    tdata3: "Medicare",
-    tdata4: "01/01/2018",
-    tdata5: "__",
-    tdata6: "345323340A",
-    tdata7: "__",
-    tdata8: "Active",
-  },
-  {
-    tdata1: "1",
-    tdata2: "Medical dd",
-    tdata3: "Medicare",
-    tdata4: "01/01/2018",
-    tdata5: "__",
-    tdata6: "345323340A",
-    tdata7: "__",
-    tdata8: "Active",
-  },
-  {
-    tdata1: "1",
-    tdata2: "Medical ee",
-    tdata3: "Medicare",
-    tdata4: "01/01/2018",
-    tdata5: "__",
-    tdata6: "345323340A",
-    tdata7: "__",
-    tdata8: "Active",
-  },
-  {
-    tdata1: "1",
-    tdata2: "Medical ff",
-    tdata3: "Medicare",
-    tdata4: "01/01/2018",
-    tdata5: "__",
-    tdata6: "345323340A",
-    tdata7: "__",
-    tdata8: "Active",
-  },
-];
-const Insurances = () => {
-  const [tableData, setTableData] = useState(tabledata);
-  const onKeyUp = (e) => {
+const Insurances = (props) => {
+  let [searchData, setSearchData] = useState([]);
+  let [nextPageNum, setNextPage] = useState("1");
+  let [limit, setLimit] = useState(10);
+  let patientId = props.match.params.patientId;
+
+  const onKeyUp = async (e) => {
     let text = e.target.value.toLowerCase();
-    let data = [...tableData];
     if (!text) {
-      setTableData(tabledata);
-      return;
+      text=""
     }
-    data = data.filter((rows) => {
-      for (let key in rows) {
-        if (rows[key].toLowerCase().includes(text)) {
-          return true;
-        }
-      }
-    });
-    setTableData(data);
+    await performSearch("1", text)
   };
+  useEffect(async () => {
+    await performSearch("1");
+  }, []);
+  const performSearch = async (nextPage, searchKey) => {
+    let filterData = await getPatientInsurances(patientId, searchKey, limit, nextPage)
+    setSearchData(filterData.items);
+    setNextPage(filterData.lastKey?filterData.lastKey:"1")
+  }
+  const nextPage = async () => {
+    await performSearch(nextPageNum)
+  }
+  const prevPage = async () => {
+    let last = parseInt(nextPageNum) - 2
+    await performSearch(last.toString())
+  }
 
   return (
     <div className="Demographics text-left">
@@ -161,23 +70,25 @@ const Insurances = () => {
             </tr>
           </thead>
           <tbody>
-            {tableData?.map((item, index) => {
+            {searchData?.map((item, index) => {
               return (
                 <tr key={index}>
-                  <td>{item.tdata1}</td>
-                  <td>{item.tdata2}</td>
-                  <td>{item.tdata3}</td>
-                  <td>{item.tdata4}</td>
-                  <td>{item.tdata5}</td>
-                  <td>{item.tdata6}</td>
-                  <td>{item.tdata7}</td>
-                  <td>{item.tdata8}</td>
+                  <td>{item.rank}</td>
+                  <td>{item.type}</td>
+                  <td>{item.plan}</td>
+                  <td>{item.startDate}</td>
+                  <td>{item.endDate}</td>
+                  <td>{item.policy}</td>
+                  <td>{item.group}</td>
+                  <td>-</td>
                 </tr>
               );
             })}
           </tbody>
         </Table>
-        <PaginationBlock name="Insurances" />
+        <PaginationBlock name="Insurances" nextPage={nextPageNum} nextClick={nextPage}
+                         prevClick={prevPage}
+                         limit={limit} currentLength={searchData.length}/>
       </div>
     </div>
   );

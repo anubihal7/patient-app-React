@@ -1,25 +1,19 @@
 import React from "react";
-import NewPasswordForm from "./newPassword-form.jsx";
+import NewPasswordFormCognito from "./newPassword-form-cognito.jsx";
 import AuthRightSection from "../../components/auth-rightSection.jsx";
 import "../login/loginStyle.scss";
 import "../authStyle.scss";
 import logo from "../../images/logo.svg";
-// import { useHistory } from "react-router-dom";
-import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
-const NewPasswordContainer = (props) => {
-  let { token } = props;
-  if (token["JwtToken"].length > 0) {
-    return <Redirect to={"/patient/dashboard"} />;
-  }
+const NewPasswordContainerCognito = (props) => {
   return (
     <div className="authPagesmainBlock">
       <div className="leftBlock">
         <div className="logoWrap text-left">
           <img src={logo} alt="Logo" />
         </div>
-        <NewPasswordForm />
+        <NewPasswordFormCognito {...props}/>
         <div className="bottomLinks text-left hidd">
           <a href="#" className="forget">
             Forgot password?
@@ -49,6 +43,6 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(NewPasswordContainer);
+)(NewPasswordContainerCognito);
 
 // export default ;

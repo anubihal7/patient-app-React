@@ -13,7 +13,6 @@ const DashboardContainer = (props) => {
   };
 
   useEffect(() => {
-    console.log("called", props);
     if (props.location.search && props.location.search.includes("searchKey")) {
       let search = props.location.search;
       let key = search.substr(search.indexOf("=") + 1);

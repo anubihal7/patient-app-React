@@ -2,6 +2,7 @@
 export const actionTypes = {
   SAVE_USER_TOKEN: "SAVE_USER_TOKEN",
   LOGOUT_USERS_PERSIST: "LOGOUT_USERS_PERSIST",
+  SAVE_SEARCH_KEY: "SAVE_SEARCH_KEY",
 };
 
 /*
@@ -20,4 +21,10 @@ export function logoutUser() {
     type: actionTypes.LOGOUT_USERS_PERSIST,
     data: null,
   };
+}
+export function saveSearchKey(key){
+  return{
+    type:actionTypes.SAVE_SEARCH_KEY,
+    data:key
+  }
 }

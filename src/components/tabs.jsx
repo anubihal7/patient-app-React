@@ -9,7 +9,8 @@ const Tab = (props) => {
   }, [props.tabSelection]);
 
   const setSelectedTab = (e) => {
-    props.history.push("/patient/details/" + e);
+    let patientId = props.match.params.patientId
+    props.history.push(`/patient/${patientId}/details/` + e);
     props.getTabSelection(e);
   };
   return (

@@ -14,7 +14,6 @@ const SearchBlock = (props) => {
   let [searchKey, setSearchKey] = useState("");
 
   const onKeyUp = (e) => {
-    console.log(props);
     if (e.key === "Enter") {
       props.history.push(`/patient/dashboard?searchKey=${searchKey}`);
       return;
@@ -23,7 +22,6 @@ const SearchBlock = (props) => {
     if (props.onKeyUpMethod) {
       props.onKeyUpMethod(e);
     }
-    console.log(e);
   };
   const showAdvanceSearch = () => {
     //   let search = !advanceSearch
@@ -91,7 +89,7 @@ const SearchBlock = (props) => {
               <Row xs={1} sm={1} md={2} lg={3}>
                 <Col className="advancedInputBlock">
                   <Input
-                    placeholder="Username"
+                    placeholder="New ID"
                     type="text"
                     inputClass="advancedInput"
                     label="New ID"
@@ -99,7 +97,7 @@ const SearchBlock = (props) => {
                 </Col>
                 <Col className="advancedInputBlock">
                   <Input
-                    placeholder="Username"
+                    placeholder="Old ID"
                     type="text"
                     inputClass="advancedInput"
                     label="Old ID"
@@ -107,7 +105,7 @@ const SearchBlock = (props) => {
                 </Col>
                 <Col className="advancedInputBlock">
                   <Input
-                    placeholder="Username"
+                    placeholder="Date of birth"
                     type="text"
                     inputClass="advancedInput"
                     label="Date of birth"
@@ -119,7 +117,7 @@ const SearchBlock = (props) => {
               <Row xs={1} sm={1} md={2} lg={2}>
                 <Col className="advancedInputBlock">
                   <Input
-                    placeholder="Username"
+                    placeholder="First name"
                     type="text"
                     inputClass="advancedInput"
                     label="First name"
@@ -127,7 +125,7 @@ const SearchBlock = (props) => {
                 </Col>
                 <Col className="advancedInputBlock">
                   <Input
-                    placeholder="Username"
+                    placeholder="Last name"
                     type="text"
                     inputClass="advancedInput"
                     label="Last name"

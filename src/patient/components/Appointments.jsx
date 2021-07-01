@@ -1,130 +1,39 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import { InputWithIcon } from "../../components/input";
 import darkSearch from "../../images/DarkSearch.png";
 import "./style.scss";
 import { Button, Table } from "react-bootstrap";
 import PaginationBlock from "./Pagination";
+import {getPatientAppointments} from "../patient-details/api";
 
-const tabledata = [
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry zaa",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: " ",
-    tdata8: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry avb",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: " ",
-    tdata8: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry abc",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: " ",
-    tdata8: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry xyz",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: " ",
-    tdata8: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry ppom",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: " ",
-    tdata8: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry hjbsa d",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: " ",
-    tdata8: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry kjsb jhkg",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: " ",
-    tdata8: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry ppom",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: " ",
-    tdata8: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry hjbsa d",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: " ",
-    tdata8: "Comments maximum of 255 characters",
-  },
-  {
-    tdata1: "10/22/2020",
-    tdata2: "10:00-10:20 AM",
-    tdata3: "FU",
-    tdata4: "Reason entry kjsb jhkg",
-    tdata5: "JRO",
-    tdata6: "Office",
-    tdata7: " ",
-    tdata8: "Comments maximum of 255 characters",
-  },
-];
-const Appointments = () => {
-  const [tableData, setTableData] = useState(tabledata);
-  const onKeyUp = (e) => {
+const Appointments = (props) => {
+  let [searchData, setSearchData] = useState([]);
+  let [nextPageNum, setNextPage] = useState("1");
+  let [limit, setLimit] = useState(10);
+  let patientId = props.match.params.patientId;
+
+  const onKeyUp = async (e) => {
     let text = e.target.value.toLowerCase();
-    let data = [...tableData];
     if (!text) {
-      setTableData(tabledata);
-      return;
+      text=""
     }
-    data = data.filter((rows) => {
-      for (let key in rows) {
-        if (rows[key].toLowerCase().includes(text)) {
-          return true;
-        }
-      }
-    });
-    setTableData(data);
+    await performSearch("1", text)
   };
+  useEffect(async () => {
+    await performSearch("1");
+  }, []);
+  const performSearch = async (nextPage, searchKey) => {
+    let filterData = await getPatientAppointments(patientId, searchKey, limit, nextPage)
+    setSearchData(filterData.items);
+    setNextPage(filterData.lastKey?filterData.lastKey:"1")
+  }
+  const nextPage = async () => {
+    await performSearch(nextPageNum)
+  }
+  const prevPage = async () => {
+    let last = parseInt(nextPageNum) - 2
+    await performSearch(last.toString())
+  }
 
   return (
     <div className="Demographics text-left">
@@ -161,23 +70,25 @@ const Appointments = () => {
             </tr>
           </thead>
           <tbody>
-            {tableData?.map((item, index) => {
+            {searchData?.map((item, index) => {
               return (
                 <tr key={index}>
-                  <td>{item.tdata1}</td>
-                  <td>{item.tdata2}</td>
-                  <td>{item.tdata3}</td>
-                  <td>{item.tdata4}</td>
-                  <td>{item.tdata5}</td>
-                  <td>{item.tdata6}</td>
-                  <td>{item.tdata7}</td>
-                  <td>{item.tdata8}</td>
+                  <td>{item.appointmentDate}</td>
+                  <td>{item.appointmentTime}</td>
+                  <td>{item.type}</td>
+                  <td>{item.reason}</td>
+                  <td>{item.resource}</td>
+                  <td>{item.location}</td>
+                  <td>{item.status}</td>
+                  <td>{item.comments}</td>
                 </tr>
               );
             })}
           </tbody>
         </Table>
-        <PaginationBlock name="Appointments" />
+        <PaginationBlock name="Appointments" nextPage={nextPageNum} nextClick={nextPage}
+                         prevClick={prevPage}
+                         limit={limit} currentLength={searchData.length}/>
       </div>
     </div>
   );

@@ -1,140 +1,111 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import "./style.scss";
 import smallArrow from "../../images/smallArrow.svg";
-import { Table } from "react-bootstrap";
+import {Table} from "react-bootstrap";
 import darkArrow from "../../images/darkArrow.svg";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
+import {getPatientSearchResults} from "./api";
+import PaginationBlock from "../components/Pagination";
+import {saveSearchKey} from "../../_actions/persist.action";
+import {connect} from "react-redux";
+import {getFullName} from "../../_utils/common-utils";
 
-const data = [
-  {
-    id: "1",
-    priorId: "20010",
-    dob: "09/07/1996",
-    name: "Tom Walker",
-    tdata5: " ",
-    tdata6: { darkArrow },
-  },
-  {
-    id: "2",
-    priorId: "200011",
-    dob: "01/10/1990",
-    name: "John Doe",
-    tdata5: " ",
-    tdata6: { darkArrow },
-  },
-  {
-    id: "3",
-    priorId: "20010",
-    dob: "09/07/1996",
-    name: "Tom Walker",
-    tdata5: " ",
-    tdata6: { darkArrow },
-  },
-  {
-    id: "4",
-    priorId: "200011",
-    dob: "01/10/1987",
-    name: "Julie Jolie",
-    tdata5: " ",
-    tdata6: { darkArrow },
-  },
-  {
-    id: "5",
-    priorId: "30010",
-    dob: "09/07/1993",
-    name: "Sam Doe",
-    tdata5: " ",
-    tdata6: { darkArrow },
-  },
-  {
-    id: "6",
-    priorId: "400011",
-    dob: "01/10/1991",
-    name: "John Murphy",
-    tdata5: " ",
-    tdata6: { darkArrow },
-  },
-];
 const SearchResultsContent = (props) => {
-  let { searchKey } = props;
-  let [searchData, setSearchData] = useState([]);
+    let {searchKey} = props;
+    let [searchData, setSearchData] = useState([]);
+    let [nextPageNum, setNextPage] = useState("1");
+    let [limit, setLimit] = useState(10);
 
-  useEffect(() => {
-    searchKey = searchKey.toLowerCase();
-    let filterData = data.filter((key) => {
-      return (
-        key.id.toLowerCase().includes(searchKey) ||
-        key.dob.toLowerCase().includes(searchKey) ||
-        key.name.toLowerCase().includes(searchKey) ||
-        key.priorId.toLowerCase().includes(searchKey)
-      );
-    });
-    setSearchData(filterData);
-  }, [searchKey]);
+    useEffect(async () => {
+        searchKey = searchKey.toLowerCase();
+        if (searchKey && searchKey !== "") {
+            await performSearch("1");
+        }
+    }, [searchKey]);
+    const performSearch = async (nextPage) => {
+        let filterData = await getPatientSearchResults(searchKey, limit, nextPage)
+        setSearchData(filterData.items);
+        setNextPage(filterData.lastKey)
+    }
+    const goToDetails = (item) => {
+        props.setSearchKey(item.lastName)
+        props.history.push(`/patient/${item.newId}/details/demographics`);
+    };
+    const nextPage = async () => {
+        await performSearch(nextPageNum)
+    }
+    const prevPage = async () => {
+        let last = parseInt(nextPageNum) - 2
+        await performSearch(last.toString())
+    }
+    return (
+        <div className="searchResultsBlock">
+            <div className="componentTree text-left">
+                <a href="">Home</a>
+                <img src={smallArrow} alt="arrow"/>
+                <a href="" className="active">
+                    Search results for “{searchKey}”
+                </a>
+            </div>
+            {/* Search no results */}
+            {searchData.length === 0 && (
+                <div className="noResult text-left">
+                    <h6>Sorry, there are no results for “{searchKey}”</h6>
+                    <p>Try searching by name, date of birth, or ID number.</p>
+                </div>
+            )}
 
-  const goToDetails = () => {
-    props.history.push("/patient/details/demographics");
-  };
+            {/* Search user results */}
+            {searchData.length > 0 && (
+                <div className="userSearchResult text-left">
+                    <h4>Search results for "{searchKey}"</h4>
 
-  return (
-    <div className="searchResultsBlock">
-      <div className="componentTree text-left">
-        <a href="">Home</a>
-        <img src={smallArrow} alt="arrow" />
-        <a href="" className="active">
-          Search results for “{searchKey}”
-        </a>
-      </div>
-      {/* Search no results */}
-      {searchData.length == 0 && (
-        <div className="noResult text-left">
-          <h6>Sorry, there are no results for “{searchKey}”</h6>
-          <p>Try searching by name, date of birth, or ID number.</p>
+                    <Table className="customTable" responsive hover>
+                        <thead>
+                        <tr>
+                            <th>New ID</th>
+                            <th>Prior ID</th>
+                            <th>Date of Birth</th>
+                            <th>Name (Last, first MI)</th>
+                            <th className="transparent">Empty section</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {searchData?.map((item, index) => {
+                            return (
+                                <tr key={index} onClick={() => {
+                                    goToDetails(item)
+                                }}>
+                                    <td>{item.newId}</td>
+                                    <td>{item.oldId}</td>
+                                    <td>{item.DOB}</td>
+                                    <td>{getFullName(item)}</td>
+                                    <td>{" "}</td>
+                                    <td>
+                                        <Link to="/patient/details/demographics">
+                                            <img src={darkArrow} alt="rightArrow"/>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                        </tbody>
+                    </Table>
+                    <PaginationBlock name="Patient Records" nextPage={nextPageNum} nextClick={nextPage}
+                                     prevClick={prevPage}
+                                     limit={limit} currentLength={searchData.length}/>
+                </div>
+            )}
         </div>
-      )}
-
-      {/* Search user results */}
-      {searchData.length > 0 && (
-        <div className="userSearchResult text-left">
-          <h4>Search results for "{searchKey}"</h4>
-
-          <Table className="customTable" responsive hover>
-            <thead>
-              <tr>
-                <th>New ID</th>
-                <th>Prior ID</th>
-                <th>Date of Birth</th>
-                <th>Name (Last, first MI)</th>
-                <th className="transparent">Empaty section</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {searchData?.map((item, index) => {
-                return (
-                  <tr key={index} onClick={goToDetails}>
-                    <td>{item.id}</td>
-                    <td>{item.priorId}</td>
-                    <td>{item.dob}</td>
-                    <td>{item.name}</td>
-                    <td>{item.tdata5}</td>
-                    <td>
-                      <Link to="/patient/details/demographics">
-                        <img src={darkArrow} alt="rightArrow" />
-                      </Link>
-                      {/* <a  >
-                        <img src={darkArrow} alt="rightArrow" />
-                      </a> */}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
-        </div>
-      )}
-    </div>
-  );
+    );
 };
-
-export default SearchResultsContent;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setSearchKey: (values) => {
+            dispatch(saveSearchKey(values))
+        },
+        dispatch,
+    };
+};
+export default connect(null, mapDispatchToProps)(SearchResultsContent);

@@ -1,21 +1,25 @@
 import React from "react";
 import "../claim-information/style.scss";
-import { Pagination, Button } from "react-bootstrap";
+import {Pagination, Button} from "react-bootstrap";
 import previous from "../../images/smallArrow.svg";
 
-const PaginationBlock = (props) => (
-  <>
-    <div className="pagintionBlock">
-      <p>{props.name} 1-10 of 10</p>
-      <Pagination>
-        {/* <Pagination.First /> */}
-        <Pagination.Prev />
+const PaginationBlock = (props) => {
+    const {prevClick, nextClick, nextPage, limit, currentLength} = props
+    let currentPage=parseInt(nextPage)-1
+    let prevTotal = (currentPage - 1) * limit
+    return (
+        <>
+            <div className="pagintionBlock">
+                <p>{props.name} {1 + prevTotal}-{prevTotal + currentLength} </p>
+                <Pagination>
 
-        <Pagination.Next />
-        {/* <Pagination.Last /> */}
-      </Pagination>
-    </div>
-  </>
-);
+                    {currentPage>1&&<Pagination.Prev onClick={prevClick}/>}
+
+                    <Pagination.Next onClick={nextClick}/>
+                </Pagination>
+            </div>
+        </>
+    );
+}
 
 export default PaginationBlock;

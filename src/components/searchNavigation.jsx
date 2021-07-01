@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./style.scss";
 import smallArrow from "../images/smallArrow.svg";
 import { Link } from "react-router-dom";
+import {connect} from "react-redux";
 
 const SearchNav = (props) => {
   const [pathName, setPathName] = useState("");
@@ -14,27 +15,21 @@ const SearchNav = (props) => {
       {/* <a href="">Home</a> */}
       <Link to="/patient/dashboard">Home</Link>
       <img src={smallArrow} alt="arrow" />
-      {/* <a
-        className={pathName.includes("/patient/claiminfo") ? "" : "active"}
-      >
-        Search results for “Walker”
-      </a> */}
-      {!pathName.includes("/patient/claiminfo") && (
-        <Link className="active" to="/patient/details/claims">
-          Search results for “Walker”
-        </Link>
-      )}
-      {pathName.includes("/patient/claiminfo") && (
+
+      {props.searchKey && (
         <React.Fragment>
-          <Link to="/patient/details/claims">Search results for “Walker”</Link>
-          <img src={smallArrow} alt="arrow" />
           <a href="" className="active">
-            Clain Information
+              Search results for “{props.searchKey}”
           </a>
         </React.Fragment>
       )}
     </div>
   );
 };
+const mapStateToProps = (state) => {
+    return {
+        searchKey: state.persist.searchKey,
+    };
+};
 
-export default SearchNav;
+export default connect(mapStateToProps, null)(SearchNav);
