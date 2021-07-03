@@ -11,25 +11,27 @@ import {connect} from "react-redux";
 import {getFullName} from "../../_utils/common-utils";
 
 const SearchResultsContent = (props) => {
-    let {searchKey} = props;
+    let {searchKey, selectedProfile} = props;
     let [searchData, setSearchData] = useState([]);
     let [nextPageNum, setNextPage] = useState("1");
     let [limit, setLimit] = useState(10);
 
     useEffect(async () => {
         searchKey = searchKey.toLowerCase();
-        if (searchKey && searchKey !== "") {
+        if (searchKey && searchKey !== "" && selectedProfile) {
             await performSearch("1");
         }
     }, [searchKey]);
     const performSearch = async (nextPage) => {
-        let filterData = await getPatientSearchResults(searchKey, limit, nextPage)
+        if(!selectedProfile)
+            return ;
+        let filterData = await getPatientSearchResults(selectedProfile.practiceId, searchKey, limit, nextPage)
         setSearchData(filterData.items);
         setNextPage(filterData.lastKey)
     }
     const goToDetails = (item) => {
         props.setSearchKey(item.lastName)
-        props.history.push(`/patient/${item.newId}/details/demographics`);
+        props.history.push(`/practice/${selectedProfile.practiceId}/patient/${item.newId}/details/demographics`);
     };
     const nextPage = async () => {
         await performSearch(nextPageNum)

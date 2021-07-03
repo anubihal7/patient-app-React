@@ -19,8 +19,9 @@ const PatientContent = (props) => {
     useEffect(async () => {
         let pageType = props.match.params.type;
         let patientId = props.match.params.patientId;
+        let practiceId = props.match.params.practiceId;
         setTabSelection(pageType);
-        let patientData = await getPatientDetails(patientId)
+        let patientData = await getPatientDetails(practiceId,patientId)
         setPatientInfo(patientData)
     }, []);
 

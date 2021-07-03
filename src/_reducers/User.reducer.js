@@ -17,6 +17,11 @@ const user = (state = initialState, action) => {
                 ...state,
                 user: {}
             }
+        case actionTypes.GET_PROFILE_SUCCESS:
+            return {
+                ...state,
+                meta: {profiles:action.data}
+            }
         default:
             return state;
     }

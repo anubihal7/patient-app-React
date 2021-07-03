@@ -1,38 +1,37 @@
 import React from "react";
-import { Dropdown } from "react-bootstrap";
+import {Dropdown} from "react-bootstrap";
 import "./style.scss";
-import { logoutUser } from "../_actions/persist.action";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 
 const HeaderBar = (props) => {
-  return (
-    <div className="headerBlock text-left">
-      <Dropdown className="headerDropdown">
-        <Dropdown.Toggle id="dropdown-basic">Randy</Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Dropdown.Item href="#/action-2">Hospital 1</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Hospital 2</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Hospital 3</Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-      <h6 className="latestUpdate">Last Updated: [MM/DD/YYYY]</h6>
-    </div>
-  );
+    let {user, selectedProfile, selectProfile} = props;
+    let profiles = user.meta.profiles
+    return (
+        <div className="headerBlock text-left">
+            <Dropdown className="headerDropdown">
+                <Dropdown.Toggle
+                    id="dropdown-basic">{selectedProfile ? selectedProfile.practiceName : "Please select practice"}</Dropdown.Toggle>
+                <Dropdown.Menu>
+                    {profiles?.map((item, index) => {
+                        return (<Dropdown.Item onSelect={() => {
+                            if (selectProfile)
+                                return selectProfile(item)
+                            else return
+                        }}>{item.practiceName}</Dropdown.Item>)
+                    })}
+                </Dropdown.Menu>
+            </Dropdown>
+            <h6 className="latestUpdate">Last Updated: [MM/DD/YYYY]</h6>
+        </div>
+    );
 };
 
 const mapStateToProps = (state) => {
-  return {
-    token: state.persist,
-  };
+    return {
+        user: state.user,
+    };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    logoutUser: () => dispatch(logoutUser()),
-    dispatch,
-  };
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderBar);
+export default connect(mapStateToProps, null)(HeaderBar);
 
-// export default HeaderBar;

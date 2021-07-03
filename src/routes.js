@@ -70,7 +70,7 @@ function Routes() {
                     />
                     <AuthGuard
                         exact
-                        path="/patient/:patientId/details/:type"
+                        path="/practice/:practiceId/patient/:patientId/details/:type"
                         component={PatientContainer}
                     />
                     <AuthGuard

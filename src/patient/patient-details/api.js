@@ -1,8 +1,8 @@
 import {fetchApi} from "../../_utils/http-utils";
 
 
-export function getPatientDetails(patientId) {
-    return fetchApi({url: "/practice/123/patient/" + patientId, method: "get"}).then(data => {
+export function getPatientDetails(practiceId,patientId) {
+    return fetchApi({url: `/practice/${practiceId}/patient/${patientId}`, method: "get"}).then(data => {
         if (!data)
             return Promise.resolve([])
         else {
@@ -14,14 +14,14 @@ export function getPatientDetails(patientId) {
 
 }
 
-export function getPatientContacts(patientId, searchText, limit, nextPage) {
+export function getPatientContacts(practiceId,patientId, searchText, limit, nextPage) {
     let body = {
         filters: {searchText: searchText ? searchText : ""},
         limit: limit || 10,
         lastKey: nextPage || "1"
     }
     return fetchApi({
-        url: "/practice/123/patient/" + patientId + "/contacts",
+        url: `/practice/${practiceId}/patient/${patientId}` + "/contacts",
         method: "post",
         body: body
     }).then(data => {
@@ -36,14 +36,14 @@ export function getPatientContacts(patientId, searchText, limit, nextPage) {
 
 }
 
-export function getPatientDocuments(patientId, searchText, limit, nextPage) {
+export function getPatientDocuments(practiceId,patientId, searchText, limit, nextPage) {
     let body = {
         filters: {searchText: searchText ? searchText : "", additonal: true},
         limit: limit || 10,
         lastKey: nextPage || "1"
     }
     return fetchApi({
-        url: "/practice/123/patient/" + patientId + "/documents",
+        url: `/practice/${practiceId}/patient/${patientId}` + "/documents",
         method: "post",
         body: body
     }).then(data => {
@@ -58,14 +58,14 @@ export function getPatientDocuments(patientId, searchText, limit, nextPage) {
 
 }
 
-export function getPatientInsurances(patientId, searchText, limit, nextPage) {
+export function getPatientInsurances(practiceId,patientId, searchText, limit, nextPage) {
     let body = {
         filters: {searchText: searchText ? searchText : "", additonal: true},
         limit: limit || 10,
         lastKey: nextPage || "1"
     }
     return fetchApi({
-        url: "/practice/123/patient/" + patientId + "/insurances",
+        url: `/practice/${practiceId}/patient/${patientId}`+ "/insurances",
         method: "post",
         body: body
     }).then(data => {
@@ -80,14 +80,14 @@ export function getPatientInsurances(patientId, searchText, limit, nextPage) {
 
 }
 
-export function getPatientAppointments(patientId, searchText, limit, nextPage) {
+export function getPatientAppointments(practiceId,patientId, searchText, limit, nextPage) {
     let body = {
         filters: {searchText: searchText ? searchText : ""},
         limit: limit || 10,
         lastKey: nextPage || "1"
     }
     return fetchApi({
-        url: "/practice/123/patient/" + patientId + "/appointments",
+        url: `/practice/${practiceId}/patient/${patientId}`+ "/appointments",
         method: "post",
         body: body
     }).then(data => {
@@ -102,14 +102,14 @@ export function getPatientAppointments(patientId, searchText, limit, nextPage) {
 
 }
 
-export function getPatientClaims(patientId, searchText, limit, nextPage) {
+export function getPatientClaims(practiceId,patientId, searchText, limit, nextPage) {
     let body = {
         filters: {searchText: searchText ? searchText : ""},
         limit: limit || 10,
         lastKey: nextPage || "1"
     }
     return fetchApi({
-        url: "/practice/123/patient/" + patientId + "/claims",
+        url: `/practice/${practiceId}/patient/${patientId}`+ "/claims",
         method: "post",
         body: body
     }).then(data => {
@@ -124,14 +124,14 @@ export function getPatientClaims(patientId, searchText, limit, nextPage) {
 
 }
 
-export function getPatientClinicals(patientId, searchText, limit, nextPage) {
+export function getPatientClinicals(practiceId,patientId, searchText, limit, nextPage) {
     let body = {
         filters: {searchText: searchText ? searchText : ""},
         limit: limit || 10,
         lastKey: nextPage || "1"
     }
     return fetchApi({
-        url: "/practice/123/patient/" + patientId + "/clinicals",
+        url: `/practice/${practiceId}/patient/${patientId}` + "/clinicals",
         method: "post",
         body: body
     }).then(data => {

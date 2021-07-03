@@ -11,7 +11,7 @@ const Insurances = (props) => {
   let [nextPageNum, setNextPage] = useState("1");
   let [limit, setLimit] = useState(10);
   let patientId = props.match.params.patientId;
-
+  let practiceId = props.match.params.practiceId;
   const onKeyUp = async (e) => {
     let text = e.target.value.toLowerCase();
     if (!text) {
@@ -23,7 +23,7 @@ const Insurances = (props) => {
     await performSearch("1");
   }, []);
   const performSearch = async (nextPage, searchKey) => {
-    let filterData = await getPatientInsurances(patientId, searchKey, limit, nextPage)
+    let filterData = await getPatientInsurances(practiceId,patientId, searchKey, limit, nextPage)
     setSearchData(filterData.items);
     setNextPage(filterData.lastKey?filterData.lastKey:"1")
   }
