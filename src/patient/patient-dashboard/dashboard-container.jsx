@@ -13,17 +13,14 @@ import {saveUserProfiles} from "../../_actions/User.action";
 const DashboardContainer = (props) => {
     const [searchKey, setSearchKey] = useState("");
     const [selectedProfile, setSelectedProfile] = useState(null);
-    const onKeyUp = (e) => {
-        setSearchKey(e.target.value);
-    };
 
     useEffect(async () => {
-            let userProf = await getUserProfile()
-            if (userProf && userProf.items && userProf.items.length > 0) {
-                props.saveProfiles(userProf.items)
-                setSearchKey("")
-            }
-        if (props.user && props.user.meta && props.user.meta.selectedProfile){
+        let userProf = await getUserProfile()
+        if (userProf && userProf.items && userProf.items.length > 0) {
+            props.saveProfiles(userProf.items)
+            setSearchKey("")
+        }
+        if (props.user && props.user.meta && props.user.meta.selectedProfile) {
             setSelectedProfile(props.user.meta.selectedProfile)
         }
         if (props.location.search && props.location.search.includes("searchKey") && selectedProfile) {
@@ -40,7 +37,9 @@ const DashboardContainer = (props) => {
             </div>
             <div className="dashboardRightBlock">
                 <HeaderBar {...props}/>
-                <SearchBlock onKeyUpMethod={onKeyUp} {...props} />
+                <SearchBlock setSearch={(searchText) => {
+                    setSearchKey(searchText)
+                }} {...props} />
                 {searchKey === "" || !selectedProfile ? (
                     <DashboardContent/>
                 ) : (

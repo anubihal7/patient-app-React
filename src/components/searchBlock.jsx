@@ -6,28 +6,44 @@ import MagnifyingGlass from "../images/MagnifyingGlass.svg";
 import {Button, Col, Row} from "react-bootstrap";
 import pdfPrint from "../images/pdfPrint.svg";
 import pdfDownlode from "../images/downlodPdf.svg";
+import {useInput} from "../_utils/common-utils";
 
 const SearchBlock = (props) => {
     let [advanceSearch, setAdvanceSearch] = useState(false);
-    let {searchKey}=props
+    const {value: firstName, bind: bindFirstName} = useInput('');
+    const {value: lastName, bind: bindLastName} = useInput('');
+    const {value: newId, bind: bindNewId} = useInput('');
+    const {value: oldId, bind: bindOldId} = useInput('');
+    const {value: dob, bind: bindDob} = useInput('');
 
     const onKeyUp = (e) => {
         if (e.key === "Enter") {
-            if (props.onKeyUpMethod) {
-                props.onKeyUpMethod(e);
-            } else {
-                props.history.push(`/patient/dashboard?searchKey=${e.target.value}`);
-            }
+            setSearch(e.target.value)
         }
     };
+
+    function setSearch(text) {
+        if (props.setSearch) {
+            props.setSearch(text);
+        } else {
+            props.history.push(`/patient/dashboard?searchKey=${text}`);
+
+        }
+    }
+
     const showAdvanceSearch = () => {
-        //   let search = !advanceSearch
         setAdvanceSearch(!advanceSearch);
     };
 
     const printPage = () => {
         window.print();
     };
+
+    function performAdvancedSearch(e) {
+        e.preventDefault();
+        let searchText = `${firstName} ${lastName} ${dob} ${oldId} ${newId}`
+        setSearch(searchText)
+    }
 
     return (
         <>
@@ -70,27 +86,30 @@ const SearchBlock = (props) => {
                                     <Input
                                         placeholder="New ID"
                                         type="text"
+                                        name="newId"
                                         inputClass="advancedInput"
                                         label="New ID"
-                                        onKeyUp={onKeyUp}
+                                        {...bindNewId}
                                     />
                                 </Col>
                                 <Col className="advancedInputBlock">
                                     <Input
                                         placeholder="Old ID"
                                         type="text"
+                                        name="oldId"
                                         inputClass="advancedInput"
                                         label="Old ID"
-                                        onKeyUp={onKeyUp}
+                                        {...bindOldId}
                                     />
                                 </Col>
                                 <Col className="advancedInputBlock">
                                     <Input
                                         placeholder="Date of birth"
                                         type="text"
+                                        name="dob"
                                         inputClass="advancedInput"
                                         label="Date of birth"
-                                        onKeyUp={onKeyUp}
+                                        {...bindDob}
                                     />
                                 </Col>
                             </Row>
@@ -101,28 +120,30 @@ const SearchBlock = (props) => {
                                     <Input
                                         placeholder="First name"
                                         type="text"
+                                        name="firstName"
                                         inputClass="advancedInput"
                                         label="First name"
-                                        onKeyUp={onKeyUp}
+                                        {...bindFirstName}
                                     />
                                 </Col>
                                 <Col className="advancedInputBlock">
                                     <Input
                                         placeholder="Last name"
                                         type="text"
+                                        name="lastName"
                                         inputClass="advancedInput"
                                         label="Last name"
-                                        onKeyUp={onKeyUp}
+                                        {...bindLastName}
                                     />
                                 </Col>
                             </Row>
                         </Col>
                     </Row>
                     <div className="text-right">
-                        <Button variant="primary" className="MagnifyingGlass">
+                        <Button variant="primary" className="MagnifyingGlass" onClick={performAdvancedSearch}>
                             <img
                                 src={MagnifyingGlass}
-                                alt="Sign in"
+                                alt="Search"
                                 className="signInImage"
                             />
                             Search

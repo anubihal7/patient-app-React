@@ -68,7 +68,6 @@ const Clinicals = (props) => {
               <th>Resource</th>
               <th>Location</th>
               <th>Comments</th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -82,11 +81,7 @@ const Clinicals = (props) => {
                   <td>{item.resource}</td>
                   <td>{item.location}</td>
                   <td>{item.comments}</td>
-                  <td>
-                    <Link to="/patient/claiminfo">
-                      <img src={darkArrow} alt="rightArrow" />
-                    </Link>
-                  </td>
+
                 </tr>
               );
             })}

@@ -30,7 +30,7 @@ const SearchResultsContent = (props) => {
         setNextPage(filterData.lastKey)
     }
     const goToDetails = (item) => {
-        props.setSearchKey(item.lastName)
+        props.setSearchKey(searchKey)
         props.history.push(`/practice/${selectedProfile.practiceId}/patient/${item.newId}/details/demographics`);
     };
     const nextPage = async () => {
