@@ -20,7 +20,13 @@ const user = (state = initialState, action) => {
         case actionTypes.GET_PROFILE_SUCCESS:
             return {
                 ...state,
-                meta: {profiles:action.data}
+                meta: {...state.meta, profiles: action.data}
+            }
+        case actionTypes.SAVE_SELECTED_PROFILE:
+            console.log(action.data)
+            return {
+                ...state,
+                meta: {...state.meta,selectedProfile: action.data }
             }
         default:
             return state;

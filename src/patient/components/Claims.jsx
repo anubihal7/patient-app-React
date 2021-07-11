@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
-import { InputWithIcon } from "../../components/input";
+import {InputWithIcon} from "../../components/input";
 import darkSearch from "../../images/DarkSearch.png";
 import "./style.scss";
-import { Button, Table } from "react-bootstrap";
+import {Button, Table} from "react-bootstrap";
 import darkArrow from "../../images/darkArrow.svg";
-import { Link } from "react-router-dom";
 import PaginationBlock from "./Pagination";
 import {getPatientClaims} from "../patient-details/api";
+import {getFormattedDate} from "../../_utils/common-utils";
 
 const Claims = (props) => {
   let [searchData, setSearchData] = useState([]);
@@ -38,8 +38,8 @@ const Claims = (props) => {
     await performSearch(last.toString())
   }
 
-  const goToDetails = () => {
-    props.history.push("/patient/claiminfo");
+  const goToDetails = (item) => {
+    props.history.push(`/practice/${practiceId}/patient/${patientId}/details/claims/` + item.claimId);
   };
 
   return (
@@ -80,8 +80,10 @@ const Claims = (props) => {
           <tbody>
             {searchData?.map((item, index) => {
               return (
-                <tr key={index} onClick={goToDetails}>
-                  <td>-</td>
+                <tr key={index} onClick={() => {
+                  goToDetails(item)
+                }}>
+                  <td>{getFormattedDate(item.claimDate)}</td>
                   <td>{item.provider}</td>
                   <td>{item.location}</td>
                   <td>{item.totalCharges}</td>
@@ -91,9 +93,7 @@ const Claims = (props) => {
                   <td>{item.balance}</td>
 
                   <td>
-                    <Link to="/patient/claiminfo">
                       <img src={darkArrow} alt="rightArrow" />
-                    </Link>
                   </td>
                 </tr>
               );

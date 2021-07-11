@@ -1,4 +1,5 @@
 import config from "../config";
+import {decode as jwtDecode} from "jsonwebtoken";
 
 let jwtToken = null;
 
@@ -13,9 +14,14 @@ export const fetchApi = async (params) => {
 
     let body = params.body ? JSON.stringify(params.body) : null;
 
-    let token = jwtToken
-    if (token) {
-        headers["smauthorization"] = token;
+    const decodedToken = jwtToken ? jwtDecode(jwtToken) : null;
+    const tokenExpiresAt = decodedToken ? decodedToken.exp * 1000 : null;
+    if (jwtToken && tokenExpiresAt && tokenExpiresAt > new Date().getTime()) {
+        headers["smauthorization"] = jwtToken;
+    }  else {
+        localStorage.clear()
+        window.location="/auth/login"
+       return
     }
     return fetch(`${config.app.BASE_API_URL}${url}`, {
         method,
@@ -25,16 +31,18 @@ export const fetchApi = async (params) => {
         switch (response.status) {
             case 401:
                 //move to login page here and log user out
-                return Promise.reject({error: response.json(),status:response.status})
+                localStorage.clear()
+                window.location="/auth/login"
+                return
             case 200:
                 return Promise.resolve(response.json())
             default:
-                return Promise.reject({error: response.json(),status:response.status})
+                return Promise.reject({error: response.json(), status: response.status})
         }
 
     }).catch(err => {
-        console.log("err>>",err)
-        return Promise.reject({error: err,status:503})
+        console.log("err>>", err)
+        return Promise.reject({error: err, status: 503})
     });
 };
 

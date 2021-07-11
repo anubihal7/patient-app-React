@@ -4,13 +4,12 @@ import {Input, InputWithIcon} from "./input.jsx";
 import search from "../images/search.svg";
 import MagnifyingGlass from "../images/MagnifyingGlass.svg";
 import {Button, Col, Row} from "react-bootstrap";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
 import pdfPrint from "../images/pdfPrint.svg";
 import pdfDownlode from "../images/downlodPdf.svg";
 
 const SearchBlock = (props) => {
     let [advanceSearch, setAdvanceSearch] = useState(false);
+    let {searchKey}=props
 
     const onKeyUp = (e) => {
         if (e.key === "Enter") {
@@ -26,25 +25,7 @@ const SearchBlock = (props) => {
         setAdvanceSearch(!advanceSearch);
     };
 
-    const downloadPage = () => {
-        html2canvas(document.querySelector(".Demographics")).then((canvas) => {
-            document.body.appendChild(canvas); // if you want see your screenshot in body.
-            const imgData = canvas.toDataURL("image/png");
-            console.log(imgData);
-            const pdf = new jsPDF();
-            console.log(pdf);
-            pdf.addImage(imgData, "JPEG", 0, 0);
-            // pdf.output('dataurlnewwindow');
-            pdf.save("download.pdf");
-        });
-    };
-
     const printPage = () => {
-        // printJS({
-        //   printable: "https://arxiv.org/pdf/quant-ph/0410100.pdf",
-        //   type: "pdf",
-        //   showModal: true,
-        // });
         window.print();
     };
 

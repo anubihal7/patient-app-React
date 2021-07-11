@@ -1,18 +1,26 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Row, Col} from "react-bootstrap";
 import "./style.scss";
 import {getFullName} from "../_utils/common-utils";
+import {getPatientDetails} from "../patient/patient-details/api";
 
 const PatientInfo = (props) => {
-    const {patientInfo} = props
+    let [patientInfo, setPatientInfo] = useState(null);
+    let patientId = props.match.params.patientId;
+    let practiceId = props.match.params.practiceId;
+
+    useEffect(async () => {
+        let patientData = await getPatientDetails(practiceId, patientId)
+        setPatientInfo(patientData)
+    },[])
     return (
         <div className="patientInfo text-left">
-            <Row xs={1} md={1} lg={2}>
+             <Row xs={1} md={1} lg={2}>
                 <Col>
                     <div className="patientName">
                         <h6>Patient Name</h6>
-                        <h4>{getFullName(patientInfo)}</h4>
-                        <h5>{patientInfo.gender}</h5>
+                        <h4>{patientInfo&&patientInfo.firstName?getFullName(patientInfo):"-"}</h4>
+                        <h5>{patientInfo?patientInfo.gender:"-"}</h5>
                     </div>
                 </Col>
                 <Col>
@@ -20,19 +28,19 @@ const PatientInfo = (props) => {
                         <Col>
                             <div className="patientName">
                                 <h6>Date of Birth</h6>
-                                <h3>04/02/1978</h3>
+                                <h3>-</h3>
                             </div>
                         </Col>
                         <Col>
                             <div className="patientName">
                                 <h6>New ID #</h6>
-                                <h3>{patientInfo.patientId}</h3>
+                                <h3>{patientInfo?patientInfo.patientId:"-"}</h3>
                             </div>
                         </Col>
                         <Col>
                             <div className="patientName">
                                 <h6>Prior ID #</h6>
-                                <h3>8902-33</h3>
+                                <h3>-</h3>
                             </div>
                         </Col>
                     </Row>

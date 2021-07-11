@@ -11,7 +11,7 @@ const ClaimInfoContainer = (props) => (
       <LeftSidebar {...props} />
     </div>
     <div className="dashboardRightBlock">
-      <HeaderBar />
+      <HeaderBar {...props}/>
       <SearchBlock {...props} />
       <ClaimInfoContent {...props} />
     </div>

@@ -11,7 +11,7 @@ const PatientContainer = (props) => (
       <LeftSidebar {...props} />
     </div>
     <div className="dashboardRightBlock">
-      <HeaderBar />
+      <HeaderBar {...props} />
       <SearchBlock {...props} />
       <PatientContant {...props} />
     </div>

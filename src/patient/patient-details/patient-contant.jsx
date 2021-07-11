@@ -31,7 +31,7 @@ const PatientContent = (props) => {
     return (
         <div className="patientContant text-left">
             <SearchNav {...props} />
-            {patientInfo && <PatientInfo patientInfo={patientInfo}/>}
+             <PatientInfo {...props}/>
             <Tab
                 {...props}
                 tabSelection={tabSelection}

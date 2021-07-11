@@ -1,23 +1,25 @@
 // import logo from './logo.svg';
 import "./App.scss";
-import { BrowserRouter } from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 import Routes from "./routes";
-import { Provider } from "react-redux";
+import {Provider} from "react-redux";
 import configureStore from "./_store/ConfigureStore";
 import configureValidators from "./_utils/custom-validators-message";
+import React from "react";
+
 configureValidators();
-let { store } = configureStore();
+let {store} = configureStore();
 
 function App() {
-  return (
-    <div className="App">
-      <Provider store={store}>
-        <BrowserRouter>
-          <Routes />
-        </BrowserRouter>
-      </Provider>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Provider store={store}>
+                <BrowserRouter>
+                    <Routes/>
+                </BrowserRouter>
+            </Provider>
+        </div>
+    );
 }
 
 export default App;

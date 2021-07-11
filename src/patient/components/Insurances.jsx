@@ -80,7 +80,7 @@ const Insurances = (props) => {
                   <td>{item.endDate}</td>
                   <td>{item.policy}</td>
                   <td>{item.group}</td>
-                  <td>-</td>
+                  <td>{item.status}</td>
                 </tr>
               );
             })}

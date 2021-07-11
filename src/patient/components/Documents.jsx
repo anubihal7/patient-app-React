@@ -37,8 +37,8 @@ const Documents = (props) => {
     await performSearch(last.toString())
   }
 
-  const openPdf = () => {
-    props.history.push("/patient/view/pdf");
+  const openPdf = (item) => {
+    props.history.push(`/practice/${practiceId}/patient/${patientId}/details/documents/` + item.documentId);
   };
   return (
     <div className="Demographics text-left">
@@ -66,15 +66,15 @@ const Documents = (props) => {
           <tbody>
             {searchData?.map((item, index) => {
               return (
-                <tr key={index} onClick={openPdf}>
+                <tr key={index}onClick={() => {
+                  openPdf(item)
+                }}>
                   <td>{item.name}</td>
                   <td>{item.category}</td>
                   <td>-</td>
                   <td>{item.description}</td>
                   <td>
-                    <Link to="">
                       <img src={darkArrow} alt="rightArrow" />
-                    </Link>
                   </td>
                 </tr>
               );

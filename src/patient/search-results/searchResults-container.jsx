@@ -12,7 +12,7 @@ const SearchResultsContainer = (props) => {
         <LeftSidebar {...props} />
       </div>
       <div className="dashboardRightBlock">
-        <HeaderBar />
+        <HeaderBar {...props}/>
         <SearchBlock onKeyUpMethod={onKeyUp} {...props} />
         <SearchResultsContant />
       </div>

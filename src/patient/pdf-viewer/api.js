@@ -1,9 +1,9 @@
 import {fetchApi} from "../../_utils/http-utils";
 
 
-export function getUserProfile() {
+export function getDownloadableLink(practiceId,patientId,docId) {
 
-    return fetchApi({url: "/profile", method: "get"}).then(data => {
+    return fetchApi({url:`/practice/${practiceId}/patient/${patientId}/documents/${docId}`, method: "get"}).then(data => {
         if (!data)
             return Promise.resolve({})
         else {

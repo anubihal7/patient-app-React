@@ -18,16 +18,20 @@ const DashboardContainer = (props) => {
     };
 
     useEffect(async () => {
-        let userProf = await getUserProfile()
-        if (userProf.items.length > 0) {
-            props.saveProfiles(userProf.items)
+            let userProf = await getUserProfile()
+            if (userProf && userProf.items && userProf.items.length > 0) {
+                props.saveProfiles(userProf.items)
+                setSearchKey("")
+            }
+        if (props.user && props.user.meta && props.user.meta.selectedProfile){
+            setSelectedProfile(props.user.meta.selectedProfile)
         }
         if (props.location.search && props.location.search.includes("searchKey") && selectedProfile) {
             let search = props.location.search;
             let key = search.substr(search.indexOf("=") + 1);
             setSearchKey(key);
         }
-    }, []);
+    }, [props.user.meta.selectedProfile]);
 
     return (
         <div className="dashboardMainBlock">
@@ -35,14 +39,12 @@ const DashboardContainer = (props) => {
                 <LeftSidebar {...props} />
             </div>
             <div className="dashboardRightBlock">
-                <HeaderBar {...props} selectedProfile={selectedProfile} selectProfile={(selection) => {
-                    return setSelectedProfile(selection)
-                }}/>
+                <HeaderBar {...props}/>
                 <SearchBlock onKeyUpMethod={onKeyUp} {...props} />
-                {searchKey === "" || !selectedProfile?(
+                {searchKey === "" || !selectedProfile ? (
                     <DashboardContent/>
                 ) : (
-                    <SearchResultsContent searchKey={searchKey} {...props} selectedProfile={selectedProfile} />
+                    <SearchResultsContent searchKey={searchKey} {...props} selectedProfile={selectedProfile}/>
                 )}
             </div>
         </div>
@@ -56,5 +58,10 @@ const mapDispatchToProps = (dispatch) => {
         dispatch,
     };
 };
+const mapStateToProps = (state) => {
+    return {
+        user: state.user,
+    };
+};
 
-export default connect(null, mapDispatchToProps)(DashboardContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);

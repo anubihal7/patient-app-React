@@ -1,87 +1,40 @@
-import React, { useState } from "react";
-import { InputWithIcon } from "../../components/input";
+import React, {useEffect, useState} from "react";
+import {InputWithIcon} from "../../components/input";
 import darkSearch from "../../images/DarkSearch.png";
 import "./style.scss";
-import { Button, Table } from "react-bootstrap";
-import previous from "../../images/ArrowRight.svg";
+import {Button, Table} from "react-bootstrap";
 import PaginationBlock from "./Pagination";
+import {getClaimComments} from "../claim-information/api";
 
-const tabledata = [
-  {
-    tdata1:
-      "Comment one lorem ipsum dolor sit amet Comment one lorem ipsum dolor sit amet",
-    tdata2: "MM/DD/YYYY",
-    tdata3: "FirstName LastName sjdbm",
-    tdata4: "MM/DD/YYYY",
-    tdata5: "FirstName LastName",
-  },
-  {
-    tdata1:
-      "Comment one lorem ipsum dolor sit amet Comment one lorem ipsum dolor sit amet",
-    tdata2: "MM/DD/YYYY",
-    tdata3: "FirstName LastName shgdv",
-    tdata4: "MM/DD/YYYY",
-    tdata5: "FirstName LastName",
-  },
-  {
-    tdata1:
-      "Comment one lorem ipsum dolor sit amet Comment one lorem ipsum dolor sit amet",
-    tdata2: "MM/DD/YYYY",
-    tdata3: "FirstName LastName sdj,vd",
-    tdata4: "MM/DD/YYYY",
-    tdata5: "FirstName LastName",
-  },
-  {
-    tdata1:
-      "Comment one lorem ipsum dolor sit amet Comment one lorem ipsum dolor sit amet",
-    tdata2: "MM/DD/YYYY",
-    tdata3: "FirstName LastName sjd,hbm",
-    tdata4: "MM/DD/YYYY",
-    tdata5: "FirstName LastName",
-  },
-  {
-    tdata1:
-      "Comment one lorem ipsum dolor sit amet Comment one lorem ipsum dolor sit amet",
-    tdata2: "MM/DD/YYYY",
-    tdata3: "FirstName LastName skgd",
-    tdata4: "MM/DD/YYYY",
-    tdata5: "FirstName LastName",
-  },
-  {
-    tdata1:
-      "Comment one lorem ipsum dolor sit amet Comment one lorem ipsum dolor sit amet",
-    tdata2: "MM/DD/YYYY",
-    tdata3: "FirstName LastName sgfdc",
-    tdata4: "MM/DD/YYYY",
-    tdata5: "FirstName LastName",
-  },
-  {
-    tdata1:
-      "Comment one lorem ipsum dolor sit amet Comment one lorem ipsum dolor sit amet",
-    tdata2: "MM/DD/YYYY",
-    tdata3: "FirstName LastName gjc",
-    tdata4: "MM/DD/YYYY",
-    tdata5: "FirstName LastName",
-  },
-];
-const Comments = () => {
-  const [tableData, setTableData] = useState(tabledata);
-  const onKeyUp = (e) => {
+const Comments = (props) => {
+  let [searchData, setSearchData] = useState([]);
+  let [nextPageNum, setNextPage] = useState("1");
+  let [limit, setLimit] = useState(10);
+  let patientId = props.match.params.patientId;
+  let practiceId = props.match.params.practiceId;
+  let claimId = props.match.params.claimId;
+  const onKeyUp = async (e) => {
     let text = e.target.value.toLowerCase();
-    let data = [...tableData];
     if (!text) {
-      setTableData(tabledata);
-      return;
+      text="";
     }
-    data = data.filter((rows) => {
-      for (let key in rows) {
-        if (rows[key].toLowerCase().includes(text)) {
-          return true;
-        }
-      }
-    });
-    setTableData(data);
+    await performSearch("1",text)
   };
+  useEffect(async () => {
+    await performSearch("1");
+  }, []);
+  const performSearch = async (nextPage, searchKey) => {
+    let filterData = await getClaimComments(practiceId,patientId,claimId, searchKey, limit, nextPage)
+    setSearchData(filterData.items);
+    setNextPage(filterData.lastKey)
+  }
+  const nextPage = async () => {
+    await performSearch(nextPageNum)
+  }
+  const prevPage = async () => {
+    let last = parseInt(nextPageNum) - 2
+    await performSearch(last.toString())
+  }
   return (
     <div className="Demographics text-left">
       <div className="claimHeader">
@@ -89,7 +42,7 @@ const Comments = () => {
         <InputWithIcon
           inputIcon={darkSearch}
           inputClass="searchIconInput"
-          placeholder="Search claims"
+          placeholder="Search Comments"
           type="text"
           onKeyUp={onKeyUp}
         />
@@ -114,20 +67,22 @@ const Comments = () => {
             </tr>
           </thead>
           <tbody>
-            {tableData?.map((item, index) => {
+            {searchData?.map((item, index) => {
               return (
                 <tr key={index}>
-                  <td className="commentTD">{item.tdata1}</td>
-                  <td>{item.tdata2}</td>
-                  <td>{item.tdata3}</td>
-                  <td>{item.tdata4}</td>
-                  <td>{item.tdata5}</td>
+                  <td className="commentTD">{item.comment}</td>
+                  <td>{item.lastUpdated}</td>
+                  <td>{item.updatedBy}</td>
+                  <td>{item.created}</td>
+                  <td>{item.createdBy}</td>
                 </tr>
               );
             })}
           </tbody>
         </Table>
-        <PaginationBlock name="comments" />
+        {searchData&&<PaginationBlock name="Comments" nextPage={nextPageNum} nextClick={nextPage}
+                         prevClick={prevPage}
+                         limit={limit} currentLength={searchData.length}/>}
       </div>
     </div>
   );

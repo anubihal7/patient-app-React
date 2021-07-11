@@ -2,10 +2,13 @@ import React from "react";
 import {Dropdown} from "react-bootstrap";
 import "./style.scss";
 import {connect} from "react-redux";
+import {saveSelectedProfile} from "../_actions/User.action";
 
 const HeaderBar = (props) => {
-    let {user, selectedProfile, selectProfile} = props;
+    let {user} = props;
     let profiles = user.meta.profiles
+    let selectedProfile = user.meta.selectedProfile
+
     return (
         <div className="headerBlock text-left">
             <Dropdown className="headerDropdown">
@@ -14,9 +17,9 @@ const HeaderBar = (props) => {
                 <Dropdown.Menu>
                     {profiles?.map((item, index) => {
                         return (<Dropdown.Item onSelect={() => {
-                            if (selectProfile)
-                                return selectProfile(item)
-                            else return
+                            props.saveSelectedProfile(profiles[index])
+                            props.history.push("/patient/dashboard")
+
                         }}>{item.practiceName}</Dropdown.Item>)
                     })}
                 </Dropdown.Menu>
@@ -31,7 +34,14 @@ const mapStateToProps = (state) => {
         user: state.user,
     };
 };
+const mapDispatchToProps = (dispatch) => {
+    return {
+        saveSelectedProfile: (values) => {
+            dispatch(saveSelectedProfile(values))
+        },
+        dispatch,
+    };
+};
 
-
-export default connect(mapStateToProps, null)(HeaderBar);
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderBar);
 
