@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Row, Col} from "react-bootstrap";
 import "./style.scss";
-import {getFullName} from "../_utils/common-utils";
+import {getFormattedDate, getFullName} from "../_utils/common-utils";
 import {getPatientDetails} from "../patient/patient-details/api";
 
 const PatientInfo = (props) => {
@@ -19,7 +19,7 @@ const PatientInfo = (props) => {
                 <Col>
                     <div className="patientName">
                         <h6>Patient Name</h6>
-                        <h4>{patientInfo&&patientInfo.firstName?getFullName(patientInfo):"-"}</h4>
+                        <h4>{patientInfo?patientInfo.patientName:"-"}</h4>
                         <h5>{patientInfo?patientInfo.gender:"-"}</h5>
                     </div>
                 </Col>
@@ -28,19 +28,19 @@ const PatientInfo = (props) => {
                         <Col>
                             <div className="patientName">
                                 <h6>Date of Birth</h6>
-                                <h3>-</h3>
+                                <h3>{patientInfo?getFormattedDate(patientInfo.dob):"-"}</h3>
                             </div>
                         </Col>
                         <Col>
                             <div className="patientName">
                                 <h6>New ID #</h6>
-                                <h3>{patientInfo?patientInfo.patientId:"-"}</h3>
+                                <h3>{patientInfo?patientInfo.newId:"-"}</h3>
                             </div>
                         </Col>
                         <Col>
                             <div className="patientName">
                                 <h6>Prior ID #</h6>
-                                <h3>-</h3>
+                                <h3>{patientInfo?patientInfo.oldId:"-"}</h3>
                             </div>
                         </Col>
                     </Row>

@@ -8,6 +8,7 @@ import {Link, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {saveUserToken} from "../../_actions/persist.action.js";
 import {Auth} from "aws-amplify";
+import {setLoadingState} from "../../_actions/User.action";
 
 const LoginContainer = (props) => {
     let {token} = props;
@@ -16,7 +17,9 @@ const LoginContainer = (props) => {
         setErr("");
 
         try {
+            props.setLoading(true)
             let data = await Auth.signIn(formObj.username, formObj.password);
+            props.setLoading(false)
             props.loginUser({token: data.signInUserSession.idToken.jwtToken});
             props.history.push("/patient/dashboard");
         } catch (e) {
@@ -26,6 +29,12 @@ const LoginContainer = (props) => {
     };
 
     if (token["JwtToken"].length > 0) {
+        if (props.location.search && props.location.search.includes("redirectUrl")) {
+            let search = props.location.search;
+            let key = search.substr(search.indexOf("=") + 1);
+            console.log("key>>>", key)
+            return <Redirect to={key}/>;
+        }
         return <Redirect to={"/patient/dashboard"}/>;
     }
     return (
@@ -62,6 +71,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         loginUser: (values) => {
             dispatch(saveUserToken(values.token))
+        },
+        setLoading: (values) => {
+            dispatch(setLoadingState(values))
         },
         dispatch,
     };

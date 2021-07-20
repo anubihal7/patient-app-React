@@ -10,14 +10,16 @@ import React from "react";
 configureValidators();
 let {store} = configureStore();
 
+
 function App() {
     return (
         <div className="App">
-            <Provider store={store}>
-                <BrowserRouter>
-                    <Routes/>
-                </BrowserRouter>
-            </Provider>
+
+                <Provider store={store}>
+                    <BrowserRouter>
+                        <Routes/>
+                    </BrowserRouter>
+                </Provider>
         </div>
     );
 }

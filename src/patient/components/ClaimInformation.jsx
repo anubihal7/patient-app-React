@@ -30,7 +30,7 @@ const ClaimInfo = (props) => {
                             <Row xs={1} sm={2} md={2} lg={3} xl={4}>
                                 <Col>
                                     <label>Date of Service</label>
-                                    <h6>-</h6>
+                                    <h6>{claimInfo.claimDate}</h6>
                                 </Col>
                                 <Col>
                                     <label>Claim Type</label>
@@ -46,7 +46,7 @@ const ClaimInfo = (props) => {
                                 </Col>
                                 <Col>
                                     <label>Scheduled</label>
-                                    <h6>-</h6>
+                                    <h6>{claimInfo.scheduled}</h6>
                                 </Col>
                                 <Col>
                                     <label>Rendering</label>

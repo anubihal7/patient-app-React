@@ -5,7 +5,9 @@ export function getPatientSearchResults(practiceId,searchText, limit, nextPage) 
     let body = {
         searchText: searchText,
         limit: limit || 10,
-        lastKey: nextPage || "1"
+    }
+    if(nextPage){
+        body.lastKey=nextPage
     }
     return fetchApi({url: `/practice/${practiceId}/patient/search`, method: "post", body: body}).then(data => {
         if (!data)

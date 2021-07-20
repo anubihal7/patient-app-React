@@ -4,6 +4,7 @@ export const actionTypes = {
     CLEAR_USER_DATA: "CLEAR_USER_DATA",
     GET_PROFILE_SUCCESS: "GET_PROFILE_SUCCESS",
     SAVE_SELECTED_PROFILE: "SAVE_SELECTED_PROFILE",
+    SET_LOADING_STATE: "SET_LOADING_STATE",
 };
 
 /*
@@ -16,21 +17,31 @@ export function loginUserSuccess(data) {
         data
     };
 }
+
 export function saveUserProfiles(data) {
     return {
         type: actionTypes.GET_PROFILE_SUCCESS,
         data
     };
 }
+
 export function saveSelectedProfile(data) {
     return {
         type: actionTypes.SAVE_SELECTED_PROFILE,
         data
     };
 }
+
 export function clearUserData() {
     return {
         type: actionTypes.CLEAR_USER_DATA,
         data: null
+    };
+}
+
+export function setLoadingState(data) {
+    return {
+        type: actionTypes.SET_LOADING_STATE,
+        data: data
     };
 }

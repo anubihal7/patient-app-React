@@ -11,17 +11,21 @@ import Insurances from "../components/Insurances.jsx";
 import Appointments from "../components/Appointments.jsx";
 import Clinicals from "../components/Clinicals.jsx";
 import {getPatientDetails} from "../patient-details/api";
+import {useDispatch} from "react-redux";
+import {setLoadingState} from "../../_actions/User.action";
 
 const PatientContent = (props) => {
     let [tabSelection, setTabSelection] = useState("demographics");
     let [patientInfo, setPatientInfo] = useState(null);
-
+    const dispatch = useDispatch()
     useEffect(async () => {
         let pageType = props.match.params.type;
         let patientId = props.match.params.patientId;
         let practiceId = props.match.params.practiceId;
         setTabSelection(pageType);
-        let patientData = await getPatientDetails(practiceId,patientId)
+        dispatch(setLoadingState(true))
+        let patientData = await getPatientDetails(practiceId, patientId)
+        dispatch(setLoadingState(false))
         setPatientInfo(patientData)
     }, []);
 
@@ -31,13 +35,13 @@ const PatientContent = (props) => {
     return (
         <div className="patientContant text-left">
             <SearchNav {...props} />
-             <PatientInfo {...props}/>
+            <PatientInfo {...props}/>
             <Tab
                 {...props}
                 tabSelection={tabSelection}
                 getTabSelection={getTabSelection}
             />
-            {tabSelection == "demographics" && patientInfo&&<Demographies {...props} patientInfo={patientInfo}/>}
+            {tabSelection == "demographics" && patientInfo && <Demographies {...props} patientInfo={patientInfo}/>}
             {tabSelection == "claims" && <Claims {...props} />}
             {tabSelection == "contacts" && <Contacts {...props} />}
             {tabSelection == "documents" && <Documents {...props} />}

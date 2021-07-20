@@ -5,15 +5,19 @@ import {setJwtToken} from "../_utils/http-utils";
 
 const AuthGuard = ({component: Component, ...rest}) => {
     let {token} = rest;
-    try{
-        if(Object.keys(token).length===0){
-            token=JSON.parse(JSON.parse(localStorage["persist:root"]).persist).JwtToken
+    let redirectUrl = ""
+    try {
+        if (Object.keys(token).length === 0) {
+            token = JSON.parse(JSON.parse(localStorage["persist:root"]).persist).JwtToken
         }
-    }catch (e) {
+    } catch (e) {
         localStorage.clear()
-        window.location="/auth/login"
+        window.location = "/auth/login"
     }
     const isAuthenticated = Object.keys(token).length !== 0;
+    // if (!isAuthenticated) {
+    //     redirectUrl = `'${window.location.pathname}'`;
+    // }
     setJwtToken(token)
     return (
         <Route
@@ -24,7 +28,7 @@ const AuthGuard = ({component: Component, ...rest}) => {
                 ) : (
                     <Redirect
                         to={{
-                            pathname: "/auth/login",
+                            pathname: `/auth/login`,
                             state: {
                                 from: props.location,
                             },

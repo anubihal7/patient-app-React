@@ -7,36 +7,54 @@ import darkArrow from "../../images/darkArrow.svg";
 import { Link } from "react-router-dom";
 import PaginationBlock from "./Pagination";
 import {getPatientDocuments} from "../patient-details/api";
+import {useDispatch} from "react-redux";
+import {setLoadingState} from "../../_actions/User.action";
 
 const Documents = (props) => {
   let [searchData, setSearchData] = useState([]);
-  let [nextPageNum, setNextPage] = useState("1");
   let [limit, setLimit] = useState(10);
+  let [currentPage, setCurrentPage] = useState(0);
+  let [lastKeys, setLastKeys] = useState([]);
+  const dispatch = useDispatch()
+
   let patientId = props.match.params.patientId;
   let practiceId = props.match.params.practiceId;
+
   const onKeyUp = async (e) => {
-    let text = e.target.value.toLowerCase();
-    if (!text) {
-      text=""
+    if (e.key === "Enter") {
+      let text = e.target.value.toLowerCase();
+      if (!text) {
+        text = ""
+      }
+      await performSearch(0, text)
     }
-    await performSearch("1", text)
   };
+
   useEffect(async () => {
-    await performSearch("1");
+    await performSearch(0);
   }, []);
+
   const performSearch = async (nextPage, searchKey) => {
-    let filterData = await getPatientDocuments(practiceId,patientId, searchKey, limit, nextPage)
+
+    setCurrentPage(nextPage)
+    let last = lastKeys[nextPage - 1]
+    dispatch(setLoadingState(true))
+    let filterData = await getPatientDocuments(practiceId,patientId, searchKey, limit, last)
+
+    dispatch(setLoadingState(false))
     setSearchData(filterData.items);
-    setNextPage(filterData.lastKey?filterData.lastKey:"1")
+    if (!lastKeys.includes(filterData.lastKey)) {
+      lastKeys.push(filterData.lastKey)
+      setLastKeys(lastKeys)
+    }
   }
   const nextPage = async () => {
-    await performSearch(nextPageNum)
+    await performSearch(currentPage + 1)
+
   }
   const prevPage = async () => {
-    let last = parseInt(nextPageNum) - 2
-    await performSearch(last.toString())
+    await performSearch(currentPage > 0 ? currentPage - 1 : 0)
   }
-
   const openPdf = (item) => {
     props.history.push(`/practice/${practiceId}/patient/${patientId}/details/documents/` + item.documentId);
   };
@@ -81,7 +99,7 @@ const Documents = (props) => {
             })}
           </tbody>
         </Table>
-        <PaginationBlock name="Documents" nextPage={nextPageNum} nextClick={nextPage}
+        <PaginationBlock name="Documents" currentPage={currentPage} nextClick={nextPage}
                          prevClick={prevPage}
                          limit={limit} currentLength={searchData.length}/>
       </div>

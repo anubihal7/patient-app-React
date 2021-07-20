@@ -3,6 +3,8 @@ import {Switch, Route, Redirect} from "react-router-dom";
 import AppLoading from "./components/app-loading.jsx";
 import PDFViewerContainer from "./patient/pdf-viewer/pdf-viewer-container.jsx";
 import AuthGuard from "./_guards/Auth.guard";
+import LoadingOverlay from "react-loading-overlay";
+import {useSelector} from "react-redux";
 
 const LoginContainer = React.lazy(() =>
     import("./auth/login/login-container.jsx")
@@ -36,62 +38,72 @@ const ClaimInfoContainer = React.lazy(() =>
 );
 
 function Routes() {
+
+    let loadingState = useSelector((state) => state.user.loading);
     return (
         <React.Fragment>
-            <Suspense fallback={<AppLoading/>}>
-                <Switch>
-                    <Route exact path="/auth/login" component={LoginContainer}/>
-                    <Route
-                        exact
-                        path="/auth/forgot-password"
-                        component={ResetContainer}
-                    />
-                    <Route exact path="/auth/email" component={EmailContainer}/>
-                    <Route
-                        exact
-                        path="/auth/new-password"
-                        component={NewPasswordContainer}
-                    />
-                    <Route
-                        exact
-                        path="/auth/new-password-cognito"
-                        component={NewPasswordContainerCognito}
-                    />
-                    <Route exact path="/auth/allset" component={AllSetContainer}/>
-                    <AuthGuard
-                        exact
-                        path="/patient/dashboard"
-                        component={DashboardContainer}
-                    />
-                    <AuthGuard
-                        exact
-                        path="/patient/result"
-                        component={SearchResultsContainer}
-                    />
-                    <AuthGuard
-                        exact
-                        path="/practice/:practiceId/patient/:patientId"
-                        component={PatientContainer}
-                    />
-                    <AuthGuard
-                        exact
-                        path="/practice/:practiceId/patient/:patientId/details/:type"
-                        component={PatientContainer}
-                    />
-                    <AuthGuard
-                        exact
-                        path="/practice/:practiceId/patient/:patientId/details/claims/:claimId"
-                        component={ClaimInfoContainer}
-                    />
-                    <AuthGuard
-                        exact
-                        path="/practice/:practiceId/patient/:patientId/details/documents/:documentId"
-                        component={PDFViewerContainer}
-                    />
-                    {/* PDFViewerContainer */}
-                    <Redirect exact from="/" to="auth/login"/>
-                </Switch>
-            </Suspense>
+            <div>
+                <LoadingOverlay
+                    active={loadingState}
+                    spinner
+                    text='Please wait...'
+                >
+                    <Suspense fallback={<AppLoading/>}>
+                        <Switch>
+                            <Route exact path="/auth/login" component={LoginContainer}/>
+                            <Route
+                                exact
+                                path="/auth/forgot-password"
+                                component={ResetContainer}
+                            />
+                            <Route exact path="/auth/email" component={EmailContainer}/>
+                            <Route
+                                exact
+                                path="/auth/new-password"
+                                component={NewPasswordContainer}
+                            />
+                            <Route
+                                exact
+                                path="/auth/new-password-cognito"
+                                component={NewPasswordContainerCognito}
+                            />
+                            <Route exact path="/auth/allset" component={AllSetContainer}/>
+                            <AuthGuard
+                                exact
+                                path="/patient/dashboard"
+                                component={DashboardContainer}
+                            />
+                            <AuthGuard
+                                exact
+                                path="/patient/result"
+                                component={SearchResultsContainer}
+                            />
+                            <AuthGuard
+                                exact
+                                path="/practice/:practiceId/patient/:patientId"
+                                component={PatientContainer}
+                            />
+                            <AuthGuard
+                                exact
+                                path="/practice/:practiceId/patient/:patientId/details/:type"
+                                component={PatientContainer}
+                            />
+                            <AuthGuard
+                                exact
+                                path="/practice/:practiceId/patient/:patientId/details/claims/:claimId"
+                                component={ClaimInfoContainer}
+                            />
+                            <AuthGuard
+                                exact
+                                path="/practice/:practiceId/patient/:patientId/details/documents/:documentId"
+                                component={PDFViewerContainer}
+                            />
+                            {/* PDFViewerContainer */}
+                            <Redirect exact from="/" to="auth/login"/>
+                        </Switch>
+                    </Suspense>
+                </LoadingOverlay>
+            </div>
         </React.Fragment>
     );
 }

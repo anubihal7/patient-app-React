@@ -2,6 +2,7 @@ import {actionTypes} from "../_actions/User.action";
 
 const initialState = {
     meta: {},
+    loading:false,
     user: {},
 };
 
@@ -23,10 +24,14 @@ const user = (state = initialState, action) => {
                 meta: {...state.meta, profiles: action.data}
             }
         case actionTypes.SAVE_SELECTED_PROFILE:
-            console.log(action.data)
             return {
                 ...state,
                 meta: {...state.meta,selectedProfile: action.data }
+            }
+        case actionTypes.SET_LOADING_STATE:
+            return {
+                ...state,
+                loading: action.data
             }
         default:
             return state;
