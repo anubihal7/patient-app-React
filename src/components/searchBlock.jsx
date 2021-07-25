@@ -7,6 +7,7 @@ import {Button, Col, Row} from "react-bootstrap";
 import pdfPrint from "../images/pdfPrint.svg";
 import pdfDownlode from "../images/downlodPdf.svg";
 import {useInput} from "../_utils/common-utils";
+import {useSelector} from "react-redux";
 
 const SearchBlock = (props) => {
     let [advanceSearch, setAdvanceSearch] = useState(false);
@@ -15,9 +16,13 @@ const SearchBlock = (props) => {
     const {value: newId, bind: bindNewId} = useInput('');
     const {value: oldId, bind: bindOldId} = useInput('');
     const {value: dob, bind: bindDob} = useInput('');
+    let selectedProfile = useSelector((state) => state.user.meta.selectedProfile);
 
     const onKeyUp = (e) => {
         if (e.key === "Enter") {
+            if(!selectedProfile)
+                alert("Please select a profile before searching")
+            else
             setSearch(e.target.value)
         }
     };

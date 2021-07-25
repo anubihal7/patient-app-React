@@ -36,6 +36,8 @@ const Clinicals = (props) => {
 
         setCurrentPage(nextPage)
         let last = lastKeys[nextPage - 1]
+        if (!last&&currentPage>0)
+            return
         dispatch(setLoadingState(true))
 
         let filterData = await getPatientClinicals(practiceId, patientId, searchKey, limit, last)

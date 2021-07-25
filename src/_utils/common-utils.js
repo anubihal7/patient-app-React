@@ -9,6 +9,10 @@ export const getFormattedDate = (date) => {
 return moment(date).format("DD/MM/YYYY")
 }
 
+export const getDateForDocs= (dateObj) => {
+    return dateObj[0]+"/"+dateObj[1]+"/"+dateObj[2]
+}
+
 
 export const useInput = initialValue => {
     const [value, setValue] = useState(initialValue);

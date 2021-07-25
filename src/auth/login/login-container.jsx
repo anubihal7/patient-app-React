@@ -23,6 +23,7 @@ const LoginContainer = (props) => {
             props.loginUser({token: data.signInUserSession.idToken.jwtToken});
             props.history.push("/patient/dashboard");
         } catch (e) {
+            props.setLoading(false)
             setErr(e.message)
         }
 
@@ -32,8 +33,7 @@ const LoginContainer = (props) => {
         if (props.location.search && props.location.search.includes("redirectUrl")) {
             let search = props.location.search;
             let key = search.substr(search.indexOf("=") + 1);
-            console.log("key>>>", key)
-            return <Redirect to={key}/>;
+            window.location = key
         }
         return <Redirect to={"/patient/dashboard"}/>;
     }

@@ -1,8 +1,8 @@
 import config from "../config";
 import {decode as jwtDecode} from "jsonwebtoken";
+import {Auth} from "aws-amplify";
 
 let jwtToken = null;
-
 
 export const fetchApi = async (params) => {
     const {url, method} = params;
@@ -18,10 +18,15 @@ export const fetchApi = async (params) => {
     const tokenExpiresAt = decodedToken ? decodedToken.exp * 1000 : null;
     if (jwtToken && tokenExpiresAt && tokenExpiresAt > new Date().getTime()) {
         headers["smauthorization"] = jwtToken;
-    }  else {
-        localStorage.clear()
-        window.location="/auth/login"
-       return
+    } else {
+        let session = await Auth.currentSession()
+        if (!session) {
+            localStorage.clear()
+            window.location = "/auth/login"
+            return
+        }
+        jwtToken = session.idToken.jwtToken
+        headers["smauthorization"] = jwtToken;
     }
     return fetch(`${config.app.BASE_API_URL}${url}`, {
         method,
@@ -32,7 +37,7 @@ export const fetchApi = async (params) => {
             case 401:
                 //move to login page here and log user out
                 localStorage.clear()
-                window.location="/auth/login"
+                window.location = "/auth/login"
                 return
             case 200:
                 return Promise.resolve(response.json())
@@ -46,6 +51,6 @@ export const fetchApi = async (params) => {
     });
 };
 
-export const setJwtToken = token => {
+export const setJwtToken = (token) => {
     jwtToken = token;
 };

@@ -15,9 +15,9 @@ const AuthGuard = ({component: Component, ...rest}) => {
         window.location = "/auth/login"
     }
     const isAuthenticated = Object.keys(token).length !== 0;
-    // if (!isAuthenticated) {
-    //     redirectUrl = `'${window.location.pathname}'`;
-    // }
+    if (!isAuthenticated) {
+        redirectUrl = `${window.location.pathname}`;
+    }
     setJwtToken(token)
     return (
         <Route
@@ -29,6 +29,7 @@ const AuthGuard = ({component: Component, ...rest}) => {
                     <Redirect
                         to={{
                             pathname: `/auth/login`,
+                            search: `${redirectUrl !== "" ? "?redirectUrl=" + redirectUrl : ""}`,
                             state: {
                                 from: props.location,
                             },

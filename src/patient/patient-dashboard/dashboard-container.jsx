@@ -7,15 +7,18 @@ import SearchResultsContent from "../search-results/searchResults-content";
 import "../patient-dashboard/style.scss";
 import "./style.scss";
 import {getUserProfile} from "./api";
-import {connect} from "react-redux";
-import {saveUserProfiles} from "../../_actions/User.action";
+import {connect, useDispatch} from "react-redux";
+import {saveUserProfiles, setLoadingState} from "../../_actions/User.action";
 
 const DashboardContainer = (props) => {
     const [searchKey, setSearchKey] = useState("");
     const [selectedProfile, setSelectedProfile] = useState(null);
+    const dispatch = useDispatch()
 
     useEffect(async () => {
+        dispatch(setLoadingState(true))
         let userProf = await getUserProfile()
+        dispatch(setLoadingState(false))
         if (userProf && userProf.items && userProf.items.length > 0) {
             props.saveProfiles(userProf.items)
             setSearchKey("")
@@ -23,7 +26,8 @@ const DashboardContainer = (props) => {
         if (props.user && props.user.meta && props.user.meta.selectedProfile) {
             setSelectedProfile(props.user.meta.selectedProfile)
         }
-        if (props.location.search && props.location.search.includes("searchKey") && selectedProfile) {
+        if (props.location.search && props.location.search.includes("searchKey")) {
+
             let search = props.location.search;
             let key = search.substr(search.indexOf("=") + 1);
             setSearchKey(key);

@@ -7,9 +7,15 @@ import pdfPrint from "../../images/pdfPrint.svg";
 import {Button} from "react-bootstrap";
 import printJS from "print-js";
 import {getDownloadableLink} from "./api";
+import {setLoadingState} from "../../_actions/User.action";
+import {useDispatch} from "react-redux";
+import {getDateForDocs} from "../../_utils/common-utils";
 
 const PDFViewerContainer = (props) => {
     let [pdfLink, setPdfLink] = useState(null)
+    let [docDetails, setDocDetails] = useState(null)
+    const dispatch = useDispatch()
+
     let patientId = props.match.params.patientId;
     let practiceId = props.match.params.practiceId;
     let documentId = props.match.params.documentId;
@@ -25,8 +31,12 @@ const PDFViewerContainer = (props) => {
         props.history.push(`/practice/${practiceId}/patient/${patientId}/details/documents/`);
     };
     useEffect(async () => {
+        dispatch(setLoadingState(true))
         let pdfResp = await getDownloadableLink(practiceId, patientId, documentId);
+        dispatch(setLoadingState(false))
         setPdfLink(pdfResp.url)
+        setDocDetails(pdfResp)
+
     }, []);
     return (
         <div className="pdfViewrBlock">
@@ -34,13 +44,13 @@ const PDFViewerContainer = (props) => {
                 <div className="pdfName">
                     <img onClick={goBack} src={arrowWhite} alt="arrowWhite"/>
                     <div className="pdfNameBlock">
-                        <p>Description lorem ipsum dolor sit amet</p>
+                        <p>{docDetails?docDetails.description:"-"}</p>
                         <div className="pdfInfoBlock">
-                            <p>Document-Name.PDF</p>
+                            <p>{docDetails?docDetails.name:"-"}</p>
                             <p>—</p>
-                            <p>[Category]</p>
+                            <p>{docDetails?`[${docDetails.category}]`:""}</p>
                             <p>—</p>
-                            <p>[MM/DD/YYYY]</p>
+                            <p>{docDetails?`[${getDateForDocs(docDetails.dateCreated)}]`:""}</p>
                         </div>
                     </div>
                 </div>

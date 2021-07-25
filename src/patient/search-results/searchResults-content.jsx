@@ -29,6 +29,8 @@ const SearchResultsContent = (props) => {
             return;
         setCurrentPage(nextPage)
         let last = lastKeys[nextPage - 1]
+        if (!last&&currentPage>0)
+            return
         props.setLoading(true)
         let filterData = await getPatientSearchResults(selectedProfile.practiceId, searchKey, limit, last)
         props.setLoading(false)
