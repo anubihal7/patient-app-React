@@ -18,7 +18,7 @@ const LoginContainer = (props) => {
 
         try {
             props.setLoading(true)
-            let data = await Auth.signIn(formObj.username, formObj.password);
+            let data = await Auth.signIn(formObj.username.toLowerCase(), formObj.password);
             props.setLoading(false)
             props.loginUser({token: data.signInUserSession.idToken.jwtToken});
             props.history.push("/patient/dashboard");
