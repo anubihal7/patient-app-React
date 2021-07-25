@@ -17,6 +17,8 @@ const Documents = (props) => {
     let [lastKeys, setLastKeys] = useState([]);
     const dispatch = useDispatch()
 
+    let prevSearchData = props.location.state.detail
+
     let patientId = props.match.params.patientId;
     let practiceId = props.match.params.practiceId;
 
@@ -31,14 +33,19 @@ const Documents = (props) => {
     };
 
     useEffect(async () => {
-        await performSearch(0);
+        console.log("props",props)
+        if (prevSearchData) {
+            setSearchData(prevSearchData)
+        } else {
+            await performSearch(0);
+        }
     }, []);
 
     const performSearch = async (nextPage, searchKey) => {
 
         setCurrentPage(nextPage)
         let last = lastKeys[nextPage - 1]
-        if (!last&&currentPage>0)
+        if (!last && currentPage > 0)
             return
         dispatch(setLoadingState(true))
         let filterData = await getPatientDocuments(practiceId, patientId, searchKey, limit, last)
@@ -58,7 +65,12 @@ const Documents = (props) => {
         await performSearch(currentPage > 0 ? currentPage - 1 : 0)
     }
     const openPdf = (item) => {
-        props.history.push(`/practice/${practiceId}/patient/${patientId}/details/documents/` + item.documentId);
+        props.history.push(
+            {
+                pathname: `/practice/${practiceId}/patient/${patientId}/details/documents/` + item.documentId,
+                state: {detail: searchData}
+            }
+        );
     };
     return (
         <div className="Demographics text-left">
@@ -91,7 +103,7 @@ const Documents = (props) => {
                             }}>
                                 <td>{item.name}</td>
                                 <td>{item.category}</td>
-                                <td>{getDateForDocs(item.dateCreated)}</td>
+                                <td>{item.dateCreated}</td>
                                 <td>{item.description}</td>
                                 <td>
                                     <img src={darkArrow} alt="rightArrow"/>

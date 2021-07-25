@@ -14,21 +14,29 @@ import {getDateForDocs} from "../../_utils/common-utils";
 const PDFViewerContainer = (props) => {
     let [pdfLink, setPdfLink] = useState(null)
     let [docDetails, setDocDetails] = useState(null)
+    let prevSearchData = props.location.state.detail
+    let prevSearchKey = props.location.search
     const dispatch = useDispatch()
 
     let patientId = props.match.params.patientId;
     let practiceId = props.match.params.practiceId;
     let documentId = props.match.params.documentId;
     const printPage = () => {
-        if(pdfLink)
-        printJS({
-            printable: pdfLink,
-            type: "pdf",
-            showModal: true,
-        });
+        if (pdfLink)
+            printJS({
+                printable: pdfLink,
+                type: "pdf",
+                showModal: true,
+            });
     };
     const goBack = () => {
-        props.history.push(`/practice/${practiceId}/patient/${patientId}/details/documents/`);
+        props.history.push(
+            {
+                pathname: `/practice/${practiceId}/patient/${patientId}/details/documents/`,
+                search: prevSearchKey,
+                state: {detail: prevSearchData}
+            }
+        );
     };
     useEffect(async () => {
         dispatch(setLoadingState(true))
@@ -44,13 +52,13 @@ const PDFViewerContainer = (props) => {
                 <div className="pdfName">
                     <img onClick={goBack} src={arrowWhite} alt="arrowWhite"/>
                     <div className="pdfNameBlock">
-                        <p>{docDetails?docDetails.description:"-"}</p>
+                        <p>{docDetails ? docDetails.description : "-"}</p>
                         <div className="pdfInfoBlock">
-                            <p>{docDetails?docDetails.name:"-"}</p>
+                            <p>{docDetails ? docDetails.name : "-"}</p>
                             <p>—</p>
-                            <p>{docDetails?`[${docDetails.category}]`:""}</p>
+                            <p>{docDetails ? `[${docDetails.category}]` : ""}</p>
                             <p>—</p>
-                            <p>{docDetails?`[${getDateForDocs(docDetails.dateCreated)}]`:""}</p>
+                            <p>{docDetails ? `[${docDetails.dateCreated}]` : ""}</p>
                         </div>
                     </div>
                 </div>
