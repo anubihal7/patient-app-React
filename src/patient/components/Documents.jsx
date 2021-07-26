@@ -8,7 +8,6 @@ import PaginationBlock from "./Pagination";
 import {getPatientDocuments} from "../patient-details/api";
 import {useDispatch} from "react-redux";
 import {setLoadingState} from "../../_actions/User.action";
-import {getDateForDocs} from "../../_utils/common-utils";
 
 const Documents = (props) => {
     let [searchData, setSearchData] = useState([]);
