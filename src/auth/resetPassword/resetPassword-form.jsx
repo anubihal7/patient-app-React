@@ -12,8 +12,8 @@ const ResetForm = () => {
     const submit = async (e) => {
         e.preventDefault()
         try {
-            await Auth.forgotPassword(email)
-            history.push("/auth/new-password-cognito?email="+email);
+            await Auth.forgotPassword(email.toLowerCase())
+            history.push("/auth/new-password-cognito?email="+email.toLowerCase());
         } catch (e) {
             setError("Cannot send reset email, please check the email entered.")
         }
