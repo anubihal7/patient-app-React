@@ -17,7 +17,7 @@ const Documents = (props) => {
     let [lastKeys, setLastKeys] = useState([]);
     const dispatch = useDispatch()
 
-    let prevSearchData = props.location.state.detail
+    let prevSearchData = props.location.state?props.location.state.detail:null
 
     let patientId = props.match.params.patientId;
     let practiceId = props.match.params.practiceId;
