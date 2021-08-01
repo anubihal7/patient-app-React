@@ -1,15 +1,16 @@
 import React, {useEffect, useState} from "react";
 import "./style.scss";
-import smallArrow from "../../images/smallArrow.svg";
 import {Table} from "react-bootstrap";
 import darkArrow from "../../images/darkArrow.svg";
 import {Link} from "react-router-dom";
 import {getPatientSearchResults} from "./api";
 import PaginationBlock from "../components/Pagination";
 import {saveSearchKey} from "../../_actions/persist.action";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {getFormattedDate} from "../../_utils/common-utils";
 import {setLoadingState} from "../../_actions/User.action";
+import {addCrumb} from "../../_utils/breadcrumb-util";
+import SearchNav from "../../components/searchNavigation";
 
 const SearchResultsContent = (props) => {
     let {searchKey, selectedProfile} = props;
@@ -17,6 +18,7 @@ const SearchResultsContent = (props) => {
     let [limit, setLimit] = useState(10);
     let [currentPage, setCurrentPage] = useState(0);
     let [lastKeys, setLastKeys] = useState([]);
+    let state = useSelector(state => state);
 
     useEffect(async () => {
         searchKey = searchKey.toLowerCase();
@@ -24,12 +26,20 @@ const SearchResultsContent = (props) => {
             await performSearch(0);
         }
     }, [searchKey]);
+    useEffect(() => {
+        let crumb = {
+            name: `Search results for "${searchKey}"`,
+            link: window.location.pathname + "?searchKey=" + searchKey,
+            identifier:"searchResults"
+        }
+        addCrumb(state, crumb, props.dispatch)
+    }, [])
     const performSearch = async (nextPage) => {
         if (!selectedProfile)
             return;
         setCurrentPage(nextPage)
         let last = lastKeys[nextPage - 1]
-        if (!last&&currentPage>0)
+        if (!last && currentPage > 0)
             return
         props.setLoading(true)
         let filterData = await getPatientSearchResults(selectedProfile.practiceId, searchKey, limit, last)
@@ -53,21 +63,7 @@ const SearchResultsContent = (props) => {
     }
     return (
         <div className="searchResultsBlock">
-            <div className="componentTree text-left">
-                <a href="">Home</a>
-                <img src={smallArrow} alt="arrow"/>
-                <a href="" className="active">
-                    Search results for “{searchKey}”
-                </a>
-            </div>
-            {/* Search no results */}
-            {/*{searchData.length === 0 && (*/}
-            {/*    <div className="noResult text-left">*/}
-            {/*        <h6>Sorry, there are no results for “{searchKey}”</h6>*/}
-            {/*        <p>Try searching by name, date of birth, or ID number.</p>*/}
-            {/*    </div>*/}
-            {/*)}*/}
-
+            <SearchNav {...props} />
             {/* Search user results */}
             <div className="userSearchResult text-left">
                 <h4>Search results for "{searchKey}"</h4>

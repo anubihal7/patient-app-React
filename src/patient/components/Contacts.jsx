@@ -68,14 +68,6 @@ const Contacts = (props) => {
                 />
             </div>
             <div className="sectionOne">
-                <div className="buttonTabs">
-                    <Button variant="primary" className="tabButton active">
-                        Open Balance
-                    </Button>
-                    <Button variant="primary" className="tabButton">
-                        Show All
-                    </Button>
-                </div>
                 <Table className="customTable" responsive hover>
                     <thead>
                     <tr>

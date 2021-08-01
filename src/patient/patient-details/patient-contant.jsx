@@ -11,13 +11,15 @@ import Insurances from "../components/Insurances.jsx";
 import Appointments from "../components/Appointments.jsx";
 import Clinicals from "../components/Clinicals.jsx";
 import {getPatientDetails} from "../patient-details/api";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setLoadingState} from "../../_actions/User.action";
+import {addCrumb} from "../../_utils/breadcrumb-util";
 
 const PatientContent = (props) => {
     let [tabSelection, setTabSelection] = useState("demographics");
     let [patientInfo, setPatientInfo] = useState(null);
     const dispatch = useDispatch()
+    let state = useSelector(state => state);
     useEffect(async () => {
         let pageType = props.match.params.type;
         let patientId = props.match.params.patientId;
@@ -25,6 +27,14 @@ const PatientContent = (props) => {
         setTabSelection(pageType);
         dispatch(setLoadingState(true))
         let patientData = await getPatientDetails(practiceId, patientId)
+
+        let crumb = {
+            name: `Patient Detail-${patientData.patientName} (${patientData.newId})`,
+            link: window.location.pathname,
+            identifier:"patientContent"
+        }
+        addCrumb(state, crumb, dispatch)
+
         dispatch(setLoadingState(false))
         setPatientInfo(patientData)
     }, []);
@@ -32,6 +42,8 @@ const PatientContent = (props) => {
     const getTabSelection = (tab) => {
         setTabSelection(tab);
     };
+
+
     return (
         <div className="patientContant text-left">
             <SearchNav {...props} />

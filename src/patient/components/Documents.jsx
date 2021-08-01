@@ -16,7 +16,7 @@ const Documents = (props) => {
     let [lastKeys, setLastKeys] = useState([]);
     const dispatch = useDispatch()
 
-    let prevSearchData = props.location.state?props.location.state.detail:null
+    let prevDetail = props.location.state ? props.location.state.detail : null
 
     let patientId = props.match.params.patientId;
     let practiceId = props.match.params.practiceId;
@@ -32,16 +32,14 @@ const Documents = (props) => {
     };
 
     useEffect(async () => {
-        console.log("props",props)
-        if (prevSearchData) {
-            setSearchData(prevSearchData)
+        if (prevDetail && prevDetail.searchData) {
+            setSearchData(prevDetail.searchData)
         } else {
             await performSearch(0);
         }
     }, []);
 
     const performSearch = async (nextPage, searchKey) => {
-
         setCurrentPage(nextPage)
         let last = lastKeys[nextPage - 1]
         if (!last && currentPage > 0)
@@ -67,7 +65,7 @@ const Documents = (props) => {
         props.history.push(
             {
                 pathname: `/practice/${practiceId}/patient/${patientId}/details/documents/` + item.documentId,
-                state: {detail: searchData}
+                state: {detail: {searchData: searchData}}
             }
         );
     };

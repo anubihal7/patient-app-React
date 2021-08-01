@@ -3,19 +3,31 @@ import {Col, Row} from "react-bootstrap";
 import "./style.scss";
 import {getClaimInfo} from "../claim-information/api";
 import PrintButton from "./print-buttons";
+import SearchNav from "../../components/searchNavigation";
+import {addCrumb} from "../../_utils/breadcrumb-util";
+import {useDispatch, useSelector} from "react-redux";
 
 const ClaimInfo = (props) => {
     let [claimInfo, setClaimInfo] = useState(null);
     let patientId = props.match.params.patientId;
     let practiceId = props.match.params.practiceId;
     let claimId = props.match.params.claimId;
-
+    const dispatch = useDispatch()
+    let state = useSelector(state => state);
     useEffect(async () => {
         let claimData = await getClaimInfo(practiceId, patientId, claimId)
         setClaimInfo(claimData)
+        let crumb = {
+            name: `Claim No. ${claimData.claimId}`,
+            link: window.location.pathname,
+            identifier:"claimInfo"
+        }
+        addCrumb(state, crumb, dispatch)
+
     }, [])
     return (
         <div className="claimInfo text-left">
+            <SearchNav {...props} />
             <div className="Demographics text-left">
                 <h5>Claim Information</h5>
                 <div className="claiminfoBlock">

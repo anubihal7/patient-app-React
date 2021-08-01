@@ -2,7 +2,8 @@ import {actionTypes} from "../_actions/persist.action";
 
 const initialState = {
     JwtToken: {},
-    searchKey: ""
+    searchKey: "",
+    breadCrumb: []
 };
 
 const persist = (state = initialState, action) => {
@@ -22,6 +23,12 @@ const persist = (state = initialState, action) => {
                 ...state,
                 searchKey: action.data
             };
+        case actionTypes.UPDATE_CRUMB:
+            return {
+                ...state,
+                breadCrumb: action.data
+            };
+
         default:
             return state;
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Row, Col} from "react-bootstrap";
 import "./style.scss";
 
@@ -8,6 +8,7 @@ const Demographics = (props) => {
         <div className="Demographics text-left">
             <h5>Demographics</h5>
             <div className="sectionOne">
+
                 <Row xs={1} sm={2} md={4} lg={5}>
                     <Col>
                         <label>Nickname</label>

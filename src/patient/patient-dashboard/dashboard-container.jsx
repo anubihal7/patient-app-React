@@ -9,6 +9,7 @@ import "./style.scss";
 import {getUserProfile} from "./api";
 import {connect, useDispatch} from "react-redux";
 import {saveUserProfiles, setLoadingState} from "../../_actions/User.action";
+import {clearCrumbs} from "../../_utils/breadcrumb-util";
 
 const DashboardContainer = (props) => {
     const [searchKey, setSearchKey] = useState("");
@@ -32,6 +33,7 @@ const DashboardContainer = (props) => {
             let key = search.substr(search.indexOf("=") + 1);
             setSearchKey(key);
         }
+        clearCrumbs(dispatch)
     }, [props.user.meta.selectedProfile]);
 
     return (

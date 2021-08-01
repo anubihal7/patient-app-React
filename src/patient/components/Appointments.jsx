@@ -32,7 +32,7 @@ const Appointments = (props) => {
         await performSearch(0);
     }, []);
 
-    const performSearch = async (nextPage, searchKey) => {
+    const performSearch = async (nextPage, searchKey,additional="") => {
 
         setCurrentPage(nextPage)
         let last = lastKeys[nextPage - 1]

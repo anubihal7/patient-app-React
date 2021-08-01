@@ -3,6 +3,7 @@ export const actionTypes = {
   SAVE_USER_TOKEN: "SAVE_USER_TOKEN",
   LOGOUT_USERS_PERSIST: "LOGOUT_USERS_PERSIST",
   SAVE_SEARCH_KEY: "SAVE_SEARCH_KEY",
+  UPDATE_CRUMB: "UPDATE_CRUMB",
 };
 
 /*
@@ -13,6 +14,14 @@ export function saveUserToken(data) {
   return {
     type: actionTypes.SAVE_USER_TOKEN,
     data,
+  };
+}
+
+export function updateCrumb(breadCrumbs) {
+  console.log("crumbs2>>>", breadCrumbs)
+  return {
+    type: actionTypes.UPDATE_CRUMB,
+    data: breadCrumbs,
   };
 }
 
