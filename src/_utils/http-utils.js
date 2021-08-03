@@ -9,8 +9,7 @@ export const fetchApi = async (params) => {
 
     let headers = {
         "Accept": "application/json",
-        "Content-Type": "application/json",
-        "Origin":"baseline.marsdenadvisors.com"
+        "Content-Type": "application/json"
     };
 
     let body = params.body ? JSON.stringify(params.body) : null;
@@ -32,7 +31,8 @@ export const fetchApi = async (params) => {
     return fetch(`${config.app.BASE_API_URL}${url}`, {
         method,
         body,
-        headers
+        headers,
+        mode:'no-cors'
     }).then(response => {
         switch (response.status) {
             case 401:
