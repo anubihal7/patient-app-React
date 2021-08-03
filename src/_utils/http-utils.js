@@ -9,7 +9,8 @@ export const fetchApi = async (params) => {
 
     let headers = {
         "Accept": "application/json",
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Origin":"baseline.marsdenadvisors.com"
     };
 
     let body = params.body ? JSON.stringify(params.body) : null;
