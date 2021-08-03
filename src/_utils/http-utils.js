@@ -31,8 +31,7 @@ export const fetchApi = async (params) => {
     return fetch(`${config.app.BASE_API_URL}${url}`, {
         method,
         body,
-        headers,
-        mode:'no-cors'
+        headers
     }).then(response => {
         switch (response.status) {
             case 401:
