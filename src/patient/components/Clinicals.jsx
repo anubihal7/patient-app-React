@@ -17,7 +17,18 @@ const Clinicals = (props) => {
 
     let patientId = props.match.params.patientId;
     let practiceId = props.match.params.practiceId;
-
+    let [searchTab, setSearchTab] = useState("Default View");
+    const changeTab = async (event) => {
+        let targetTab = event.target.innerHTML.toString()
+        setSearchTab(targetTab)
+        await performSearch(currentPage, "", targetTab)
+    }
+    const getButtonClass = (innerHTML) => {
+        let baseClass = "tabButton"
+        if (searchTab === innerHTML)
+            baseClass = baseClass + " active"
+        return baseClass
+    }
     const onKeyUp = async (e) => {
         if (e.key === "Enter") {
             let text = e.target.value.toLowerCase();
@@ -71,10 +82,10 @@ const Clinicals = (props) => {
             </div>
             <div className="sectionOne">
                 <div className="buttonTabs">
-                    <Button variant="primary" className="tabButton active">
+                    <Button variant="primary" className={getButtonClass("Default View")} onClick={changeTab}>
                         Default View
                     </Button>
-                    <Button variant="primary" className="tabButton ">
+                    <Button variant="primary" className={getButtonClass("Show All")} onClick={changeTab}>
                         Show All
                     </Button>
                 </div>

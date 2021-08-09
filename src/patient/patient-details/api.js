@@ -1,7 +1,7 @@
 import {fetchApi} from "../../_utils/http-utils";
 
 
-export function getPatientDetails(practiceId,patientId) {
+export function getPatientDetails(practiceId, patientId) {
     return fetchApi({url: `/practice/${practiceId}/patient/${patientId}`, method: "get"}).then(data => {
         if (!data)
             return Promise.resolve([])
@@ -14,7 +14,7 @@ export function getPatientDetails(practiceId,patientId) {
 
 }
 
-export function getPatientContacts(practiceId,patientId, searchText, limit, nextPage) {
+export function getPatientContacts(practiceId, patientId, searchText, limit, nextPage) {
     let body = {
         filters: {searchText: searchText ? searchText : ""},
         limit: limit || 10,
@@ -36,9 +36,9 @@ export function getPatientContacts(practiceId,patientId, searchText, limit, next
 
 }
 
-export function getPatientDocuments(practiceId,patientId, searchText, limit, nextPage) {
+export function getPatientDocuments(practiceId, patientId, searchText, limit, nextPage) {
     let body = {
-        filters: {searchText: searchText ? searchText : "", additonal: true},
+        filters: {searchText: searchText ? searchText : ""},
         limit: limit || 10,
         lastKey: nextPage || null
     }
@@ -58,14 +58,14 @@ export function getPatientDocuments(practiceId,patientId, searchText, limit, nex
 
 }
 
-export function getPatientInsurances(practiceId,patientId, searchText, limit, nextPage) {
+export function getPatientInsurances(practiceId, patientId, searchText, limit, nextPage,additional) {
     let body = {
-        filters: {searchText: searchText ? searchText : "", additonal: true},
+        filters: {searchText: searchText ? searchText : "", additional: additional},
         limit: limit || 10,
         lastKey: nextPage || null
     }
     return fetchApi({
-        url: `/practice/${practiceId}/patient/${patientId}`+ "/insurances",
+        url: `/practice/${practiceId}/patient/${patientId}` + "/insurances",
         method: "post",
         body: body
     }).then(data => {
@@ -80,14 +80,14 @@ export function getPatientInsurances(practiceId,patientId, searchText, limit, ne
 
 }
 
-export function getPatientAppointments(practiceId,patientId, searchText, limit, nextPage) {
+export function getPatientAppointments(practiceId, patientId, searchText, limit, nextPage,additional) {
     let body = {
-        filters: {searchText: searchText ? searchText : ""},
+        filters: {searchText: searchText ? searchText : "",additional:additional},
         limit: limit || 10,
         lastKey: nextPage || null
     }
     return fetchApi({
-        url: `/practice/${practiceId}/patient/${patientId}`+ "/appointments",
+        url: `/practice/${practiceId}/patient/${patientId}` + "/appointments",
         method: "post",
         body: body
     }).then(data => {
@@ -102,14 +102,14 @@ export function getPatientAppointments(practiceId,patientId, searchText, limit, 
 
 }
 
-export function getPatientClaims(practiceId,patientId, searchText, limit, nextPage) {
+export function getPatientClaims(practiceId, patientId, searchText, limit, nextPage,additional) {
     let body = {
-        filters: {searchText: searchText ? searchText : ""},
+        filters: {searchText: searchText ? searchText : "",additional:additional},
         limit: limit || 10,
         lastKey: nextPage || null
     }
     return fetchApi({
-        url: `/practice/${practiceId}/patient/${patientId}`+ "/claims",
+        url: `/practice/${practiceId}/patient/${patientId}` + "/claims",
         method: "post",
         body: body
     }).then(data => {
@@ -124,9 +124,9 @@ export function getPatientClaims(practiceId,patientId, searchText, limit, nextPa
 
 }
 
-export function getPatientClinicals(practiceId,patientId, searchText, limit, nextPage) {
+export function getPatientClinicals(practiceId, patientId, searchText, limit, nextPage,additional) {
     let body = {
-        filters: {searchText: searchText ? searchText : ""},
+        filters: {searchText: searchText ? searchText : "",additional:additional},
         limit: limit || 10,
         lastKey: nextPage || null
     }
