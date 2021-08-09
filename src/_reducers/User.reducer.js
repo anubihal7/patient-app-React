@@ -3,7 +3,7 @@ import {actionTypes} from "../_actions/User.action";
 const initialState = {
     meta: {},
     loading:false,
-    user: {},
+    attributes: {},
 };
 
 const user = (state = initialState, action) => {
@@ -11,12 +11,12 @@ const user = (state = initialState, action) => {
         case actionTypes.LOGIN_USER_SUCCESS:
             return {
                 ...state,
-                user: action.data,
+                attributes: action.data,
             };
         case actionTypes.CLEAR_USER_DATA:
             return {
                 ...state,
-                user: {}
+                attributes: {}
             }
         case actionTypes.GET_PROFILE_SUCCESS:
             return {

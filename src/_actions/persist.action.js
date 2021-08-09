@@ -18,7 +18,6 @@ export function saveUserToken(data) {
 }
 
 export function updateCrumb(breadCrumbs) {
-  console.log("crumbs2>>>", breadCrumbs)
   return {
     type: actionTypes.UPDATE_CRUMB,
     data: breadCrumbs,

@@ -1,23 +1,24 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./style.scss";
 import smallArrow from "../images/smallArrow.svg";
 import {Link} from "react-router-dom";
-import {connect, useSelector} from "react-redux";
-import {getBreadCrumb} from "../_utils/breadcrumb-util";
+import {connect} from "react-redux";
 
 const SearchNav = (props) => {
-
-    let breadCrumbs = useSelector((state) => getBreadCrumb(state));
+    let [crumbs, setCrumbs] = useState([])
+    useEffect(() => {
+        setCrumbs( props.breadCrumbs)
+    }, [props.breadCrumbs])
 
     return (
         <div className="componentTree text-left">
             <Link to="/patient/dashboard">Home</Link>
-            {breadCrumbs && breadCrumbs.map((crumb, index) => {
+            {crumbs && crumbs.map((crumb, index) => {
 
                 return (
                     <React.Fragment>
                         <img src={smallArrow} alt="arrow"/>
-                        {index === breadCrumbs.length - 1 ? (
+                        {index === crumbs.length - 1 ? (
                                 <a className="active">
                                     {crumb.name}</a>)
                             : (<Link className="active" to={crumb.link}>
@@ -34,6 +35,7 @@ const SearchNav = (props) => {
 const mapStateToProps = (state) => {
     return {
         searchKey: state.persist.searchKey,
+        breadCrumbs: state.persist.breadCrumb
     };
 };
 

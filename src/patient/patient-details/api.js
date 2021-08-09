@@ -18,7 +18,7 @@ export function getPatientContacts(practiceId,patientId, searchText, limit, next
     let body = {
         filters: {searchText: searchText ? searchText : ""},
         limit: limit || 10,
-        lastKey: nextPage || "1"
+        lastKey: nextPage || null
     }
     return fetchApi({
         url: `/practice/${practiceId}/patient/${patientId}` + "/contacts",
@@ -40,7 +40,7 @@ export function getPatientDocuments(practiceId,patientId, searchText, limit, nex
     let body = {
         filters: {searchText: searchText ? searchText : "", additonal: true},
         limit: limit || 10,
-        lastKey: nextPage || "1"
+        lastKey: nextPage || null
     }
     return fetchApi({
         url: `/practice/${practiceId}/patient/${patientId}` + "/documents",
@@ -62,7 +62,7 @@ export function getPatientInsurances(practiceId,patientId, searchText, limit, ne
     let body = {
         filters: {searchText: searchText ? searchText : "", additonal: true},
         limit: limit || 10,
-        lastKey: nextPage || "1"
+        lastKey: nextPage || null
     }
     return fetchApi({
         url: `/practice/${practiceId}/patient/${patientId}`+ "/insurances",
@@ -84,7 +84,7 @@ export function getPatientAppointments(practiceId,patientId, searchText, limit, 
     let body = {
         filters: {searchText: searchText ? searchText : ""},
         limit: limit || 10,
-        lastKey: nextPage || "1"
+        lastKey: nextPage || null
     }
     return fetchApi({
         url: `/practice/${practiceId}/patient/${patientId}`+ "/appointments",
@@ -106,7 +106,7 @@ export function getPatientClaims(practiceId,patientId, searchText, limit, nextPa
     let body = {
         filters: {searchText: searchText ? searchText : ""},
         limit: limit || 10,
-        lastKey: nextPage || "1"
+        lastKey: nextPage || null
     }
     return fetchApi({
         url: `/practice/${practiceId}/patient/${patientId}`+ "/claims",
@@ -128,7 +128,7 @@ export function getPatientClinicals(practiceId,patientId, searchText, limit, nex
     let body = {
         filters: {searchText: searchText ? searchText : ""},
         limit: limit || 10,
-        lastKey: nextPage || "1"
+        lastKey: nextPage || null
     }
     return fetchApi({
         url: `/practice/${practiceId}/patient/${patientId}` + "/clinicals",

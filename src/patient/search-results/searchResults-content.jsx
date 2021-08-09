@@ -6,7 +6,7 @@ import {Link} from "react-router-dom";
 import {getPatientSearchResults} from "./api";
 import PaginationBlock from "../components/Pagination";
 import {saveSearchKey} from "../../_actions/persist.action";
-import {connect, useSelector} from "react-redux";
+import {connect} from "react-redux";
 import {getFormattedDate} from "../../_utils/common-utils";
 import {setLoadingState} from "../../_actions/User.action";
 import {addCrumb} from "../../_utils/breadcrumb-util";
@@ -18,7 +18,6 @@ const SearchResultsContent = (props) => {
     let [limit, setLimit] = useState(10);
     let [currentPage, setCurrentPage] = useState(0);
     let [lastKeys, setLastKeys] = useState([]);
-    let state = useSelector(state => state);
 
     useEffect(async () => {
         searchKey = searchKey.toLowerCase();
@@ -30,16 +29,16 @@ const SearchResultsContent = (props) => {
         let crumb = {
             name: `Search results for "${searchKey}"`,
             link: window.location.pathname + "?searchKey=" + searchKey,
-            identifier:"searchResults"
+            identifier: "searchResults"
         }
-        addCrumb(state, crumb, props.dispatch)
+        addCrumb(crumb, props.dispatch)
     }, [])
     const performSearch = async (nextPage) => {
         if (!selectedProfile)
             return;
         setCurrentPage(nextPage)
         let last = lastKeys[nextPage - 1]
-        if (!last && currentPage > 0)
+        if (!last && nextPage > 0)
             return
         props.setLoading(true)
         let filterData = await getPatientSearchResults(selectedProfile.practiceId, searchKey, limit, last)

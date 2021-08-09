@@ -35,7 +35,7 @@ const Comments = (props) => {
     const performSearch = async (nextPage, searchKey) => {
         setCurrentPage(nextPage)
         let last = lastKeys[nextPage - 1]
-        if (!last&&currentPage>0)
+        if (!last&&nextPage>0)
             return
         dispatch(setLoadingState(true))
         let filterData = await getClaimComments(practiceId, patientId, claimId, searchKey, limit, last)

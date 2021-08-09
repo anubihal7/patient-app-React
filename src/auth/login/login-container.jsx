@@ -8,7 +8,7 @@ import {Link, Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {saveUserToken} from "../../_actions/persist.action.js";
 import {Auth} from "aws-amplify";
-import {setLoadingState} from "../../_actions/User.action";
+import {loginUserSuccess, setLoadingState} from "../../_actions/User.action";
 
 const LoginContainer = (props) => {
     let {token} = props;
@@ -20,7 +20,7 @@ const LoginContainer = (props) => {
             props.setLoading(true)
             let data = await Auth.signIn(formObj.username.toLowerCase(), formObj.password);
             props.setLoading(false)
-            props.loginUser({token: data.signInUserSession.idToken.jwtToken});
+            props.loginUser({token: data.signInUserSession.idToken.jwtToken,attributes:data.attributes});
             props.history.push("/patient/dashboard");
         } catch (e) {
             props.setLoading(false)
@@ -71,6 +71,7 @@ const mapDispatchToProps = (dispatch) => {
     return {
         loginUser: (values) => {
             dispatch(saveUserToken(values.token))
+            dispatch(loginUserSuccess(values.attributes))
         },
         setLoading: (values) => {
             dispatch(setLoadingState(values))

@@ -5,7 +5,7 @@ import previous from "../../images/smallArrow.svg";
 
 const PaginationBlock = (props) => {
     const {prevClick, nextClick, currentPage, limit, currentLength} = props
-    let prevTotal = currentPage > 0 ? (currentPage - 1) * limit : 0
+    let prevTotal = currentPage > 0 ? currentPage * limit : 0
     return (
         <>
             <div className="pagintionBlock">

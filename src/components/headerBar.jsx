@@ -1,14 +1,36 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Dropdown} from "react-bootstrap";
 import "./style.scss";
-import {connect} from "react-redux";
-import {saveSelectedProfile} from "../_actions/User.action";
+import {connect, useDispatch} from "react-redux";
+import {saveSelectedProfile, saveUserProfiles} from "../_actions/User.action";
+import {getUserProfile} from "../patient/patient-dashboard/api";
 
 const HeaderBar = (props) => {
     let {user} = props;
+    let [selectedProfile, setSelectedProfile] = useState(null);
     let profiles = user.meta.profiles
-    let selectedProfile = user.meta.selectedProfile
+    const dispatch = useDispatch()
+    useEffect(async () => {
+        setSelectedProfile(user.meta.selectedProfile)
+        if (!selectedProfile) {
+            let practiceId = props.match.params.practiceId;
+            if (practiceId) {
+                if (!profiles) {
+                    let userProf = await getUserProfile()
+                    dispatch(saveUserProfiles(userProf.items))
+                    selectedProfile = userProf.items.find(prof => {
+                        return prof.practiceId === practiceId
+                    })
+                } else {
+                    selectedProfile = profiles.find(prof => {
+                        return prof.practiceId === practiceId
+                    })
+                }
+                setSelectedProfile(selectedProfile)
+            }
+        }
 
+    }, [user.meta.selectedProfile]);
     return (
         <div className="headerBlock text-left">
             <Dropdown className="headerDropdown">

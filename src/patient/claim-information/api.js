@@ -23,7 +23,7 @@ export function getClaimServices(practiceId, patientId, claimId, searchText, lim
     let body = {
         filters: {searchText: searchText ? searchText : ""},
         limit: limit || 10,
-        lastKey: nextPage || "1"
+        lastKey: nextPage || null
     }
     return fetchApi({
         url: `/practice/${practiceId}/patient/${patientId}/claims/${claimId}/services`,
@@ -45,7 +45,7 @@ export function getClaimComments(practiceId, patientId, claimId, searchText, lim
     let body = {
         filters: {searchText: searchText ? searchText : ""},
         limit: limit || 10,
-        lastKey: nextPage || "1"
+        lastKey: nextPage || null
     }
     return fetchApi({
         url: `/practice/${practiceId}/patient/${patientId}/claims/${claimId}/comments`,

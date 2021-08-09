@@ -13,7 +13,6 @@ import Clinicals from "../components/Clinicals.jsx";
 import {getPatientDetails} from "../patient-details/api";
 import {useDispatch, useSelector} from "react-redux";
 import {setLoadingState} from "../../_actions/User.action";
-import {addCrumb} from "../../_utils/breadcrumb-util";
 
 const PatientContent = (props) => {
     let [tabSelection, setTabSelection] = useState("demographics");
@@ -27,13 +26,6 @@ const PatientContent = (props) => {
         setTabSelection(pageType);
         dispatch(setLoadingState(true))
         let patientData = await getPatientDetails(practiceId, patientId)
-
-        let crumb = {
-            name: `Patient Detail-${patientData.patientName} (${patientData.newId})`,
-            link: window.location.pathname,
-            identifier:"patientContent"
-        }
-        addCrumb(state, crumb, dispatch)
 
         dispatch(setLoadingState(false))
         setPatientInfo(patientData)

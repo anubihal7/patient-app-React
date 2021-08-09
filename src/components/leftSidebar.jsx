@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 import {Link} from "react-router-dom";
 import {Auth} from "aws-amplify";
 import {clearUserData} from "../_actions/User.action";
+import {getNameFromEmail} from "../_utils/common-utils";
 
 const LeftSidebar = (props) => {
     const logout = async () => {
@@ -39,7 +40,7 @@ const LeftSidebar = (props) => {
                     </li>
                 </ul>
                 <p className="signOutbtn">
-                    Signed in as Randy
+                    {`Signed in as ${getNameFromEmail(props.user.attributes.email)}`}
                     <a style={{cursor: "pointer"}} onClick={logout}>
                         <img src={signout} className="desktopHidd" alt="logout"/>
                         Sign out

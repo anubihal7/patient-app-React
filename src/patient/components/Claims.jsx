@@ -37,7 +37,7 @@ const Claims = (props) => {
 
         setCurrentPage(nextPage)
         let last = lastKeys[nextPage - 1]
-        if (!last&&currentPage>0)
+        if (!last&&nextPage>0)
             return
         dispatch(setLoadingState(true))
 

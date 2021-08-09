@@ -13,7 +13,11 @@ export const getDateForDocs= (dateObj) => {
     return dateObj[0]+"/"+dateObj[1]+"/"+dateObj[2]
 }
 
-
+export const getNameFromEmail=(email)=>{
+    if(!email)
+        return ""
+    return email.slice(0,email.indexOf("@"))
+}
 export const useInput = initialValue => {
     const [value, setValue] = useState(initialValue);
 
