@@ -43,7 +43,7 @@ const Clinicals = (props) => {
         await performSearch(0);
     }, []);
 
-    const performSearch = async (nextPage, searchKey) => {
+    const performSearch = async (nextPage, searchKey,additional = searchTab) => {
 
         setCurrentPage(nextPage)
         let last = lastKeys[nextPage - 1]
@@ -51,7 +51,7 @@ const Clinicals = (props) => {
             return
         dispatch(setLoadingState(true))
 
-        let filterData = await getPatientClinicals(practiceId, patientId, searchKey, limit, last)
+        let filterData = await getPatientClinicals(practiceId, patientId, searchKey, limit, last,additional)
 
         dispatch(setLoadingState(false))
         setSearchData(filterData.items);

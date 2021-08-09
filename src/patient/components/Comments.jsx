@@ -18,6 +18,18 @@ const Comments = (props) => {
     let patientId = props.match.params.patientId;
     let practiceId = props.match.params.practiceId;
     let claimId = props.match.params.claimId;
+    let [searchTab, setSearchTab] = useState("Default View");
+    const changeTab = async (event) => {
+        let targetTab = event.target.innerHTML.toString()
+        setSearchTab(targetTab)
+        await performSearch(currentPage, "", targetTab)
+    }
+    const getButtonClass = (innerHTML) => {
+        let baseClass = "tabButton"
+        if (searchTab === innerHTML)
+            baseClass = baseClass + " active"
+        return baseClass
+    }
     const onKeyUp = async (e) => {
         if (e.key === "Enter") {
             let text = e.target.value.toLowerCase();
@@ -32,13 +44,13 @@ const Comments = (props) => {
         await performSearch(0);
     }, []);
 
-    const performSearch = async (nextPage, searchKey) => {
+    const performSearch = async (nextPage, searchKey, additional = searchTab) => {
         setCurrentPage(nextPage)
         let last = lastKeys[nextPage - 1]
-        if (!last&&nextPage>0)
+        if (!last && nextPage > 0)
             return
         dispatch(setLoadingState(true))
-        let filterData = await getClaimComments(practiceId, patientId, claimId, searchKey, limit, last)
+        let filterData = await getClaimComments(practiceId, patientId, claimId, searchKey, limit, last, additional)
         dispatch(setLoadingState(false))
         setSearchData(filterData.items);
         if (!lastKeys.includes(filterData.lastKey)) {
@@ -68,10 +80,10 @@ const Comments = (props) => {
             </div>
             <div className="sectionOne">
                 <div className="buttonTabs">
-                    <Button variant="primary" className="tabButton active">
+                    <Button variant="primary" className={getButtonClass("Default View")} onClick={changeTab}>
                         Default View
                     </Button>
-                    <Button variant="primary" className="tabButton ">
+                    <Button variant="primary" className={getButtonClass("Show All")} onClick={changeTab}>
                         Show All
                     </Button>
                 </div>

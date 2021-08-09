@@ -13,9 +13,10 @@ const PatientInfo = (props) => {
     let claimId = props.match.params.claimId;
     const dispatch = useDispatch()
     useEffect(async () => {
+        let pathname = window.location.pathname.split("details")[0] + "details/demographics"
         let crumb = {
             name: `Patient Detail`,
-            link: window.location.pathname,
+            link: pathname,
             identifier: "patientContent",
             keepPos: !!claimId
         }
@@ -26,7 +27,7 @@ const PatientInfo = (props) => {
             identifier: "patientContent",
             keepPos: !!claimId
         }
-        addCrumb(crumb, dispatch,true)
+        addCrumb(crumb, dispatch, true)
         setPatientInfo(patientData)
     }, [])
     return (
