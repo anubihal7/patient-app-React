@@ -24,6 +24,12 @@ export const getDateForClinicals = (dateObj) => {
     return split[1] + "/" + split[2] + "/" + split[0]
 }
 
+export const getDateForInsurances = (dateObj) => {
+    let split = dateObj.split('-')
+    return split[1] + "/" + split[2] + "/" + split[0]
+}
+
+
 export const getTimeForAppointments = (time) => {
     return new Date(time).toLocaleTimeString()
 }

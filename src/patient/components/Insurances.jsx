@@ -7,6 +7,8 @@ import PaginationBlock from "./Pagination";
 import {getPatientInsurances} from "../patient-details/api";
 import {useDispatch} from "react-redux";
 import {setLoadingState} from "../../_actions/User.action";
+import {getDateForInsurances} from "../../_utils/common-utils";
+
 
 const Insurances = (props) => {
     let [searchData, setSearchData] = useState([]);
@@ -108,8 +110,8 @@ const Insurances = (props) => {
                                 <td>{item.rank}</td>
                                 <td>{item.type}</td>
                                 <td>{item.plan}</td>
-                                <td>{item.startDate}</td>
-                                <td>{item.endDate}</td>
+                                <td>{getDateForInsurances(item.startDate)}</td>
+                                <td>{item.endDate ? getDateForInsurances(item.endDate): ''}</td>
                                 <td>{item.policy}</td>
                                 <td>{item.group}</td>
                                 <td>{item.status}</td>
