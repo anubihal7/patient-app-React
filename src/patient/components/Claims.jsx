@@ -9,7 +9,6 @@ import {getPatientClaims} from "../patient-details/api";
 import {getFormattedDate} from "../../_utils/common-utils";
 import {useDispatch} from "react-redux";
 import {setLoadingState} from "../../_actions/User.action";
-
 const Claims = (props) => {
     let [searchData, setSearchData] = useState([]);
     let [limit, setLimit] = useState(10);
@@ -44,6 +43,10 @@ const Claims = (props) => {
         await performSearch(0);
     }, []);
 
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+      });
     const performSearch = async (nextPage, searchKey, additional = searchTab) => {
 
         setCurrentPage(nextPage)
@@ -117,11 +120,11 @@ const Claims = (props) => {
                                 <td>{getFormattedDate(item.claimDate)}</td>
                                 <td>{item.provider}</td>
                                 <td>{item.location}</td>
-                                <td>{item.totalCharges}</td>
-                                <td>{item.appliedPayments}</td>
-                                <td>{item.adjustments}</td>
+                                <td>{formatter.format(item.totalCharges)}</td>
+                                <td>{formatter.format(item.appliedPayments)}</td>
+                                <td>{formatter.format(item.adjustments)}</td>
                                 <td>{item.billedTo}</td>
-                                <td>{item.balance}</td>
+                                <td>{formatter.format(item.balance)}</td>
 
                                 <td>
                                     <img src={darkArrow} alt="rightArrow"/>

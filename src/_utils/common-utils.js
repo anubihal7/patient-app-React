@@ -5,18 +5,33 @@ export const getFullName = (user) => {
     return user ? `${user.lastName ? user.lastName + ", " : ""}${user.firstName ? user.firstName + " " : ""}${user.middleName ? user.middleName : ""}` : "-"
 }
 
+
 export const getFormattedDate = (date) => {
-return moment(date).format("DD/MM/YYYY")
+    return moment(date).format("MM/DD/YYYY")
 }
 
-export const getDateForDocs= (dateObj) => {
-    return dateObj[0]+"/"+dateObj[1]+"/"+dateObj[2]
+export const getDateForDocs = (dateObj) => {
+    return dateObj[0] + "/" + dateObj[1] + "/" + dateObj[2]
 }
 
-export const getNameFromEmail=(email)=>{
-    if(!email)
+export const getDateForAppointments = (dateObj) => {
+    let split = dateObj.split('-')
+    return split[1] + "/" + split[2] + "/" + split[0]
+}
+
+export const getDateForClinicals = (dateObj) => {
+    let split = dateObj.split('-')
+    return split[1] + "/" + split[2] + "/" + split[0]
+}
+
+export const getTimeForAppointments = (time) => {
+    return new Date(time).toLocaleTimeString()
+}
+
+export const getNameFromEmail = (email) => {
+    if (!email)
         return ""
-    return email.slice(0,email.indexOf("@"))
+    return email.slice(0, email.indexOf("@"))
 }
 export const useInput = initialValue => {
     const [value, setValue] = useState(initialValue);

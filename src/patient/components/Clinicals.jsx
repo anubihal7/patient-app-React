@@ -7,6 +7,7 @@ import PaginationBlock from "./Pagination";
 import {getPatientClinicals} from "../patient-details/api";
 import {useDispatch} from "react-redux";
 import {setLoadingState} from "../../_actions/User.action";
+import {getDateForClinicals} from "../../_utils/common-utils";
 
 const Clinicals = (props) => {
     let [searchData, setSearchData] = useState([]);
@@ -105,8 +106,8 @@ const Clinicals = (props) => {
                     {searchData?.map((item, index) => {
                         return (
                             <tr key={index}>
-                                <td>{item.clinicalDate}</td>
-                                <td>{item.clinicalTime}</td>
+                                <td>{getDateForClinicals(item.clinicalDate)}</td>
+                                <td>{item.clinicalTime === '00:00:00' ? "" : item.clinicalTime}</td>
                                 <td>{item.type}</td>
                                 <td>{item.reason}</td>
                                 <td>{item.resource}</td>
