@@ -12,9 +12,9 @@ const NewPasswordFormCognito = (props) => {
     const [verificationCode, setVerificationCode] = useState("");
     const [error, setError] = useState("");
     let searchParams = new URLSearchParams(props.location.search);
-    let email=""
-    if(searchParams&&searchParams.has("email")){
-        email=searchParams.get("email")
+    let email = ""
+    if (searchParams && searchParams.has("email")) {
+        email = searchParams.get("email")
     }
     const submit = async () => {
         let errors = []
@@ -34,19 +34,22 @@ const NewPasswordFormCognito = (props) => {
             errors.forEach(er => {
                 if (err !== "")
                     err = ".\n" + er
+                else err = er
             })
             setError(err)
+        } else {
+            try {
+                await Auth.forgotPasswordSubmit(
+                    email,
+                    verificationCode,
+                    newPass
+                );
+                history.push("/auth/allset");
+            } catch (error) {
+                setError(error.message)
+            }
         }
-        try {
-            await Auth.forgotPasswordSubmit(
-                email,
-                verificationCode,
-                newPass
-            );
-            history.push("/auth/allset");
-        } catch (error) {
-            setError(error.message)
-        }
+
 
     };
     const handleChange = (e, section) => {

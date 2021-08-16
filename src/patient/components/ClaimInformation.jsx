@@ -20,7 +20,7 @@ const ClaimInfo = (props) => {
             link: window.location.pathname,
             identifier:"claimInfo"
         }
-        addCrumb( crumb, dispatch)
+        addCrumb( crumb, dispatch,true)
     }, [])
     return (
         <div className="claimInfo text-left">

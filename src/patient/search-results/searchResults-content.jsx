@@ -31,8 +31,8 @@ const SearchResultsContent = (props) => {
             link: window.location.pathname + "?searchKey=" + searchKey,
             identifier: "searchResults"
         }
-        addCrumb(crumb, props.dispatch)
-    }, [])
+        addCrumb(crumb, props.dispatch, true)
+    }, [searchKey])
     const performSearch = async (nextPage) => {
         if (!selectedProfile)
             return;
