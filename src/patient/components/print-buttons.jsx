@@ -10,8 +10,8 @@ const PrintButton = (props) => {
                 {types?.map((item, index) => {
                     return (<Col>
                         <div className="printBlock">
-                            <label>A</label>
-                            <h6>{item}</h6>
+                            <label>{item.split(',')[0]}</label>
+                            <h6>{item.split(',')[1]}</h6>
                         </div>
                     </Col>)
                 })}

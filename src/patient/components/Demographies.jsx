@@ -96,7 +96,7 @@ const Demographics = (props) => {
                     </Col>
                     <Col>
                         <label>First contact date</label>
-                        <h6>{patientInfo.firstContactDate}</h6>
+                        <h6>{(new Date(patientInfo.firstContactDate)).toLocaleDateString()}</h6>
                     </Col>
                     <Col>
                         <label>Emergency Contact</label>

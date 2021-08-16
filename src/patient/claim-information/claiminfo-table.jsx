@@ -1,17 +1,13 @@
-import React, {useEffect, useState} from "react";
-import {Col, Row} from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Col, Row } from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 
 import "./style.scss";
-import {getClaimServices} from "./api";
+import { getClaimServices } from "./api";
 
 
 const columns = [
-    {
-        dataField: "serviceId",
-        text: "ID",
-        sort: true,
-    },
+
     {
         dataField: "serviceName",
         text: "Service",
@@ -30,7 +26,7 @@ const columns = [
             return (
                 <div className="badge dxLinks">
                     {cellContent?.map((item, index) => {
-                        return (<span>{item}</span>)
+                        return (<span>{item.substring(0, 1)}</span>)
                     })}
                 </div>
             );
@@ -45,33 +41,56 @@ const columns = [
         dataField: "charge",
         text: "Charge",
         sort: true,
+        formatter: (cellContent, row) => {
+            return formatter.format(cellContent)
+        }
     },
     {
         dataField: "ttlCharge",
         text: "TTL Charge",
         sort: true,
+        formatter: (cellContent, row) => {
+            return formatter.format(cellContent)
+        }
     },
     {
         dataField: "ttlAllowed",
         text: "TTL Allowed",
         sort: true,
+        formatter: (cellContent, row) => {
+            return formatter.format(cellContent)
+        }
     },
     {
         dataField: "payments",
         text: "Payments",
         sort: true,
+        formatter: (cellContent, row) => {
+            return formatter.format(cellContent)
+        }
     },
     {
         dataField: "adjustments",
         text: "Adjustments",
         sort: true,
+        formatter: (cellContent, row) => {
+            return formatter.format(cellContent)
+        }
     },
     {
         dataField: "balance",
         text: "Balance",
         sort: true,
+        formatter: (cellContent, row) => {
+            return formatter.format(cellContent)
+        }
     },
 ];
+
+const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+});
 
 const expandRow = {
     renderer: (row) => {
@@ -111,13 +130,16 @@ const expandRow = {
         )
     },
     showExpandColumn: true,
-    expandHeaderColumnRenderer: ({isAnyExpands}) => {
+    expandHeaderColumnRenderer: (isAnyExpands) => (null ),
+/*
+    expandHeaderColumnRenderer: ({ isAnyExpands }) => {
         if (isAnyExpands) {
             return <p className="reduce-table-row">--</p>;
         }
         return <p className="expand-table-row">++</p>;
     },
-    expandColumnRenderer: ({expanded}) => {
+*/    
+    expandColumnRenderer: ({ expanded }) => {
         if (expanded) {
             return <p className="reduce-table-row">--</p>;
         } else {
@@ -138,6 +160,15 @@ const ClaimInfoTable = (props) => {
     }, []);
     const performSearch = async (nextPage, searchKey) => {
         let filterData = await getClaimServices(practiceId, patientId, claimId, searchKey, limit, nextPage)
+        
+        filterData = {
+            "items": filterData.items.map((it) => {
+                delete it.serviceId;
+                return it
+            })
+        }
+        
+
         setSearchData(filterData.items);
     }
 

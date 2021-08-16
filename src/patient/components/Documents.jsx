@@ -8,7 +8,7 @@ import PaginationBlock from "./Pagination";
 import {getPatientDocuments} from "../patient-details/api";
 import {useDispatch} from "react-redux";
 import {setLoadingState} from "../../_actions/User.action";
-
+import {getDateForDocs} from "../../_utils/common-utils";
 const Documents = (props) => {
     let [searchData, setSearchData] = useState([]);
     let [limit, setLimit] = useState(10);
@@ -100,7 +100,7 @@ const Documents = (props) => {
                             }}>
                                 <td>{item.name}</td>
                                 <td>{item.category}</td>
-                                <td>{item.dateCreated}</td>
+                                <td>{getDateForDocs(item.dateCreated)}</td>
                                 <td>{item.description}</td>
                                 <td>
                                     <img src={darkArrow} alt="rightArrow"/>
