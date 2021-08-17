@@ -12,7 +12,6 @@ const PDFViewerComponent = (props) => {
     useEffect(async () => {
         if (link) {
             let fileType = get_url_extension(link)
-            console.log("fileType>>>>",fileType)
             setFileType(fileType)
         }
     }, [link]);

@@ -7,7 +7,7 @@ import PaginationBlock from "./Pagination";
 import {getPatientAppointments} from "../patient-details/api";
 import {useDispatch} from "react-redux";
 import {setLoadingState} from "../../_actions/User.action";
-import {getDateForAppointments, getTimeForAppointments} from "../../_utils/common-utils";
+import {getSpecificFormatDate, getTimeForAppointments} from "../../_utils/common-utils";
 
 const Appointments = (props) => {
     let [searchData, setSearchData] = useState([]);
@@ -107,7 +107,7 @@ const Appointments = (props) => {
                     {searchData?.map((item, index) => {
                         return (
                             <tr key={index}>
-                                <td>{getDateForAppointments(item.appointmentDate)}</td>
+                                <td>{getSpecificFormatDate(item.appointmentDate)}</td>
                                 <td>{getTimeForAppointments(item.appointmentTime)}</td>
                                 <td>{item.type}</td>
                                 <td>{item.reason}</td>

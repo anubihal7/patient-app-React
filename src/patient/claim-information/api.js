@@ -31,12 +31,12 @@ export function getClaimServices(practiceId, patientId, claimId, searchText, lim
         body: body
     }).then(data => {
         if (!data)
-            return Promise.resolve([])
+            return Promise.resolve({})
         else {
             return Promise.resolve(data)
         }
     }).catch(error => {
-        return Promise.resolve([])
+        return Promise.resolve({})
     })
 
 }

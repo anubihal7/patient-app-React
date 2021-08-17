@@ -4,6 +4,7 @@ export const actionTypes = {
   LOGOUT_USERS_PERSIST: "LOGOUT_USERS_PERSIST",
   SAVE_SEARCH_KEY: "SAVE_SEARCH_KEY",
   UPDATE_CRUMB: "UPDATE_CRUMB",
+  ERROR_OCCURRED: "ERROR_OCCURRED",
 };
 
 /*
@@ -24,6 +25,12 @@ export function updateCrumb(breadCrumbs) {
   };
 }
 
+export function errorOccurred(error) {
+  return {
+    type: actionTypes.ERROR_OCCURRED,
+    data: error,
+  };
+}
 export function logoutUser() {
   return {
     type: actionTypes.LOGOUT_USERS_PERSIST,

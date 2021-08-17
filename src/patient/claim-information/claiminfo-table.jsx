@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import React, {useEffect, useState} from "react";
+import {Col, Row} from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 
 import "./style.scss";
-import { getClaimServices } from "./api";
+import {getClaimServices} from "./api";
 
 
 const columns = [
@@ -130,16 +130,16 @@ const expandRow = {
         )
     },
     showExpandColumn: true,
-    expandHeaderColumnRenderer: (isAnyExpands) => (null ),
-/*
-    expandHeaderColumnRenderer: ({ isAnyExpands }) => {
-        if (isAnyExpands) {
-            return <p className="reduce-table-row">--</p>;
-        }
-        return <p className="expand-table-row">++</p>;
-    },
-*/    
-    expandColumnRenderer: ({ expanded }) => {
+    expandHeaderColumnRenderer: (isAnyExpands) => (null),
+    /*
+        expandHeaderColumnRenderer: ({ isAnyExpands }) => {
+            if (isAnyExpands) {
+                return <p className="reduce-table-row">--</p>;
+            }
+            return <p className="expand-table-row">++</p>;
+        },
+    */
+    expandColumnRenderer: ({expanded}) => {
         if (expanded) {
             return <p className="reduce-table-row">--</p>;
         } else {
@@ -160,16 +160,13 @@ const ClaimInfoTable = (props) => {
     }, []);
     const performSearch = async (nextPage, searchKey) => {
         let filterData = await getClaimServices(practiceId, patientId, claimId, searchKey, limit, nextPage)
-        
-        filterData = {
-            "items": filterData.items.map((it) => {
+        if (filterData && filterData.items) {
+            filterData.items = filterData.items.map((it) => {
                 delete it.serviceId;
                 return it
             })
+            setSearchData(filterData.items);
         }
-        
-
-        setSearchData(filterData.items);
     }
 
     return (

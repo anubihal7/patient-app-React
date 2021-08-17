@@ -3,7 +3,8 @@ import {actionTypes} from "../_actions/persist.action";
 const initialState = {
     JwtToken: {},
     searchKey: "",
-    breadCrumb: []
+    breadCrumb: [],
+    error:""
 };
 
 const persist = (state = initialState, action) => {
@@ -28,7 +29,11 @@ const persist = (state = initialState, action) => {
                 ...state,
                 breadCrumb: action.data
             };
-
+        case actionTypes.ERROR_OCCURRED:
+            return {
+                ...state,
+                error: action.data
+            };
         default:
             return state;
     }

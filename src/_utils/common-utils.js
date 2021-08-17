@@ -13,18 +13,9 @@ export const getFormattedDate = (date) => {
 export const getDateForDocs = (dateObj) => {
     return dateObj[0] + "/" + dateObj[1] + "/" + dateObj[2]
 }
-
-export const getDateForAppointments = (dateObj) => {
-    let split = dateObj.split('-')
-    return split[1] + "/" + split[2] + "/" + split[0]
-}
-
-export const getDateForClinicals = (dateObj) => {
-    let split = dateObj.split('-')
-    return split[1] + "/" + split[2] + "/" + split[0]
-}
-
-export const getDateForInsurances = (dateObj) => {
+export const getSpecificFormatDate = (dateObj) => {
+    if(!dateObj)
+        return ""
     let split = dateObj.split('-')
     return split[1] + "/" + split[2] + "/" + split[0]
 }

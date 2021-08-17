@@ -1,10 +1,11 @@
 import React from "react";
 import {Route, Redirect} from "react-router-dom";
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import {setJwtToken} from "../_utils/http-utils";
 
 const AuthGuard = ({component: Component, ...rest}) => {
     let {token} = rest;
+    let dispatch=useDispatch()
     let redirectUrl = ""
     try {
         if (Object.keys(token).length === 0) {
@@ -18,7 +19,7 @@ const AuthGuard = ({component: Component, ...rest}) => {
     if (!isAuthenticated) {
         redirectUrl = `${window.location.pathname}`;
     }
-    setJwtToken(token)
+    setJwtToken(token,dispatch)
     return (
         <Route
             {...rest}

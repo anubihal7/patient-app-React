@@ -1,8 +1,10 @@
 import config from "../config";
 import {decode as jwtDecode} from "jsonwebtoken";
 import {Auth} from "aws-amplify";
+import {errorOccurred} from "../_actions/persist.action";
 
 let jwtToken = null;
+let localDispatch
 
 export const fetchApi = async (params) => {
     const {url, method} = params;
@@ -32,25 +34,39 @@ export const fetchApi = async (params) => {
         method,
         body,
         headers
-    }).then(response => {
+    }).then(async response => {
+        let error
         switch (response.status) {
             case 401:
                 //move to login page here and log user out
                 localStorage.clear()
                 window.location = "/auth/login"
                 return
+            case 403:
+                error = await response.json()
+                if (localDispatch) {
+                    localDispatch(errorOccurred(error.Error))
+                }
+                return Promise.reject({error: error, status: response.status})
             case 200:
                 return Promise.resolve(response.json())
             default:
-                return Promise.reject({error: response.json(), status: response.status})
+                error = await response.json()
+                if (localDispatch) {
+                    localDispatch(errorOccurred(error.Error))
+                }
+                return Promise.reject({error: error, status: response.status})
         }
 
     }).catch(err => {
-        console.log("err>>", err)
-        return Promise.reject({error: err, status: 503})
+        return Promise.reject({
+            error: err.error ? err.error : "Unknown error occurred.",
+            status: err.status ? err.status : 503
+        })
     });
 };
 
-export const setJwtToken = (token) => {
+export const setJwtToken = (token, dispatch) => {
     jwtToken = token;
+    localDispatch = dispatch
 };

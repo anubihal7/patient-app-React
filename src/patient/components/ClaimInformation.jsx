@@ -5,7 +5,7 @@ import {getClaimInfo} from "../claim-information/api";
 import PrintButton from "./print-buttons";
 import {addCrumb} from "../../_utils/breadcrumb-util";
 import {useDispatch} from "react-redux";
-import {getDateForInsurances} from "../../_utils/common-utils";
+import {getSpecificFormatDate} from "../../_utils/common-utils";
 
 const ClaimInfo = (props) => {
     let [claimInfo, setClaimInfo] = useState(null);
@@ -39,7 +39,7 @@ const ClaimInfo = (props) => {
                             <Row xs={1} sm={2} md={2} lg={3} xl={4}>
                                 <Col>
                                     <label>Date of Service</label>
-                                    <h6>{getDateForInsurances(claimInfo.claimDate)}</h6>
+                                    <h6>{getSpecificFormatDate(claimInfo.claimDate)}</h6>
                                 </Col>
                                 <Col>
                                     <label>Claim Type</label>

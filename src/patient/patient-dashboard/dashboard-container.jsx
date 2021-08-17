@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import HeaderBar from "../../components/headerBar";
 import LeftSidebar from "../../components/leftSidebar";
 import SearchBlock from "../../components/searchBlock";
+import ErrorBlock from "../../components/errorBlock";
 import DashboardContent from "./dashboard-content";
 import SearchResultsContent from "../search-results/searchResults-content";
 import "../patient-dashboard/style.scss";
@@ -10,6 +11,7 @@ import {getUserProfile} from "./api";
 import {connect, useDispatch} from "react-redux";
 import {saveUserProfiles, setLoadingState} from "../../_actions/User.action";
 import {clearCrumbs} from "../../_utils/breadcrumb-util";
+import {errorOccurred} from "../../_actions/persist.action";
 
 const DashboardContainer = (props) => {
     const [searchKey, setSearchKey] = useState("");
@@ -17,6 +19,7 @@ const DashboardContainer = (props) => {
     const dispatch = useDispatch()
 
     useEffect(async () => {
+        dispatch(errorOccurred(""))
         dispatch(setLoadingState(true))
         let userProf = await getUserProfile()
         dispatch(setLoadingState(false))
@@ -46,6 +49,7 @@ const DashboardContainer = (props) => {
                 <SearchBlock setSearch={(searchText) => {
                     setSearchKey(searchText)
                 }} {...props} />
+                <ErrorBlock {...props}/>
                 {searchKey === "" || !selectedProfile ? (
                     <DashboardContent/>
                 ) : (

@@ -4,6 +4,7 @@ import LeftSidebar from "../../components/leftSidebar";
 import SearchBlock from "../../components/searchBlock";
 import PatientContant from "./patient-contant";
 import "../patient-dashboard/style.scss";
+import ErrorBlock from "../../components/errorBlock";
 
 const PatientContainer = (props) => (
   <div className="dashboardMainBlock">
@@ -13,6 +14,7 @@ const PatientContainer = (props) => (
     <div className="dashboardRightBlock">
       <HeaderBar {...props} />
       <SearchBlock {...props} />
+        <ErrorBlock {...props}/>
       <PatientContant {...props} />
     </div>
   </div>

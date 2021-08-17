@@ -292,6 +292,50 @@
     }
 }
 
+.errorBlock{
+    background-color: rgba(255, 11, 0, 0.68);
+    padding: 4px 36px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    .closeIcon {
+        background-color: #E0E0E0;
+        border: 1px solid #E0E0E0;
+        border-radius: 21px;
+        padding: 2px 10px;
+        min-width: 255px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 12px;
+        line-height: 20px;
+        color: #4F4F4F;
+        @media(max-width:767px){
+            min-width: unset;
+            width: 100%;
+        }
+        &:focus,&:active,&:hover{
+            outline: none;
+            box-shadow: none !important;
+            background-color: #E0E0E0;
+            border: 1px solid #E0E0E0;
+            color: #4F4F4F;
+        }
+        &::after{
+            content: '';
+            border: 0px;
+            background-image: url("../images/cancel.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            height: 12px;
+            width: 12px;
+        }
+    }
+}
 // search block 
 
 .searchBlock {

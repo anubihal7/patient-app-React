@@ -9,6 +9,7 @@ import {getPatientDocuments} from "../patient-details/api";
 import {useDispatch} from "react-redux";
 import {setLoadingState} from "../../_actions/User.action";
 import {getDateForDocs} from "../../_utils/common-utils";
+
 const Documents = (props) => {
     let [searchData, setSearchData] = useState([]);
     let [limit, setLimit] = useState(10);
@@ -34,6 +35,7 @@ const Documents = (props) => {
     useEffect(async () => {
         if (prevDetail && prevDetail.searchData) {
             setSearchData(prevDetail.searchData)
+            setCurrentPage(prevDetail.currentPage)
         } else {
             await performSearch(0);
         }
@@ -65,7 +67,7 @@ const Documents = (props) => {
         props.history.push(
             {
                 pathname: `/practice/${practiceId}/patient/${patientId}/details/documents/` + item.documentId,
-                state: {detail: {searchData: searchData}}
+                state: {detail: {searchData: searchData, currentPage: currentPage}}
             }
         );
     };
