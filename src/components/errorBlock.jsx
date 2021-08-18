@@ -5,10 +5,13 @@ import {errorOccurred} from "../_actions/persist.action";
 
 const ErrorBlock = (props) => {
     let {error} = props;
-    return (error && error !== "" ?
+    return (
+        error && error !== "" ?
             <div className="errorBlock">
                 <h6>{error}</h6>
-            </div> : null
+                <a className="closeIcon" onClick={()=>{props.clearError()}}/>
+            </div>
+            : null
     )
         ;
 };
