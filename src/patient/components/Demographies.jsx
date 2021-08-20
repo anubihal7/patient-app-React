@@ -53,12 +53,12 @@ const Demographics = (props) => {
                     <Col>
                         <label>Address</label>
                         <h6>{patientInfo.address1 + "\n"
-                        + (patientInfo.address2 !== "" ? patientInfo.address2 + "\n" : "")
+                        + (patientInfo.address2 ? patientInfo.address2 + "\n" : "\n")
                         + patientInfo.city + ", " + patientInfo.state + " " + patientInfo.postalCode}</h6>
                     </Col>
                     <Col>
                         <label>Email Address</label>
-                        <h6>u{patientInfo.email}</h6>
+                        <h6>{patientInfo.email}</h6>
                     </Col>
                     <Col>
                         <label>Home Phone</label>
@@ -96,7 +96,7 @@ const Demographics = (props) => {
                     </Col>
                     <Col>
                         <label>First contact date</label>
-                        <h6>{(new Date(patientInfo.firstContactDate)).toLocaleDateString()}</h6>
+                        <h6>{patientInfo.firstContactDate ? (new Date(patientInfo.firstContactDate)).toLocaleDateString(): ""}</h6>
                     </Col>
                     <Col>
                         <label>Emergency Contact</label>
@@ -105,7 +105,7 @@ const Demographics = (props) => {
 
                     <Col>
                         <label>Emergency contact relation</label>
-                        <h6>Spouse</h6>
+                        <h6>{patientInfo.emergencyContactRelationship}</h6>
                     </Col>
                     <Col>
                         <label>Emergency contact Phone</label>

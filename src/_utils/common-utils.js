@@ -6,8 +6,8 @@ export const getFullName = (user) => {
 }
 
 
-export const getFormattedDate = (date) => {
-    return moment(date).format("MM/DD/YYYY")
+export const getFormattedDate = (date, add) => {
+    return moment(date).add( add || 0, 'days').format("MM/DD/YYYY")
 }
 
 export const getDateForDocs = (dateObj) => {

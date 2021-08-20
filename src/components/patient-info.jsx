@@ -23,7 +23,7 @@ const PatientInfo = (props) => {
         addCrumb(crumb, dispatch)
         let patientData = await getPatientDetails(practiceId, patientId)
         crumb = {
-            name: `Patient Detail-${patientData.patientName} (${patientData.newId})`,
+            name: `Patient Detail-${patientData.patientName} (${patientData.newId || patientData.oldId })`,
             identifier: "patientContent",
             keepPos: !!claimId
         }
@@ -45,7 +45,7 @@ const PatientInfo = (props) => {
                         <Col>
                             <div className="patientName">
                                 <h6>Date of Birth</h6>
-                                <h3>{patientInfo ? getFormattedDate(patientInfo.dob) : "-"}</h3>
+                                <h3>{patientInfo ? getFormattedDate(patientInfo.dob, 1) : "-"}</h3>
                             </div>
                         </Col>
                         <Col>
