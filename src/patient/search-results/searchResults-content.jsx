@@ -86,7 +86,7 @@ const SearchResultsContent = (props) => {
                             }}>
                                 <td>{item.newId}</td>
                                 <td>{item.oldId}</td>
-                                <td>{getFormattedDate(item.dob)}</td>
+                                <td>{getFormattedDate(item.dob, 1)}</td>
                                 <td>{item.patientName}</td>
                                 <td>{" "}</td>
                                 <td>
