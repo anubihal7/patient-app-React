@@ -32,7 +32,7 @@ const ClaimInfo = (props) => {
                     <Row>
                         <Col sm={12} md={4} lg={3}>
                             <div className="claimID">
-                                <h5><span>Claim ID</span>{claimInfo.claimId}</h5>
+                                <h6><span>Claim ID: </span>{claimInfo.claimId}</h6>
                             </div>
                         </Col>
                         <Col sm={12} md={8} lg={9} className="claiminfoblocks">
