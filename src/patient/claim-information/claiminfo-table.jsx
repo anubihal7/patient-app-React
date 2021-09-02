@@ -7,7 +7,7 @@ import {getClaimServices} from "./api";
 
 
 const columns = [
-
+  
     {
         dataField: "serviceName",
         text: "Service",
@@ -162,7 +162,7 @@ const ClaimInfoTable = (props) => {
         let filterData = await getClaimServices(practiceId, patientId, claimId, searchKey, limit, nextPage)
         if (filterData && filterData.items) {
             filterData.items = filterData.items.map((it) => {
-                delete it.serviceId;
+                //delete it.serviceId;
                 return it
             })
             setSearchData(filterData.items);
