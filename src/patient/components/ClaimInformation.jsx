@@ -63,7 +63,7 @@ const ClaimInfo = (props) => {
                                 </Col>
                                 <Col>
                                     <label>Referring Providers</label>
-                                    <h6>{claimInfo.provider}</h6>
+                                    <h6>{claimInfo.referring}</h6>
                                 </Col>
                                 <Col>
                                     <label>Service Location</label>
