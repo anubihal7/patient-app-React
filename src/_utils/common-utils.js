@@ -2,7 +2,7 @@ import moment from "moment";
 import { useState } from "react";
 
 export const getFullName = (user) => {
-    return user ? `${user.lastName ? user.lastName + ", " : ""}${user.firstName ? user.firstName + " " : ""}${user.middleName ? user.middleName : ""}` : "-"
+    return user ? `${user.lastName ? user.lastName + ", " : ""}${user.firstName ? user.firstName + " " : ""}${user.middleName ? user.middleName : ""}` : "N/A"
 }
 
 
@@ -22,7 +22,7 @@ export const getSpecificFormatDate = (dateObj) => {
 
 
 export const getTimeForAppointments = (time) => {
-    return new Date(time).toLocaleTimeString()
+    return moment(time).format("h:MM A")
 }
 
 export const getNameFromEmail = (email) => {

@@ -36,8 +36,8 @@ const PatientInfo = (props) => {
                 <Col>
                     <div className="patientName">
                         <h6>Patient Name</h6>
-                        <h4>{patientInfo ? patientInfo.patientName : "-"}</h4>
-                        <h5>{patientInfo ? patientInfo.gender : "-"}</h5>
+                        <h4>{patientInfo ? patientInfo.patientName : "N/A"}</h4>
+                        <h5>{patientInfo ? patientInfo.gender : "N/A"}</h5>
                     </div>
                 </Col>
                 <Col>
@@ -45,19 +45,19 @@ const PatientInfo = (props) => {
                         <Col>
                             <div className="patientName">
                                 <h6>Date of Birth</h6>
-                                <h3>{patientInfo ? getFormattedDate(patientInfo.dob, 1) : "-"}</h3>
+                                <h3>{patientInfo ? getFormattedDate(patientInfo.dob,1) : "N/A"}</h3>
                             </div>
                         </Col>
                         <Col>
                             <div className="patientName">
                                 <h6>New ID #</h6>
-                                <h3>{patientInfo ? patientInfo.newId : "-"}</h3>
+                                <h3>{patientInfo ? patientInfo.newId : "N/A"}</h3>
                             </div>
                         </Col>
                         <Col>
                             <div className="patientName">
                                 <h6>Prior ID #</h6>
-                                <h3>{patientInfo ? patientInfo.oldId : "-"}</h3>
+                                <h3>{patientInfo ? patientInfo.oldId : "N/A"}</h3>
                             </div>
                         </Col>
                     </Row>

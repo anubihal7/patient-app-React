@@ -52,9 +52,9 @@ const PDFViewerContainer = (props) => {
                 <div className="pdfName">
                     <img onClick={goBack} src={arrowWhite} alt="arrowWhite"/>
                     <div className="pdfNameBlock">
-                        <p>{docDetails ? docDetails.description : "-"}</p>
+                        <p>{docDetails ? docDetails.description : "N/A"}</p>
                         <div className="pdfInfoBlock">
-                            <p>{docDetails ? docDetails.name : "-"}</p>
+                            <p>{docDetails ? docDetails.name : "N/A"}</p>
                             <p>—</p>
                             <p>{docDetails ? `[${docDetails.category}]` : ""}</p>
                             <p>—</p>

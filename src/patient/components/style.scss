@@ -172,10 +172,7 @@
     }
 }
 .buttonTabs{
-    padding-left: 25px;
-    @media(max-width:480px){
-        padding-left: 0px;
-    }
+    padding-left: 0px;
     .tabButton {
         font-style: normal;
         font-weight: 500;

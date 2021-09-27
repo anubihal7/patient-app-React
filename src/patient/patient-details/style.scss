@@ -1,5 +1,7 @@
 .patientContant{
     background: linear-gradient(0deg, rgba(60, 100, 177, 0.06), rgba(60, 100, 177, 0.06)), #FFFFFF;
+    padding: 0px 36px;
+    min-height: calc(100vh - 84px);
     .componentTree{
         margin: 0 38px;
         @media(max-width:767px){

@@ -11,11 +11,13 @@ import {useSelector} from "react-redux";
 
 const SearchBlock = (props) => {
     let [advanceSearch, setAdvanceSearch] = useState(false);
+    const [hidePDFControls, setShowPDFControls] = useState(props.hidePDFControls);
     const {value: firstName, bind: bindFirstName} = useInput('');
     const {value: lastName, bind: bindLastName} = useInput('');
     const {value: newId, bind: bindNewId} = useInput('');
     const {value: oldId, bind: bindOldId} = useInput('');
     const {value: dob, bind: bindDob} = useInput('');
+
     let selectedProfile = useSelector((state) => state.user.meta.selectedProfile);
 
     const onKeyUp = (e) => {
@@ -69,7 +71,7 @@ const SearchBlock = (props) => {
                         Advanced Search
                     </a>
                 </div>
-                <div className="pdfActionBtns d-flex align-items-center">
+                {!hidePDFControls&&<div className="pdfActionBtns d-flex align-items-center">
                     <Button variant="primary" className="pdfDownlode" onClick={printPage}>
                         <img src={pdfDownlode} alt="Sign in" className="signInImage"/>
                         Download
@@ -78,7 +80,7 @@ const SearchBlock = (props) => {
                         <img src={pdfPrint} alt="Sign in" className="signInImage"/>
                         Print
                     </Button>
-                </div>
+                </div>}
             </div>
             {/* this block only show when click on advanced search button */}
             {advanceSearch && (
