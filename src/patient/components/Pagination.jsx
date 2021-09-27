@@ -11,8 +11,8 @@ const PaginationBlock = (props) => {
             <div className="pagintionBlock">
                 <p>{props.name} {1 + prevTotal}-{prevTotal + currentLength} </p>
                 <Pagination>
-                    {currentPage > 0 && <Pagination.Prev onClick={prevClick}/>}
-                    {currentLength === limit && <Pagination.Next onClick={nextClick}/>}
+                    <Pagination.Prev disabled={currentPage === 0} onClick={prevClick}/>
+                     <Pagination.Next disabled={currentLength !== limit} onClick={nextClick}/>
                 </Pagination>
             </div>
         </>

@@ -10,6 +10,7 @@ export function addCrumb(crumb, dispatch, updateName) {
     }
     if (updateName&&index !== -1) {
         crumbs[index].name = crumb.name
+        crumbs[index].link=crumb.link
     }
     dispatch(updateCrumb(crumbs))
 

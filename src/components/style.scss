@@ -520,6 +520,9 @@
         align-items: center;
         color: #4F4F4F;
         padding: 21px 15px;
+        &::placeholder{
+            color: #828282;
+        }
     }
 }
 
